@@ -2,7 +2,7 @@ variables:
 - name: BuildParameters.solution
   value: '**\*.sln'
 
-name: v'$(Major).$(Minor).$(Patch)'
+name: v$(Major).$(Minor).$(Patch)
 
 trigger:
 - main
@@ -24,6 +24,10 @@ steps:
       packagesToPack: '**/*.csproj'
       versioningScheme: byEnvVar
       versionEnvVar: PackageVersion
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'test'
+      projects: '**/*UnitTests.csproj'
   - task: GitHubRelease@1
     displayName: "Publish Relase To GitHub"
     inputs:
