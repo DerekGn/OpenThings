@@ -2,7 +2,7 @@ variables:
 - name: BuildParameters.solution
   value: '**\*.sln'
 
-name: v1.0.0$(rev:.r)
+name: 1.0.0$(rev:.r)
 
 trigger:
 - main
@@ -17,14 +17,13 @@ steps:
       command: 'build'
       projects: $(BuildParameters.solution)
       configuration: $(BuildConfiguration)
-      arguments: '--configuration $(BuildConfiguration) --no-restore /p:Version=$(Build.BuildNumber)'
+      arguments: '--configuration $(BuildConfiguration) /p:Version=$(Build.BuildNumber)'
   - task: DotNetCoreCLI@2
     name: "Pack_Project"
     inputs:
       command: 'pack'
       packagesToPack: '**/*.csproj'
       versioningScheme: 'byBuildNumber'
-      buildProperties: '--configuration $(BuildConfiguration) --no-build'
   - task: GitHubRelease@1
     name: "Publish_Release_To_GitHub"
     inputs:
@@ -33,7 +32,7 @@ steps:
       action: 'create'
       target: '$(Build.SourceVersion)'
       tagSource: 'userSpecifiedTag'
-      tag: '$(Build.BuildNumber)'
-      title: '$(Build.BuildNumber) - $(BuildConfiguration) - $(Build.SourceBranchName)'
+      tag: 'v$(Build.BuildNumber)'
+      title: 'v$(Build.BuildNumber) - $(BuildConfiguration) - $(Build.SourceBranchName)'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
