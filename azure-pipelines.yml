@@ -24,7 +24,7 @@ steps:
       projects: $(BuildParameters.solution)
       configuration: $(BuildConfiguration)
   - task: DotNetCoreCLI@2
-    name: "Run Unittests"
+    name: "Run_Unittests"
     inputs:
       command: 'test'
       projects: '**/*.csproj'
