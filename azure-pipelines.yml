@@ -1,8 +1,14 @@
 variables:
 - name: BuildParameters.solution
   value: '**\*.sln'
+- name: Major
+  value: 1
+- name: Minor
+  value: 0
+- name: Patch
+  value: 0
 
-name: 1.0.0$(rev:.r)
+name: v$(Major).$(Minor).$(Patch)$(rev:.r)
 
 trigger:
 - main
@@ -17,13 +23,20 @@ steps:
       command: 'build'
       projects: $(BuildParameters.solution)
       configuration: $(BuildConfiguration)
-      arguments: '--configuration $(BuildConfiguration) /p:Version=$(Build.BuildNumber)'
+  - task: DotNetCoreCLI@2
+    name: "Run Unittests"
+    inputs:
+      command: 'test'
+      projects: '**/*.csproj'
   - task: DotNetCoreCLI@2
     name: "Pack_Project"
     inputs:
       command: 'pack'
       packagesToPack: '**/*.csproj'
-      versioningScheme: 'byBuildNumber'
+      versioningScheme: byPrereleaseNumber
+      majorVersion: $(Major)
+      minorVersion: $(Minor)
+      patchVersion: $(Patch)
   - task: GitHubRelease@1
     name: "Publish_Release_To_GitHub"
     inputs:
@@ -32,7 +45,7 @@ steps:
       action: 'create'
       target: '$(Build.SourceVersion)'
       tagSource: 'userSpecifiedTag'
-      tag: 'v$(Build.BuildNumber)'
-      title: 'v$(Build.BuildNumber) - $(BuildConfiguration) - $(Build.SourceBranchName)'
+      tag: '$(Build.BuildNumber)'
+      title: '$(Build.BuildNumber) - $(BuildConfiguration) - $(Build.SourceBranchName)'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
