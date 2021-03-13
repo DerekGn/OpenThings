@@ -29,7 +29,7 @@ steps:
     displayName: "Publish Test Results"
     inputs:
       testRunner: VSTest
-      testResultsFiles: '**/*.trx'
+      testResultsFiles: '**\*.trx'
   - task: DotNetCoreCLI@2
     displayName: "Pack Project"
     inputs:
