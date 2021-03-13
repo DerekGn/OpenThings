@@ -1,6 +1,8 @@
 variables:
 - name: BuildParameters.solution
   value: '**\*.sln'
+- name: TestProject
+  value: '**/*UnitTests.csproj'
 
 name: v$(Major).$(Minor).$(Patch)
 
@@ -18,16 +20,24 @@ steps:
       projects: $(BuildParameters.solution)
       configuration: $(BuildConfiguration)
   - task: DotNetCoreCLI@2
+    displayName: "Run Unit Tests"
+    inputs:
+      command: 'test'
+      projects: $(TestProject)
+      arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+  - script: dotnet test $(TestProject) --logger trx --collect "Code coverage"
+  - task: PublishTestResults@2
+    displayName: "Publish Test Results"
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'
+  - task: DotNetCoreCLI@2
     displayName: "Pack Project"
     inputs:
       command: 'pack'
       packagesToPack: '**/*.csproj'
       versioningScheme: byEnvVar
       versionEnvVar: PackageVersion
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'test'
-      projects: '**/*UnitTests.csproj'
   - task: GitHubRelease@1
     displayName: "Publish Relase To GitHub"
     inputs:
