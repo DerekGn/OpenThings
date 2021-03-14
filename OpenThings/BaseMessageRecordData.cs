@@ -22,26 +22,35 @@
 * SOFTWARE.
 */
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OpenThings
 {
-    internal class FixedPointData
+    public abstract class BaseMessageRecordData
     {
-        public FixedPointData(int result, float fixedPoint)
+        public BaseMessageRecordData(RecordType recordType, int length)
         {
-            Result = result;
-
-            FixedPoint = fixedPoint;
+            RecordType = recordType;
+            Length = length;
         }
 
-        public int Result { get;}
+        public int Length { get; }
 
-        public float FixedPoint { get; }
+        public RecordType RecordType { get; }
 
-        public override string ToString()
+        public IEnumerable<byte> Encode()
         {
-            return $"[0x{Result:X}] [{FixedPoint}]";
+            List<byte> bytes = new List<byte>
+            {
+                (byte)(((byte)RecordType << 4) | (byte)Length)
+            };
+
+            bytes.AddRange(GetValueByes());
+
+            return bytes;
         }
+
+        internal abstract IList<byte> GetValueByes();
     }
 }

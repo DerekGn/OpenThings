@@ -29,22 +29,29 @@ namespace OpenThings
 {
     public class MessageHeader
     {
-        public MessageHeader(IList<byte> payload)
+        public MessageHeader(byte manufacturerId, byte productId, ushort pip)
         {
-            Length = payload[0];
-            ManufacturerId = payload[1];
-            ProductId = payload[2];
-            EncryptPip = (ushort)(payload[3] << 8);
-            EncryptPip += payload[4];
+            if ((manufacturerId & (byte)0x80) == 0x80)
+            {
+                throw new ArgumentOutOfRangeException(nameof(manufacturerId));
+            }
+
+            ManufacturerId = manufacturerId;
+            ProductId = productId;
+            Pip = pip;
         }
-        
+
+        public MessageHeader(byte manufacturerId, byte productId) : this(manufacturerId, productId, 0x0000)
+        {
+        }
+
         public byte Length { get; }
 
         public byte ManufacturerId { get; }
 
         public byte ProductId { get; }
 
-        public ushort EncryptPip { get; }
+        public ushort Pip { get; }
 
         public UInt32 SensorId { get; private set; }
 
@@ -54,7 +61,7 @@ namespace OpenThings
                 $"\tLength:\t\t[0x{Length:X2}]\r\n" +
                 $"\tManufacturerID:\t[0x{ManufacturerId:X2}]\r\n" +
                 $"\tProductId:\t[0x{ProductId:X2}]\r\n" +
-                $"\tEncryptPip:\t[0x{EncryptPip:X4}]\r\n" +
+                $"\tPip:\t[0x{Pip:X4}]\r\n" +
                 $"\tSensorId:\t[0x{SensorId:X8}]\r\n";
         }
 

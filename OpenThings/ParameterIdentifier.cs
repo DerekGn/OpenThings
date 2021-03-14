@@ -24,7 +24,7 @@
 
 namespace OpenThings
 {
-    public enum ParameterIdentifiers
+    public enum ParameterIdentifier : byte
     {
         Alarm = 0x21,
         Debug = 0x2D,
@@ -74,6 +74,7 @@ namespace OpenThings
         Phase1Power = 0x79,
         Phase2Power = 0x7A,
         Phase3Power = 0x7B,
-        ThreePhaseTotalPower = 0x7C
+        ThreePhaseTotalPower = 0x7C,
+        JoinSlave = 0xEA
     }
 }
