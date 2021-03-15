@@ -1,8 +1,10 @@
 variables:
 - name: BuildParameters.solution
   value: '**\*.sln'
+- name: TestProject
+  value: '**/*UnitTests.csproj'
 
-name: v1.0.0$(rev:.r)
+name: v$(Major).$(Minor).$(Patch)
 
 trigger:
 - main
@@ -12,21 +14,31 @@ pool:
 
 steps:
   - task: DotNetCoreCLI@2
-    name: "Build_Solution"
+    displayName: "Build Solution"
     inputs:
       command: 'build'
       projects: $(BuildParameters.solution)
       configuration: $(BuildConfiguration)
-      arguments: '--configuration $(BuildConfiguration) --no-restore /p:Version=$(Build.BuildNumber)'
   - task: DotNetCoreCLI@2
-    name: "Pack_Project"
+    displayName: "Run Unit Tests"
+    inputs:
+      command: 'test'
+      projects: $(TestProject)
+      arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+  - task: PublishTestResults@2
+    displayName: "Publish Test Results"
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**\*.trx'
+  - task: DotNetCoreCLI@2
+    displayName: "Pack Project"
     inputs:
       command: 'pack'
       packagesToPack: '**/*.csproj'
-      versioningScheme: 'byBuildNumber'
-      buildProperties: '--configuration $(BuildConfiguration) --no-build'
+      versioningScheme: byEnvVar
+      versionEnvVar: PackageVersion
   - task: GitHubRelease@1
-    name: "Publish_Release_To_GitHub"
+    displayName: "Publish Relase To GitHub"
     inputs:
       gitHubConnection: 'GitHub PAT'
       repositoryName: '$(Build.Repository.Name)'
