@@ -61,7 +61,7 @@ namespace OpenThings
 
             var pip = BitConverter.ToUInt16(payload.Skip(3).Take(2).Reverse().ToArray(), 0);
 
-            var header = new MessageHeader(payload[1], payload[2], pip);
+            var header = new MessageHeader(payload[1], payload[2], pip, 0x0);
 
             var body = payload.Take(payload[0] + 1).Skip(5).ToList();
 

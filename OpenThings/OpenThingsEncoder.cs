@@ -22,6 +22,7 @@
 * SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,6 +33,8 @@ namespace OpenThings
     /// </summary>
     public class OpenThingsEncoder : IOpenThingsEncoder
     {
+        private static ushort random;
+
         /// <summary>
         /// Encode an OpenThings <see cref="Message"/>
         /// </summary>
@@ -43,12 +46,14 @@ namespace OpenThings
 
             List<byte> encoded = new List<byte>
             {
-                0,
+                0, // Length
                 message.Header.ManufacturerId,
                 message.Header.ProductId,
-                message.Header.ProductId,
-                0,
-                0
+                0, // Pip Msb
+                0, // Pip Lsb
+                (byte) (message.Header.SensorId >> 16),
+                (byte) ((message.Header.SensorId & 0xFF00) >> 8),
+                (byte) (message.Header.SensorId & 0xFF)
             };
 
             foreach (var record in message.Records)
@@ -57,12 +62,13 @@ namespace OpenThings
                 encoded.AddRange(record.Data.Encode());
             }
 
+            encoded.Add(0);
+
             var crcBytes = crc16Ccitt.ComputeChecksumBytes(encoded.Skip(5).ToArray());
 
-            encoded.Add(0);
-            encoded.AddRange(crcBytes);
+            encoded.AddRange(crcBytes.Reverse());
 
-            encoded[0] = (byte) encoded.Count;
+            encoded[0] = (byte)encoded.Count;
 
             return encoded;
         }
@@ -74,11 +80,55 @@ namespace OpenThings
         /// <param name="encryptionId">The encryption Id</param>
         /// <param name="seed">The random seed for encrypting the message</param>
         /// <returns>A <see cref="IList{T}"/> of the encoded OpentThings message bytes</returns>
-        public IList<byte> Encode(Message message, byte encryptionId, uint seed)
+        public IList<byte> Encode(Message message, byte encryptionId, ushort seed)
         {
             var encoded = Encode(message);
 
+            Encrypt(encoded, encryptionId, seed);
+
             return encoded;
+        }
+
+        private void Encrypt(IList<byte> encoded, byte encryptionId, ushort seed)
+        {
+            RandomiseSeed(seed);
+
+            ushort messagePip = GeneratePip(encryptionId);
+
+            encoded[3] = (byte) (messagePip >> 8);
+            encoded[4] = (byte) (messagePip & 0xFF);
+
+            for (int i = 5; i < encoded.Count; ++i)
+            {
+                encoded[i] = EncryptDecrypt(encoded[i]);
+            }
+        }
+
+        private byte EncryptDecrypt(byte b)
+        {
+            int i;
+            
+            for (i = 0; i < 5; ++i) 
+            { 
+                random = (random & 1) > 0 ? (ushort)((random >> 1) ^ 62965U) : (ushort)(random >> 1); 
+            }
+            
+            return (byte)(random ^ b ^ 90U);
+        }
+
+        private void RandomiseSeed(ushort seed)
+        {
+            random = (ushort)(random ^ seed);
+            
+            if (random == 0)
+            {
+                random = 1;
+            }
+        }
+
+        ushort GeneratePip(byte encryptionId)
+        {
+            return (ushort)(random ^ (encryptionId << 8));
         }
     }
 }

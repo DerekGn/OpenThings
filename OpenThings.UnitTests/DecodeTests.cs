@@ -89,7 +89,14 @@ namespace OpenThings.UnitTests
             var message = _decoder.Decode(payload, new List<PidMap>() { new PidMap(0x4, 242) });
 
             // Assert
+            message.Header.Should().NotBeNull();
             message.Header.ManufacturerId.Should().Be(4);
+            message.Header.ProductId.Should().Be(0x0C);
+            message.Header.SensorId.Should().Be(0x91BD);
+            message.Records.Should().NotBeNull().And.NotBeEmpty();
+            message.Records.Should().HaveCount(1);
+            message.Records.Take(1).First().Parameter.Should().NotBeNull();
+            message.Records.Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.JoinSlave);
         }
 
         [Fact]
@@ -102,6 +109,20 @@ namespace OpenThings.UnitTests
             var message = _decoder.Decode(payload, new List<PidMap>() { new PidMap(0x4, 242) });
 
             // Assert
+            message.Header.Should().NotBeNull();
+            message.Header.ManufacturerId.Should().Be(0x55);
+        }
+        [Fact]
+        public void TestMessageValidDecode()
+        {
+            // Arrange
+            List<byte> payload = new List<byte>() { 0x13, 0x55, 0xAA, 0x55, 0x55, 0x18, 0xE2, 0x3B, 0x97, 0x06, 0x47, 0x40, 0xFB, 0xE8, 0x84, 0x0E, 0xCD, 0x29, 0xAE };
+
+            // Act
+            var message = _decoder.Decode(payload, new List<PidMap>() { new PidMap(0x55, 0xFF) });
+
+            // Assert
+            message.Header.Should().NotBeNull();
             message.Header.ManufacturerId.Should().Be(0x55);
         }
     }

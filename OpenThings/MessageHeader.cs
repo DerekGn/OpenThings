@@ -38,15 +38,21 @@ namespace OpenThings
         /// <param name="manufacturerId">The manufacturer Id</param>
         /// <param name="productId">The product Id</param>
         /// <param name="pip">The pip value</param>
-        public MessageHeader(byte manufacturerId, byte productId, ushort pip)
+        public MessageHeader(byte manufacturerId, byte productId, ushort pip, uint sensorId)
         {
-            if ((manufacturerId & (byte)0x80) == 0x80)
+            if ((manufacturerId & 0x80) == 0x80)
             {
                 throw new ArgumentOutOfRangeException(nameof(manufacturerId));
             }
 
+            if(sensorId > 0xFFFFFF)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sensorId));
+            }
+
             ManufacturerId = manufacturerId;
             ProductId = productId;
+            SensorId = sensorId;
             Pip = pip;
         }
 
@@ -54,7 +60,6 @@ namespace OpenThings
         /// The length in bytes of the OpenThings message payload
         /// </summary>
         public byte Length { get; }
-
         /// <summary>
         /// The Manufacturer Id
         /// </summary>
@@ -70,7 +75,7 @@ namespace OpenThings
         /// <summary>
         /// The sensor Id
         /// </summary>
-        public UInt32 SensorId { get; private set; }
+        public uint SensorId { get; private set; }
 
         public override string ToString()
         {

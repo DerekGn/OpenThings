@@ -22,28 +22,25 @@
 * SOFTWARE.
 */
 
-using System.Collections.Generic;
-
 namespace OpenThings
 {
-    /// <summary>
-    /// Defines the interface for an OpenThings message encoder
-    /// </summary>
-    public interface IOpenThingsEncoder
+    public enum AlarmClear
     {
         /// <summary>
-        /// Encode an OpenThings message without linear shift encryption
+        /// The device’s battery is failing and must be replaced soon
         /// </summary>
-        /// <param name="message">The message to encode</param>
-        /// <returns>An <see cref="IList{T}"/> of the encoded message</returns>
-        IList<byte> Encode(Message message);
+        LowBattery = 0x62,
         /// <summary>
-        /// Encode an OpenThings message with linear shift encryption
+        /// A mains-powered device is currently running off its battery backup
         /// </summary>
-        /// <param name="message">The message to encode</param>
-        /// <param name="encryptionId">The encryption value</param>
-        /// <param name="seed">The random seed value for the encryption</param>
-        /// <returns>An <see cref="IList{T}"/> of the encoded message</returns>
-        IList<byte> Encode(Message message, byte encryptionId, ushort seed);
+        PowerFail = 0x70,
+        /// <summary>
+        /// The device is running unexpectedly hot and needs attention
+        /// </summary>
+        OverTemperature = 0x74,
+        /// <summary>
+        /// The device’s anti-tamper mechanism has been triggered
+        /// </summary>
+        Tamper = 0x7A
     }
 }
