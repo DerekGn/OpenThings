@@ -28,6 +28,9 @@ using System.Linq;
 
 namespace OpenThings
 {
+    /// <summary>
+    /// An OpenThings parameter
+    /// </summary>
     public class Parameter
     {
         private static readonly List<Tuple<ParameterIdentifier, string>> parameterUnitsMap = new List<Tuple<ParameterIdentifier, string>>() 
@@ -84,15 +87,29 @@ namespace OpenThings
             new Tuple<ParameterIdentifier, string>(ParameterIdentifier.JoinSlave, "")
         };
 
+        /// <summary>
+        /// Create an instance of a <see cref="Parameter"/>
+        /// </summary>
+        /// <param name="parameterIdentifier">The <see cref="ParameterIdentifier"/></param>
         public Parameter(ParameterIdentifier parameterIdentifier)
         {
             Identifier = parameterIdentifier;
 
             Units = parameterUnitsMap.First(_ => _.Item1 == parameterIdentifier).Item2;
         }
-
+        /// <summary>
+        /// The <see cref="ParameterIdentifier"/>
+        /// </summary>
         public ParameterIdentifier Identifier { get; }
+        /// <summary>
+        /// The unit for this <see cref="Parameter"/>
+        /// </summary>
         public string Units { get; }
+        /// <summary>
+        /// Get the <see cref="Parameter"/> from the identifier
+        /// </summary>
+        /// <param name="identifier">The identifier to lookup the <see cref="Parameter"/></param>
+        /// <returns>The <see cref="Parameter"/> instance</returns>
         public static Parameter GetParameter(byte identifier)
         {
             var parameter = parameterUnitsMap.First(_ => _.Item1 == (ParameterIdentifier) identifier);

@@ -1,13 +1,46 @@
-﻿using System;
+﻿/*
+* MIT License
+*
+* Copyright (c) 2021 Derek Goslin
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace OpenThings
 {
+    /// <summary>
+    /// An <see cref="IOpenThingsDecoder"/> type
+    /// </summary>
     public class OpenThingsDecoder : IOpenThingsDecoder
     {
         private static ushort random;
 
+        /// <summary>
+        /// Decode a <see cref="IList{T}"/> of bytes representing the OpenThings message payload
+        /// </summary>
+        /// <param name="payload">The OpenThings payload message bytes</param>
+        /// <param name="pidMaps">A mapping of PID to manufacture Ids to enable linear shift encryption decoding</param>
+        /// <returns>A decode <see cref="Message"/></returns>
         public Message Decode(IList<byte> payload, IList<PidMap> pidMaps)
         {
             Crc16Ccitt crc16Ccitt = new Crc16Ccitt(0);

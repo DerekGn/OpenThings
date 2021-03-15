@@ -23,121 +23,32 @@
 */
 
 using System;
-using System.Collections.Generic;
 
 namespace OpenThings
 {
+    /// <summary>
+    /// An OpenThings message record
+    /// </summary>
     public class MessageRecord
     {
+        /// <summary>
+        /// Create an instance of a <see cref="MessageRecord"/>
+        /// </summary>
+        /// <param name="parameter">The <see cref="Parameter"/> instance</param>
+        /// <param name="data">The <see cref="BaseMessageRecordData"/> instance for this <see cref="MessageRecord"/></param>
         public MessageRecord(Parameter parameter, BaseMessageRecordData data)
         {
             Parameter = parameter ?? throw new ArgumentNullException(nameof(parameter));
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }
-
+        /// <summary>
+        /// The <see cref="Parameter"/> instance
+        /// </summary>
         public Parameter Parameter { get; }
-        
+
+        /// <summary>
+        /// The <see cref="BaseMessageRecordData"/> instance for this <see cref="MessageRecord"/>
+        /// </summary>
         public BaseMessageRecordData Data { get; }
-
-        //public MessageRecord(Parameter parameter, IList<byte> recordBytes)
-        //{
-        //    Parameter = parameter;
-
-        //    //Length = recordBytes[0] & 0x0F;
-
-        //    //RecordType = (RecordType)((recordBytes[0] & 0xF0) >> 4);
-
-        //    //MapRecordType(Length, recordBytes.Skip(1).ToList());
-        //}
-
-        //private void MapRecordType(int length, IList<byte> dataBytes)
-        //{
-        //    int result = 0;
-        //    int i = 0;
-
-        //    switch (RecordType)
-        //    {
-        //        case RecordType.UnsignedX0:
-        //        case RecordType.UnsignedX4:
-        //        case RecordType.UnsignedX8:
-        //        case RecordType.UnsignedX12:
-        //        case RecordType.UnsignedX16:
-        //        case RecordType.UnsignedX20:
-        //        case RecordType.UnsignedX24:
-        //            for (i = 0; i < length; i++)
-        //            {
-        //                result <<= 8;
-        //                result += dataBytes[i];
-        //            }
-        //            Data = new RecordData<FixedPointData>(new FixedPointData(result, (float)(result / Math.Pow(2, DecimalPlaces(RecordType)))));
-        //            break;
-        //        case RecordType.Chars:
-        //            Data = new RecordData<List<char>>(dataBytes.Select( _ => Convert.ToChar(_)).ToList());
-        //            break;
-        //        case RecordType.SignedX0:
-        //        case RecordType.SignedX8:
-        //        case RecordType.SignedX12:
-        //        case RecordType.SignedX16:
-        //        case RecordType.SignedX24:
-                    
-        //            for (i = 0; i < length; i++)
-        //            {
-        //                result <<= 8;
-        //                result += dataBytes[i];
-        //            }
-        //            if ((dataBytes[i] & 0x80) == 0x80)
-        //            {
-        //                result = -(((~result) & ((2 ^ (length * 8)) - 1)) + 1);
-        //            }
-        //            Data = new RecordData<FixedPointData>(new FixedPointData(result, (float)(result / Math.Pow(2, DecimalPlaces(RecordType)))));
-        //            break;
-        //        case RecordType.Enum:
-        //            break;
-        //        case RecordType.Float:
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-        //public override string ToString()
-        //{
-        //    return
-        //        $"\tParameter->\r\n\t\t{Parameter}\r\n" +
-        //        $"\t\tLength:\t\t[0x{Length:X2}]\r\n" +
-        //        $"\t\tData:\t\t[{Data}]";
-        //}
-
-        private int DecimalPlaces(RecordType recordType)
-        {
-            int result = 0;
-
-            switch (recordType)
-            {
-                case RecordType.UnsignedX4:
-                    result = 4;
-                    break;
-                case RecordType.SignedX8:
-                case RecordType.UnsignedX8:
-                    result = 8;
-                    break;
-                case RecordType.SignedX12:
-                case RecordType.UnsignedX12:
-                    result = 12;
-                    break;
-                case RecordType.SignedX16:
-                case RecordType.UnsignedX16:
-                    result = 16;
-                    break;
-                case RecordType.UnsignedX20:
-                    result = 20;
-                    break;
-                case RecordType.SignedX24:
-                case RecordType.UnsignedX24:
-                    result = 24;
-                    break;
-            }
-
-            return result;
-        }
     }
 }

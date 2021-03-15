@@ -27,8 +27,17 @@ using System.Collections.Generic;
 
 namespace OpenThings
 {
+    /// <summary>
+    /// An OpenThings message header
+    /// </summary>
     public class MessageHeader
     {
+        /// <summary>
+        /// Create an instance of an OpenThings message
+        /// </summary>
+        /// <param name="manufacturerId">The manufacturer Id</param>
+        /// <param name="productId">The product Id</param>
+        /// <param name="pip">The pip value</param>
         public MessageHeader(byte manufacturerId, byte productId, ushort pip)
         {
             if ((manufacturerId & (byte)0x80) == 0x80)
@@ -41,18 +50,26 @@ namespace OpenThings
             Pip = pip;
         }
 
-        public MessageHeader(byte manufacturerId, byte productId) : this(manufacturerId, productId, 0x0000)
-        {
-        }
-
+        /// <summary>
+        /// The length in bytes of the OpenThings message payload
+        /// </summary>
         public byte Length { get; }
 
+        /// <summary>
+        /// The Manufacturer Id
+        /// </summary>
         public byte ManufacturerId { get; }
-
+        /// <summary>
+        /// The Product Id
+        /// </summary>
         public byte ProductId { get; }
-
+        /// <summary>
+        /// The pip
+        /// </summary>
         public ushort Pip { get; }
-
+        /// <summary>
+        /// The sensor Id
+        /// </summary>
         public UInt32 SensorId { get; private set; }
 
         public override string ToString()

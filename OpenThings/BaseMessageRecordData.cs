@@ -23,10 +23,12 @@
 */
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OpenThings
 {
+    /// <summary>
+    /// A base message record data type
+    /// </summary>
     public abstract class BaseMessageRecordData
     {
         public BaseMessageRecordData(RecordType recordType, int length)
@@ -34,11 +36,18 @@ namespace OpenThings
             RecordType = recordType;
             Length = length;
         }
-
+        /// <summary>
+        /// The records byte length
+        /// </summary>
         public int Length { get; }
-
+        /// <summary>
+        /// The record type
+        /// </summary>
         public RecordType RecordType { get; }
-
+        /// <summary>
+        /// Encode the <see cref="BaseMessageRecordData"/> derived data bytes
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="byte"/></returns>
         public IEnumerable<byte> Encode()
         {
             List<byte> bytes = new List<byte>

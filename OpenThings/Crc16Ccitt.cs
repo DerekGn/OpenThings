@@ -23,33 +23,23 @@
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace OpenThings
 {
+    /// <summary>
+    /// Computes a 16 bit CCITT CRC
+    /// </summary>
     internal class Crc16Ccitt
     {
         private readonly ushort[] _table = new ushort[256];
         private readonly ushort _initialValue = 0;
         private const ushort Polynomial = 4129;
 
-        public ushort ComputeChecksum(byte[] bytes)
-        {
-            ushort crc = _initialValue;
-            
-            for (int i = 0; i < bytes.Length; ++i)
-            {
-                crc = (ushort)((crc << 8) ^ _table[((crc >> 8) ^ (0xff & bytes[i]))]);
-            }
-
-            return crc;
-        }
-
-        public byte[] ComputeChecksumBytes(byte[] bytes)
-        {
-            ushort crc = ComputeChecksum(bytes);
-            return BitConverter.GetBytes(crc);
-        }
-
+        /// <summary>
+        /// Create instance of a <see cref="Crc16Ccitt"/>
+        /// </summary>
+        /// <param name="initialValue">The initial seed value for the CRC calculation</param>
         public Crc16Ccitt(ushort initialValue)
         {
             _initialValue = initialValue;
@@ -74,5 +64,31 @@ namespace OpenThings
                 _table[i] = temp;
             }
         }
+        /// <summary>
+        /// Compute the CRC checksum
+        /// </summary>
+        /// <param name="bytes">The <see cref="List{T}"/> of bytes to compute the checksum</param>
+        /// <returns>The computed CCITT 16 checksum</returns>
+        public ushort ComputeChecksum(IList<byte> bytes)
+        {
+            ushort crc = _initialValue;
+
+            foreach (var b in bytes)
+            {
+                crc = (ushort)((crc << 8) ^ _table[(crc >> 8) ^ (0xff & b)]);
+            }
+            return crc;
+        }
+        /// <summary>
+        /// Compute the CRC checksum
+        /// </summary>
+        /// <param name="bytes">The <see cref="List{T}"/> of bytes to compute the checksum</param>
+        /// <returns>The computed CCITT 16 checksum</returns>
+        public byte[] ComputeChecksumBytes(IList<byte> bytes)
+        {
+            ushort crc = ComputeChecksum(bytes);
+            return BitConverter.GetBytes(crc);
+        }
+
     }
 }

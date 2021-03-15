@@ -28,17 +28,29 @@ using System.Text;
 
 namespace OpenThings
 {
+    /// <summary>
+    /// An OpenThings message
+    /// </summary>
     public class Message
     {
+        /// <summary>
+        /// Create an instance of an <see cref="OpenThings"/> message
+        /// </summary>
+        /// <param name="messageHeader">The <see cref="MessageHeader"/> to add to the <see cref="Message"/></param>
         public Message(MessageHeader messageHeader)
         {
             Header = messageHeader ?? throw new ArgumentOutOfRangeException(nameof(messageHeader));
 
             Records = new List<MessageRecord>();
         }
-
+        /// <summary>
+        /// The <see cref="MessageHeader"/>
+        /// </summary>
         public MessageHeader Header { get; private set; }
 
+        /// <summary>
+        /// The <see cref="IList{T}"/> of <see cref="MessageRecord"/>
+        /// </summary>
         public IList<MessageRecord> Records { get; private set; }
 
         public override string ToString()

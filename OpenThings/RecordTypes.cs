@@ -24,6 +24,9 @@
 
 namespace OpenThings
 {
+    /// <summary>
+    /// OpenThings record type
+    /// </summary>
     public enum RecordType
     {
         UnsignedX0,
