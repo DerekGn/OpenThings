@@ -83,8 +83,8 @@ namespace OpenThings
                 $"\tLength:\t\t[0x{Length:X2}]\r\n" +
                 $"\tManufacturerID:\t[0x{ManufacturerId:X2}]\r\n" +
                 $"\tProductId:\t[0x{ProductId:X2}]\r\n" +
-                $"\tPip:\t[0x{Pip:X4}]\r\n" +
-                $"\tSensorId:\t[0x{SensorId:X8}]\r\n";
+                $"\tPip:\t\t[0x{Pip:X4}]\r\n" +
+                $"\tSensorId:\t[0x{SensorId:X8}]";
         }
 
         internal void SetSensorId(List<byte> sensorId)

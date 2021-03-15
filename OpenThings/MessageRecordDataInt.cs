@@ -75,5 +75,10 @@ namespace OpenThings
             if (!valid)
                 throw new ArgumentOutOfRangeException(nameof(recordType));
         }
+
+        public override string ToString()
+        {
+            return $"Record Type: [{RecordType}] Length: [{Length}] Value: [0x{Value:X8}]";
+        }
     }
 }

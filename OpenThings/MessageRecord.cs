@@ -45,10 +45,15 @@ namespace OpenThings
         /// The <see cref="Parameter"/> instance
         /// </summary>
         public Parameter Parameter { get; }
-
         /// <summary>
         /// The <see cref="BaseMessageRecordData"/> instance for this <see cref="MessageRecord"/>
         /// </summary>
         public BaseMessageRecordData Data { get; }
+
+        public override string ToString()
+        {
+            return
+                $"\tParameter:[{Parameter}] Data: [{Data}]";
+        }
     }
 }

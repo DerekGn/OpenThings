@@ -124,9 +124,7 @@ namespace OpenThings
 
         public override string ToString()
         {
-            return 
-                $"Identifier:\t[{Identifier}]\r\n" +
-                $"\t\tUnits:\t\t[{Units}]";
+            return $"Identifier: [{Identifier}] Units: [{Units}]";
         }
     }
 }
