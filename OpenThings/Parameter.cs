@@ -33,74 +33,76 @@ namespace OpenThings
     /// </summary>
     public class Parameter
     {
-        private static readonly List<Tuple<ParameterIdentifier, string>> parameterUnitsMap = new List<Tuple<ParameterIdentifier, string>>() 
+        private static readonly List<Tuple<OpenThingsParameter, string>> parameterUnitsMap = new List<Tuple<OpenThingsParameter, string>>() 
         { 
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.AirPressure, "mbar" ),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Alarm, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.ApparentPower, "VA"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.BatteryLevel, "V"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Closures, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.CODetector, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Current, "A"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Debug, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.DoorBell, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.DoorSensor, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.EmergencyPanicButton, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Energy, "kWh"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.FallSensor, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Frequency, "Hz"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.GasFlowRate, "m3/hr"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.GasPressure, "Pa"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.GasVolume, "m3"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.GlassBreakage, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Identify, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Illuminance, "Lux"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Join, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Level, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.LightLevel, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.MotionDetector, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Occupancy, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Phase1Power, "W"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Phase2Power, "W"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Phase3Power, "W"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.PowerFactor, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Rainfall, "mm"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.ReactivePower, "VAR"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.RealPower, "W"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.RelativeHumidity, "%"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.ReportPeriod, "s"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.RFQuality, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.RotationSpeed, "RPM"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.SmokeDetector, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.SourceSelector, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.SwitchState, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Temperature, "Celsius"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.ThreePhaseTotalPower, "W"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.TimeDate, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Vibration, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.Voltage, "V"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.WaterDetector, ""),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.WaterFlowRate, "l/hr"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.WaterPressure, "Pa"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.WaterVolume, "l"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.WindSpeed, "m/s"),
-            new Tuple<ParameterIdentifier, string>(ParameterIdentifier.JoinSlave, "")
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.AirPressure, "mbar" ),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Alarm, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ApparentPower, "VA"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.BatteryLevel, "V"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Closures, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.CODetector, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Current, "A"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Debug, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.DoorBell, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.DoorSensor, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.EmergencyPanicButton, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Energy, "kWh"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.FallSensor, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Frequency, "Hz"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.GasFlowRate, "m3/hr"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.GasPressure, "Pa"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.GasVolume, "m3"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.GlassBreakage, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Identify, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Illuminance, "Lux"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Join, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Level, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.LightLevel, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.MotionDetector, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Occupancy, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Phase1Power, "W"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Phase2Power, "W"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Phase3Power, "W"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.PowerFactor, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Rainfall, "mm"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ReactivePower, "VAR"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.RealPower, "W"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.RelativeHumidity, "%"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ReportPeriod, "s"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.RFQuality, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.RotationSpeed, "RPM"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.SmokeDetector, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.SourceSelector, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.SwitchState, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Temperature, "Celsius"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ThreePhaseTotalPower, "W"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.TimeDate, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Vibration, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Voltage, "V"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WaterDetector, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WaterFlowRate, "l/hr"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WaterPressure, "Pa"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WaterVolume, "l"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WindSpeed, "m/s"),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.IdentifyCommand, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.JoinCommand, ""),
+            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.StartOtaCommand, "")
         };
 
         /// <summary>
         /// Create an instance of a <see cref="Parameter"/>
         /// </summary>
-        /// <param name="parameterIdentifier">The <see cref="ParameterIdentifier"/></param>
-        public Parameter(ParameterIdentifier parameterIdentifier)
+        /// <param name="parameterIdentifier">The <see cref="OpenThingsParameter"/></param>
+        public Parameter(OpenThingsParameter parameterIdentifier)
         {
             Identifier = parameterIdentifier;
 
             Units = parameterUnitsMap.First(_ => _.Item1 == parameterIdentifier).Item2;
         }
         /// <summary>
-        /// The <see cref="ParameterIdentifier"/>
+        /// The <see cref="OpenThingsParameter"/>
         /// </summary>
-        public ParameterIdentifier Identifier { get; }
+        public OpenThingsParameter Identifier { get; }
         /// <summary>
         /// The unit for this <see cref="Parameter"/>
         /// </summary>
@@ -112,7 +114,7 @@ namespace OpenThings
         /// <returns>The <see cref="Parameter"/> instance</returns>
         public static Parameter GetParameter(byte identifier)
         {
-            var parameter = parameterUnitsMap.First(_ => _.Item1 == (ParameterIdentifier) identifier);
+            var parameter = parameterUnitsMap.First(_ => _.Item1 == (OpenThingsParameter) identifier);
 
             if (parameter == null)
             {

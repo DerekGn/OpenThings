@@ -27,7 +27,7 @@ namespace OpenThings
     /// <summary>
     /// The OpenThings parameter identifiers
     /// </summary>
-    public enum ParameterIdentifier : byte
+    public enum OpenThingsParameter : byte
     {
         Alarm = 0x21,
         Debug = 0x2D,
@@ -78,7 +78,8 @@ namespace OpenThings
         Phase2Power = 0x7A,
         Phase3Power = 0x7B,
         ThreePhaseTotalPower = 0x7C,
-        JoinSlave = 0xEA,
-        EnterBootLoader = 0xFF
+        IdentifyCommand = 0xBF,
+        JoinCommand = 0xEA,
+        StartOtaCommand = 0xEB
     }
 }

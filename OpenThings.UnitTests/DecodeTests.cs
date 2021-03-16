@@ -74,9 +74,9 @@ namespace OpenThings.UnitTests
             message.Records.Should().NotBeNull().And.NotBeEmpty();
             message.Records.Should().HaveCount(2);
             message.Records.Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.Temperature);
+            message.Records.Take(1).First().Parameter.Identifier.Should().Be(OpenThingsParameter.Temperature);
             message.Records.Skip(1).Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Skip(1).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.Temperature);
+            message.Records.Skip(1).Take(1).First().Parameter.Identifier.Should().Be(OpenThingsParameter.Temperature);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace OpenThings.UnitTests
             message.Records.Should().NotBeNull().And.NotBeEmpty();
             message.Records.Should().HaveCount(1);
             message.Records.Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.JoinSlave);
+            message.Records.Take(1).First().Parameter.Identifier.Should().Be(OpenThingsParameter.JoinCommand);
         }
 
         [Fact]
