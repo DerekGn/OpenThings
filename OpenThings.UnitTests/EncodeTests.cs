@@ -21,9 +21,9 @@ namespace OpenThings.UnitTests
 
             var message = new Message(messageHeader);
 
-            var parameterTemp = new Parameter(ParameterIdentifier.Temperature);
+            var parameterTemp = new Parameter(OpenThingsParameter.Temperature);
             var dataTemp = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
-            var parameterHumidity = new Parameter(ParameterIdentifier.RelativeHumidity);
+            var parameterHumidity = new Parameter(OpenThingsParameter.RelativeHumidity);
             var dataHumidity = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
 
             message.Records.Add(
@@ -57,9 +57,9 @@ namespace OpenThings.UnitTests
 
             var message = new Message(messageHeader);
 
-            var parameterTemp = new Parameter(ParameterIdentifier.Temperature);
+            var parameterTemp = new Parameter(OpenThingsParameter.Temperature);
             var dataTemp = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
-            var parameterHumidity = new Parameter(ParameterIdentifier.RelativeHumidity);
+            var parameterHumidity = new Parameter(OpenThingsParameter.RelativeHumidity);
             var dataHumidity = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
 
             message.Records.Add(
