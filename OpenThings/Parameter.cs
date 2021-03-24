@@ -114,7 +114,7 @@ namespace OpenThings
         /// <returns>The <see cref="Parameter"/> instance</returns>
         public static Parameter GetParameter(byte identifier)
         {
-            var parameter = parameterUnitsMap.First(_ => _.Item1 == (OpenThingsParameter) identifier);
+            var parameter = parameterUnitsMap.FirstOrDefault (_ => _.Item1 == (OpenThingsParameter) identifier);
 
             if (parameter == null)
             {

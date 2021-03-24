@@ -68,7 +68,7 @@ namespace OpenThings
 
             encoded.AddRange(crcBytes.Reverse());
 
-            encoded[0] = (byte)encoded.Count;
+            encoded[0] = (byte)(encoded.Count - 1);
 
             return encoded;
         }

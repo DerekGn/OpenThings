@@ -80,6 +80,6 @@ namespace OpenThings
         ThreePhaseTotalPower = 0x7C,
         IdentifyCommand = 0xBF,
         JoinCommand = 0xEA,
-        StartOtaCommand = 0xEB
+        StartOtaCommand = 0xFF
     }
 }

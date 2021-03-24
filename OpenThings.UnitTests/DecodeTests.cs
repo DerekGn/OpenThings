@@ -112,6 +112,7 @@ namespace OpenThings.UnitTests
             message.Header.Should().NotBeNull();
             message.Header.ManufacturerId.Should().Be(0x55);
         }
+
         [Fact]
         public void TestMessageValidDecode()
         {

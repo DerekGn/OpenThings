@@ -46,7 +46,7 @@ namespace OpenThings.UnitTests
                 .And
                 .NotBeEmpty()
                 .And
-                .ContainInOrder(new List<byte>() { 0x13, 0x55, 0xAA, 0x00, 0x00, 0xFE, 0xED, 0xED, 0x74, 0x02, 0xBE, 0xEF, 0x68, 0x02, 0xBE, 0xEF, 0x00, 0x70, 0xA4 });
+                .ContainInOrder(new List<byte>() { 0x12, 0x55, 0xAA, 0x00, 0x00, 0xFE, 0xED, 0xED, 0x74, 0x02, 0xBE, 0xEF, 0x68, 0x02, 0xBE, 0xEF, 0x00, 0x70, 0xA4 });
         }
 
         [Fact]
@@ -82,7 +82,30 @@ namespace OpenThings.UnitTests
                 .And
                 .NotBeEmpty()
                 .And
-                .ContainInOrder(new List<byte>() { 0x13, 0x55, 0xAA, 0x55, 0x55, 0x18, 0xE2, 0x3B, 0x97, 0x06, 0x47, 0x40, 0xFB, 0xE8, 0x84, 0x0E, 0xCD, 0x29, 0xAE });
+                .ContainInOrder(new List<byte>() { 0x12, 0x55, 0xAA, 0x55, 0x55, 0x18, 0xE2, 0x3B, 0x97, 0x06, 0x47, 0x40, 0xFB, 0xE8, 0x84, 0x0E, 0xCD, 0x29, 0xAE });
+        }
+
+        [Fact]
+        public void TestEncodeMessageIdentifyCommand()
+        {
+            MessageRecordDataUInt messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 0, 0);
+            Parameter parameter = new Parameter(OpenThingsParameter.IdentifyCommand);
+            MessageRecord messageRecord = new MessageRecord(parameter, messageRecordData);
+            MessageHeader messageHeader = new MessageHeader(0, 0, 0, 0x00F3E379);
+            Message message = new Message(messageHeader);
+            message.Records.Add(messageRecord);
+
+            // Act
+            var result = _encoder.Encode(message);
+
+            // Assert
+            result
+                .Should()
+                .NotBeNull()
+                .And
+                .NotBeEmpty()
+                .And
+                .ContainInOrder(new List<byte>() { 0x0C, 0x00, 0x00, 0x00, 0x00, 0xF3, 0xE3, 0x79, 0xBF, 0x00, 0x00, 0xE9, 0x4E });
         }
     }
 }
