@@ -6,7 +6,7 @@ A .net core library for encoding and decoding OpenThings messages. See [specific
 
 ## Installing OpenThings
 
-Install the HexIO package via nuget package manager console:
+Install the OpenThings package via nuget package manager console:
 
 ```
 Install-Package OpenThings
