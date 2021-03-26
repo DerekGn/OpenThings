@@ -4,6 +4,20 @@
 
 A .net core library for encoding and decoding OpenThings messages. See [specification](https://github.com/DerekGn/OpenThings/blob/main/OpenThings%20Specification%5B2505%5D.pdf).
 
+## Installing OpenThings
+
+Install the HexIO package via nuget package manager console:
+
+```
+Install-Package OpenThings
+```
+
+## Supported .Net Runtimes
+
+The OpenThings package is compatible with the following runtimes:
+
+* .NET Standard 2.0
+
 ## Encoding
 
 ``` csharp
