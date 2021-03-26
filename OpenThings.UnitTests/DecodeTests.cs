@@ -8,7 +8,7 @@ namespace OpenThings.UnitTests
 {
     public class DecodeTests
     {
-        private OpenThingsDecoder _decoder;
+        private readonly OpenThingsDecoder _decoder;
 
         public DecodeTests()
         {

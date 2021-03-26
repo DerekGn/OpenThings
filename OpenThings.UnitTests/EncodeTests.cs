@@ -6,7 +6,7 @@ namespace OpenThings.UnitTests
 {
     public class EncodeTests
     {
-        private OpenThingsEncoder _encoder;
+        private readonly OpenThingsEncoder _encoder;
 
         public EncodeTests()
         {

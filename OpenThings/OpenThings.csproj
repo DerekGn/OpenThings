@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Derek Goslin</Authors>
+    <Description>A library for encoding and decoding openthings messages</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright © Derek Goslin 2021</Copyright>
+    <PackageProjectUrl>https://github.com/DerekGn/RfmOta</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DerekGn/RfmOta</RepositoryUrl>
+    <PackageTags>Openthings Sentec</PackageTags>
+    <PackageReleaseNotes>1.0.0 Initial version</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
