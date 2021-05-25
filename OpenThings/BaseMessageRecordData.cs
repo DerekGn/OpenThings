@@ -31,7 +31,7 @@ namespace OpenThings
     /// </summary>
     public abstract class BaseMessageRecordData
     {
-        public BaseMessageRecordData(RecordType recordType, int length)
+        internal BaseMessageRecordData(RecordType recordType, int length)
         {
             RecordType = recordType;
             Length = length;

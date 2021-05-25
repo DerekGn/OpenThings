@@ -53,6 +53,10 @@ namespace OpenThings
         /// </summary>
         public IList<MessageRecord> Records { get; private set; }
 
+        /// <summary>
+        /// Convert the <see cref="Message"/> to a string representation
+        /// </summary>
+        /// <returns>A string representation of the message</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

@@ -38,6 +38,7 @@ namespace OpenThings
         /// <param name="manufacturerId">The manufacturer Id</param>
         /// <param name="productId">The product Id</param>
         /// <param name="pip">The pip value</param>
+        /// <param name="sensorId">The sensor Id</param>
         public MessageHeader(byte manufacturerId, byte productId, ushort pip, uint sensorId)
         {
             if ((manufacturerId & 0x80) == 0x80)
@@ -77,6 +78,10 @@ namespace OpenThings
         /// </summary>
         public uint SensorId { get; private set; }
 
+        /// <summary>
+        /// Convert the <see cref="MessageHeader"/> to a string representation
+        /// </summary>
+        /// <returns>A string representation of the <see cref="MessageHeader"/></returns>
         public override string ToString()
         {
             return 

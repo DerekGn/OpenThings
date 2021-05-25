@@ -76,6 +76,10 @@ namespace OpenThings
                 throw new ArgumentOutOfRangeException(nameof(recordType));
         }
 
+        /// <summary>
+        /// Convert the <see cref="MessageRecordDataInt"/> to a string representation
+        /// </summary>
+        /// <returns>A string representation of the <see cref="MessageRecordDataInt"/></returns>
         public override string ToString()
         {
             return $"Record Type: [{RecordType}] Length: [{Length}] Value: [0x{Value:X8}]";

@@ -124,6 +124,10 @@ namespace OpenThings
             return new Parameter(parameter.Item1);
         }
 
+        /// <summary>
+        /// Convert the <see cref="Parameter"/> to a string representation
+        /// </summary>
+        /// <returns>A string representation of the <see cref="Parameter"/></returns>
         public override string ToString()
         {
             return $"Identifier: [{Identifier}] Units: [{Units}]";

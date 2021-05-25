@@ -29,22 +29,73 @@ namespace OpenThings
     /// </summary>
     public enum RecordType
     {
+        /// <summary>
+        /// x.0 unsigned normal integer
+        /// </summary>
         UnsignedX0,
+        /// <summary>
+        /// x.4 unsigned fixed point integer
+        /// </summary>
         UnsignedX4,
+        /// <summary>
+        /// x.8 unsigned fixed point integer
+        /// </summary>
         UnsignedX8,
+        /// <summary>
+        /// x.4 unsigned fixed point integer
+        /// </summary>
         UnsignedX12,
+        /// <summary>
+        /// x.16 unsigned fixed point integer
+        /// </summary>
         UnsignedX16,
+        /// <summary>
+        /// x.20 unsigned fixed point integer
+        /// </summary>
         UnsignedX20,
+        /// <summary>
+        /// x.24 unsigned fixed point integer
+        /// </summary>
         UnsignedX24,
+        /// <summary>
+        /// A set of characters record type
+        /// </summary>
         Chars,
+        /// <summary>
+        /// x.0 signed normal integer
+        /// </summary>
         SignedX0,
+        /// <summary>
+        /// x.8 signed fixed point integer
+        /// </summary>
         SignedX8,
+        /// <summary>
+        /// x.12 signed fixed point integer
+        /// </summary>
         SignedX12,
+        /// <summary>
+        /// x.16 signed fixed point integer
+        /// </summary>
         SignedX16,
+        /// <summary>
+        /// x.24 signed fixed point integer
+        /// </summary>
         SignedX24,
+        /// <summary>
+        /// Enumeration
+        /// </summary>
         Enum,
+        /// <summary>
+        /// Reserved
+        /// </summary>
         Reserved1,
+        /// <summary>
+        /// Reserved
+        /// </summary>
         Reserved2,
+        /// <summary>
+        /// A float record type
+        /// </summary>
         Float
     }
 }

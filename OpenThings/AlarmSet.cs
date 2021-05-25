@@ -24,6 +24,9 @@
 
 namespace OpenThings
 {
+    /// <summary>
+    /// The commands for setting an alarm
+    /// </summary>
     public enum AlarmSet
     {
         /// <summary>

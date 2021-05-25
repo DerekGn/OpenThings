@@ -24,6 +24,9 @@
 
 namespace OpenThings
 {
+    /// <summary>
+    /// The commands for clearing an alarm
+    /// </summary>
     public enum AlarmClear
     {
         /// <summary>

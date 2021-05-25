@@ -50,6 +50,10 @@ namespace OpenThings
         /// </summary>
         public BaseMessageRecordData Data { get; }
 
+        /// <summary>
+        /// Convert the <see cref="MessageRecord"/> to a string representation
+        /// </summary>
+        /// <returns>A string representation of the <see cref="MessageRecord"/></returns>
         public override string ToString()
         {
             return

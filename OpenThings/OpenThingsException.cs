@@ -27,21 +27,41 @@ using System.Runtime.Serialization;
 
 namespace OpenThings
 {
+    /// <summary>
+    /// An <see cref="Exception"/> that is throw if an error occurs processing openthing messages
+    /// </summary>
     [Serializable]
     public class OpenThingsException : Exception
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenThingsException"/> class
+        /// </summary>
         public OpenThingsException()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenThingsException"/> class with a specified error
+        /// </summary>
+        /// <param name="message"></param>
         public OpenThingsException(string message) : base(message)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenThingsException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// </summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         public OpenThingsException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenThingsException"/> class with serialized data.
+        /// </summary>
+        /// <param name="info">The  that holds <see cref="SerializationInfo"/> the serialized object data about the exception being thrown.</param>
+        /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
         protected OpenThingsException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }

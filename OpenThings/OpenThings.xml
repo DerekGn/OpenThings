@@ -1,0 +1,817 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OpenThings</name>
+    </assembly>
+    <members>
+        <member name="T:OpenThings.AlarmClear">
+            <summary>
+            The commands for clearing an alarm
+            </summary>
+        </member>
+        <member name="F:OpenThings.AlarmClear.LowBattery">
+            <summary>
+            The device’s battery is failing and must be replaced soon
+            </summary>
+        </member>
+        <member name="F:OpenThings.AlarmClear.PowerFail">
+            <summary>
+            A mains-powered device is currently running off its battery backup
+            </summary>
+        </member>
+        <member name="F:OpenThings.AlarmClear.OverTemperature">
+            <summary>
+            The device is running unexpectedly hot and needs attention
+            </summary>
+        </member>
+        <member name="F:OpenThings.AlarmClear.Tamper">
+            <summary>
+            The device’s anti-tamper mechanism has been triggered
+            </summary>
+        </member>
+        <member name="T:OpenThings.AlarmSet">
+            <summary>
+            The commands for setting an alarm
+            </summary>
+        </member>
+        <member name="F:OpenThings.AlarmSet.LowBattery">
+            <summary>
+            The device’s battery is failing and must be replaced soon
+            </summary>
+        </member>
+        <member name="F:OpenThings.AlarmSet.PowerFail">
+            <summary>
+            A mains-powered device is currently running off its battery backup
+            </summary>
+        </member>
+        <member name="F:OpenThings.AlarmSet.OverTemperature">
+            <summary>
+            The device is running unexpectedly hot and needs attention
+            </summary>
+        </member>
+        <member name="F:OpenThings.AlarmSet.Tamper">
+            <summary>
+            The device’s anti-tamper mechanism has been triggered
+            </summary>
+        </member>
+        <member name="T:OpenThings.BaseMessageRecordData">
+            <summary>
+            A base message record data type
+            </summary>
+        </member>
+        <member name="P:OpenThings.BaseMessageRecordData.Length">
+            <summary>
+            The records byte length
+            </summary>
+        </member>
+        <member name="P:OpenThings.BaseMessageRecordData.RecordType">
+            <summary>
+            The record type
+            </summary>
+        </member>
+        <member name="M:OpenThings.BaseMessageRecordData.Encode">
+            <summary>
+            Encode the <see cref="T:OpenThings.BaseMessageRecordData"/> derived data bytes
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:System.Byte"/></returns>
+        </member>
+        <member name="T:OpenThings.Crc16Ccitt">
+            <summary>
+            Computes a 16 bit CCITT CRC
+            </summary>
+        </member>
+        <member name="M:OpenThings.Crc16Ccitt.#ctor(System.UInt16)">
+            <summary>
+            Create instance of a <see cref="T:OpenThings.Crc16Ccitt"/>
+            </summary>
+            <param name="initialValue">The initial seed value for the CRC calculation</param>
+        </member>
+        <member name="M:OpenThings.Crc16Ccitt.ComputeChecksum(System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Compute the CRC checksum
+            </summary>
+            <param name="bytes">The <see cref="T:System.Collections.Generic.List`1"/> of bytes to compute the checksum</param>
+            <returns>The computed CCITT 16 checksum</returns>
+        </member>
+        <member name="M:OpenThings.Crc16Ccitt.ComputeChecksumBytes(System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Compute the CRC checksum
+            </summary>
+            <param name="bytes">The <see cref="T:System.Collections.Generic.List`1"/> of bytes to compute the checksum</param>
+            <returns>The computed CCITT 16 checksum</returns>
+        </member>
+        <member name="T:OpenThings.IOpenThingsDecoder">
+            <summary>
+            Defines the interface for an OpenThings message decoder
+            </summary>
+        </member>
+        <member name="M:OpenThings.IOpenThingsDecoder.Decode(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{OpenThings.PidMap})">
+            <summary>
+            Decode an OpenThings message packet
+            </summary>
+            <param name="payload">An <see cref="T:System.Collections.Generic.IList`1"/> of bytes which is the OpenThings message</param>
+            <param name="pidMaps">The set of <see cref="T:OpenThings.PidMap"/> for decoding linear shift encoded messages</param>
+            <returns>The decoded <see cref="T:OpenThings.Message"/></returns>
+        </member>
+        <member name="T:OpenThings.IOpenThingsEncoder">
+            <summary>
+            Defines the interface for an OpenThings message encoder
+            </summary>
+        </member>
+        <member name="M:OpenThings.IOpenThingsEncoder.Encode(OpenThings.Message)">
+            <summary>
+            Encode an OpenThings message without linear shift encryption
+            </summary>
+            <param name="message">The message to encode</param>
+            <returns>An <see cref="T:System.Collections.Generic.IList`1"/> of the encoded message</returns>
+        </member>
+        <member name="M:OpenThings.IOpenThingsEncoder.Encode(OpenThings.Message,System.Byte,System.UInt16)">
+            <summary>
+            Encode an OpenThings message with linear shift encryption
+            </summary>
+            <param name="message">The message to encode</param>
+            <param name="encryptionId">The encryption value</param>
+            <param name="seed">The random seed value for the encryption</param>
+            <returns>An <see cref="T:System.Collections.Generic.IList`1"/> of the encoded message</returns>
+        </member>
+        <member name="T:OpenThings.Message">
+            <summary>
+            An OpenThings message
+            </summary>
+        </member>
+        <member name="M:OpenThings.Message.#ctor(OpenThings.MessageHeader)">
+            <summary>
+            Create an instance of an <see cref="N:OpenThings"/> message
+            </summary>
+            <param name="messageHeader">The <see cref="T:OpenThings.MessageHeader"/> to add to the <see cref="T:OpenThings.Message"/></param>
+        </member>
+        <member name="P:OpenThings.Message.Header">
+            <summary>
+            The <see cref="T:OpenThings.MessageHeader"/>
+            </summary>
+        </member>
+        <member name="P:OpenThings.Message.Records">
+            <summary>
+            The <see cref="T:System.Collections.Generic.IList`1"/> of <see cref="T:OpenThings.MessageRecord"/>
+            </summary>
+        </member>
+        <member name="M:OpenThings.Message.ToString">
+            <summary>
+            Convert the <see cref="T:OpenThings.Message"/> to a string representation
+            </summary>
+            <returns>A string representation of the message</returns>
+        </member>
+        <member name="T:OpenThings.MessageHeader">
+            <summary>
+            An OpenThings message header
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageHeader.#ctor(System.Byte,System.Byte,System.UInt16,System.UInt32)">
+            <summary>
+            Create an instance of an OpenThings message
+            </summary>
+            <param name="manufacturerId">The manufacturer Id</param>
+            <param name="productId">The product Id</param>
+            <param name="pip">The pip value</param>
+            <param name="sensorId">The sensor Id</param>
+        </member>
+        <member name="P:OpenThings.MessageHeader.Length">
+            <summary>
+            The length in bytes of the OpenThings message payload
+            </summary>
+        </member>
+        <member name="P:OpenThings.MessageHeader.ManufacturerId">
+            <summary>
+            The Manufacturer Id
+            </summary>
+        </member>
+        <member name="P:OpenThings.MessageHeader.ProductId">
+            <summary>
+            The Product Id
+            </summary>
+        </member>
+        <member name="P:OpenThings.MessageHeader.Pip">
+            <summary>
+            The pip
+            </summary>
+        </member>
+        <member name="P:OpenThings.MessageHeader.SensorId">
+            <summary>
+            The sensor Id
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageHeader.ToString">
+            <summary>
+            Convert the <see cref="T:OpenThings.MessageHeader"/> to a string representation
+            </summary>
+            <returns>A string representation of the <see cref="T:OpenThings.MessageHeader"/></returns>
+        </member>
+        <member name="T:OpenThings.MessageRecord">
+            <summary>
+            An OpenThings message record
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageRecord.#ctor(OpenThings.Parameter,OpenThings.BaseMessageRecordData)">
+            <summary>
+            Create an instance of a <see cref="T:OpenThings.MessageRecord"/>
+            </summary>
+            <param name="parameter">The <see cref="P:OpenThings.MessageRecord.Parameter"/> instance</param>
+            <param name="data">The <see cref="T:OpenThings.BaseMessageRecordData"/> instance for this <see cref="T:OpenThings.MessageRecord"/></param>
+        </member>
+        <member name="P:OpenThings.MessageRecord.Parameter">
+            <summary>
+            The <see cref="P:OpenThings.MessageRecord.Parameter"/> instance
+            </summary>
+        </member>
+        <member name="P:OpenThings.MessageRecord.Data">
+            <summary>
+            The <see cref="T:OpenThings.BaseMessageRecordData"/> instance for this <see cref="T:OpenThings.MessageRecord"/>
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageRecord.ToString">
+            <summary>
+            Convert the <see cref="T:OpenThings.MessageRecord"/> to a string representation
+            </summary>
+            <returns>A string representation of the <see cref="T:OpenThings.MessageRecord"/></returns>
+        </member>
+        <member name="T:OpenThings.MessageRecordDataInt">
+            <summary>
+            A signed integer <see cref="T:OpenThings.BaseMessageRecordData"/> type
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageRecordDataInt.#ctor(OpenThings.RecordType,System.Int32,System.Int32)">
+            <summary>
+            Create an instance of a <see cref="T:OpenThings.MessageRecordDataInt"/>
+            </summary>
+            <param name="recordType">The <see cref="T:OpenThings.RecordType"/></param>
+            <param name="length">The length in bytes of the message record when encoded</param>
+            <param name="value">The value to encode</param>
+        </member>
+        <member name="P:OpenThings.MessageRecordDataInt.Value">
+            <summary>
+            The value of the <see cref="T:OpenThings.MessageRecordDataInt"/>
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageRecordDataInt.ToString">
+            <summary>
+            Convert the <see cref="T:OpenThings.MessageRecordDataInt"/> to a string representation
+            </summary>
+            <returns>A string representation of the <see cref="T:OpenThings.MessageRecordDataInt"/></returns>
+        </member>
+        <member name="T:OpenThings.MessageRecordDataUInt">
+            <summary>
+            An unsigned integer <see cref="T:OpenThings.BaseMessageRecordData"/> type
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageRecordDataUInt.#ctor(OpenThings.RecordType,System.Int32,System.UInt32)">
+            <summary>
+            Create an instance of a <see cref="T:OpenThings.MessageRecordDataInt"/>
+            </summary>
+            <param name="recordType">The <see cref="T:OpenThings.RecordType"/></param>
+            <param name="length">The length in bytes of the message record when encoded</param>
+            <param name="value">The value to encode</param>
+        </member>
+        <member name="P:OpenThings.MessageRecordDataUInt.Value">
+            <summary>
+            The value of the <see cref="T:OpenThings.MessageRecordDataInt"/>
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageRecordDataUInt.ToString">
+            <summary>
+            Convert the <see cref="T:OpenThings.MessageRecordDataUInt"/> to a string representation
+            </summary>
+            <returns>A string representation of the <see cref="T:OpenThings.MessageRecordDataUInt"/></returns>
+        </member>
+        <member name="T:OpenThings.OpenThingsAlarms">
+            <summary>
+            OpenThings Alarm events
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsAlarms.LowBatterySet">
+            <summary>
+            The low battery alarm set
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsAlarms.LowBatteryClear">
+            <summary>
+            The low battery alarm cleared
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsAlarms.PowerFailSet">
+            <summary>
+            The power fail alarm set
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsAlarms.PowerFailClear">
+            <summary>
+            The power fail alarm cleared
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsAlarms.OverTemperatureSet">
+            <summary>
+            The over temperature alarm set
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsAlarms.OverTemperatureClear">
+            <summary>
+            The over temperature alarm cleared
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsAlarms.TamperSet">
+            <summary>
+            The tamper alarm is set
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsAlarms.TamperClear">
+            <summary>
+            The tamper alarm is cleared
+            </summary>
+        </member>
+        <member name="T:OpenThings.OpenThingsDecoder">
+            <summary>
+            An <see cref="T:OpenThings.IOpenThingsDecoder"/> type
+            </summary>
+        </member>
+        <member name="M:OpenThings.OpenThingsDecoder.Decode(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{OpenThings.PidMap})">
+            <summary>
+            Decode a <see cref="T:System.Collections.Generic.IList`1"/> of bytes representing the OpenThings message payload
+            </summary>
+            <param name="payload">The OpenThings payload message bytes</param>
+            <param name="pidMaps">A mapping of PID to manufacture Ids to enable linear shift encryption decoding</param>
+            <returns>A decode <see cref="T:OpenThings.Message"/></returns>
+        </member>
+        <member name="T:OpenThings.OpenThingsEncoder">
+            <summary>
+            An <see cref="T:OpenThings.IOpenThingsEncoder"/> type
+            </summary>
+        </member>
+        <member name="M:OpenThings.OpenThingsEncoder.Encode(OpenThings.Message)">
+            <summary>
+            Encode an OpenThings <see cref="T:OpenThings.Message"/>
+            </summary>
+            <param name="message">The <see cref="T:OpenThings.Message"/> message to encode</param>
+            <returns>A <see cref="T:System.Collections.Generic.IList`1"/> of the encoded OpentThings message bytes</returns>
+        </member>
+        <member name="M:OpenThings.OpenThingsEncoder.Encode(OpenThings.Message,System.Byte,System.UInt16)">
+            <summary>
+            Encode an OpenThings <see cref="T:OpenThings.Message"/>
+            </summary>
+            <param name="message">The <see cref="T:OpenThings.Message"/> message to encode</param>
+            <param name="encryptionId">The encryption Id</param>
+            <param name="seed">The random seed for encrypting the message</param>
+            <returns>A <see cref="T:System.Collections.Generic.IList`1"/> of the encoded OpentThings message bytes</returns>
+        </member>
+        <member name="T:OpenThings.OpenThingsException">
+            <summary>
+            An <see cref="T:System.Exception"/> that is throw if an error occurs processing openthing messages
+            </summary>
+        </member>
+        <member name="M:OpenThings.OpenThingsException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:OpenThings.OpenThingsException"/> class
+            </summary>
+        </member>
+        <member name="M:OpenThings.OpenThingsException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OpenThings.OpenThingsException"/> class with a specified error
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:OpenThings.OpenThingsException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OpenThings.OpenThingsException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:OpenThings.OpenThingsException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OpenThings.OpenThingsException"/> class with serialized data.
+            </summary>
+            <param name="info">The  that holds <see cref="T:System.Runtime.Serialization.SerializationInfo"/> the serialized object data about the exception being thrown.</param>
+            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
+        </member>
+        <member name="T:OpenThings.OpenThingsParameter">
+            <summary>
+            The OpenThings parameter identifiers
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Alarm">
+            <summary>
+            An alarm parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Debug">
+            <summary>
+            A debug parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Identify">
+            <summary>
+            Identify parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.SourceSelector">
+            <summary>
+            Source selection parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.WaterDetector">
+            <summary>
+            Water detection parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.GlassBreakage">
+            <summary>
+            A glass break parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Closures">
+            <summary>
+            A closure parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.DoorBell">
+            <summary>
+            A door bell parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Energy">
+            <summary>
+            Energy parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.FallSensor">
+            <summary>
+            Fall sensor parameter
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.GasVolume">
+            <summary>
+            Gas volume
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.AirPressure">
+            <summary>
+            Air pressure
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Illuminance">
+            <summary>
+            Luminance
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Level">
+            <summary>
+            Level
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Rainfall">
+            <summary>
+            Rainfall
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ApparentPower">
+            <summary>
+            Apparent power
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.PowerFactor">
+            <summary>
+            Power factor
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ReportPeriod">
+            <summary>
+            Report period
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.SmokeDetector">
+            <summary>
+            Smoke detector
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.TimeDate">
+            <summary>
+            Time Date
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Vibration">
+            <summary>
+            Vibration
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.WaterVolume">
+            <summary>
+            Water volume
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.WindSpeed">
+            <summary>
+            Wind speed
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.GasPressure">
+            <summary>
+            Gas pressure
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.BatteryLevel">
+            <summary>
+            Battery level
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.CODetector">
+            <summary>
+            CO Detector
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.DoorSensor">
+            <summary>
+            Door Sensor
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.EmergencyPanicButton">
+            <summary>
+            Emergency Panic Button
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Frequency">
+            <summary>
+            Frequency
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.GasFlowRate">
+            <summary>
+            Gas flow rate
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.RelativeHumidity">
+            <summary>
+            Relative humidity
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Current">
+            <summary>
+            Current
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Join">
+            <summary>
+            Join
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.RFQuality">
+            <summary>
+            Rf Quality
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.LightLevel">
+            <summary>
+            Light level
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.MotionDetector">
+            <summary>
+            Motion detector
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Occupancy">
+            <summary>
+            Occupancy
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.RealPower">
+            <summary>
+            Real power
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ReactivePower">
+            <summary>
+            Reactive power
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.RotationSpeed">
+            <summary>
+            Rotation speed
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.SwitchState">
+            <summary>
+            Switch state
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Temperature">
+            <summary>
+            Temperature
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Voltage">
+            <summary>
+            Voltage
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.WaterFlowRate">
+            <summary>
+            Water flow
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.WaterPressure">
+            <summary>
+            Water pressure
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Phase1Power">
+            <summary>
+            Phase 1 Power
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Phase2Power">
+            <summary>
+            Phase 2 Power
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.Phase3Power">
+            <summary>
+            Phase 3 Power
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ThreePhaseTotalPower">
+            <summary>
+            THree phase total power
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.IdentifyCommand">
+            <summary>
+            An Identify command
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.JoinCommand">
+            <summary>
+            A Join command
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.StartOtaCommand">
+            <summary>
+            Start an OTA update
+            </summary>
+        </member>
+        <member name="T:OpenThings.OpenThingsServiceExtensions">
+            <summary>
+            Add the OpenThings types to the <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
+            </summary>
+        </member>
+        <member name="M:OpenThings.OpenThingsServiceExtensions.AddOpenThings(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            </summary>
+            <param name="serviceCollection">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add the</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="T:OpenThings.Parameter">
+            <summary>
+            An OpenThings parameter
+            </summary>
+        </member>
+        <member name="M:OpenThings.Parameter.#ctor(OpenThings.OpenThingsParameter)">
+            <summary>
+            Create an instance of a <see cref="T:OpenThings.Parameter"/>
+            </summary>
+            <param name="parameterIdentifier">The <see cref="T:OpenThings.OpenThingsParameter"/></param>
+        </member>
+        <member name="P:OpenThings.Parameter.Identifier">
+            <summary>
+            The <see cref="T:OpenThings.OpenThingsParameter"/>
+            </summary>
+        </member>
+        <member name="P:OpenThings.Parameter.Units">
+            <summary>
+            The unit for this <see cref="T:OpenThings.Parameter"/>
+            </summary>
+        </member>
+        <member name="M:OpenThings.Parameter.GetParameter(System.Byte)">
+            <summary>
+            Get the <see cref="T:OpenThings.Parameter"/> from the identifier
+            </summary>
+            <param name="identifier">The identifier to lookup the <see cref="T:OpenThings.Parameter"/></param>
+            <returns>The <see cref="T:OpenThings.Parameter"/> instance</returns>
+        </member>
+        <member name="M:OpenThings.Parameter.ToString">
+            <summary>
+            Convert the <see cref="T:OpenThings.Parameter"/> to a string representation
+            </summary>
+            <returns>A string representation of the <see cref="T:OpenThings.Parameter"/></returns>
+        </member>
+        <member name="T:OpenThings.PidMap">
+            <summary>
+            A pip to manufacturer map 
+            </summary>
+        </member>
+        <member name="M:OpenThings.PidMap.#ctor(System.Byte,System.Byte)">
+            <summary>
+            Create an instance of a <see cref="T:OpenThings.PidMap"/>
+            </summary>
+            <param name="manufacturerId">The manufacturer Id</param>
+            <param name="pid">The PID</param>
+        </member>
+        <member name="P:OpenThings.PidMap.ManufacturerId">
+            <summary>
+            The manufacturer Id
+            </summary>
+        </member>
+        <member name="P:OpenThings.PidMap.Pid">
+            <summary>
+            The pid
+            </summary>
+        </member>
+        <member name="T:OpenThings.RecordType">
+            <summary>
+            OpenThings record type
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.UnsignedX0">
+            <summary>
+            x.0 unsigned normal integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.UnsignedX4">
+            <summary>
+            x.4 unsigned fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.UnsignedX8">
+            <summary>
+            x.8 unsigned fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.UnsignedX12">
+            <summary>
+            x.4 unsigned fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.UnsignedX16">
+            <summary>
+            x.16 unsigned fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.UnsignedX20">
+            <summary>
+            x.20 unsigned fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.UnsignedX24">
+            <summary>
+            x.24 unsigned fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.Chars">
+            <summary>
+            A set of characters record type
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.SignedX0">
+            <summary>
+            x.0 signed normal integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.SignedX8">
+            <summary>
+            x.8 signed fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.SignedX12">
+            <summary>
+            x.12 signed fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.SignedX16">
+            <summary>
+            x.16 signed fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.SignedX24">
+            <summary>
+            x.24 signed fixed point integer
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.Enum">
+            <summary>
+            Enumeration
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.Reserved1">
+            <summary>
+            Reserved
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.Reserved2">
+            <summary>
+            Reserved
+            </summary>
+        </member>
+        <member name="F:OpenThings.RecordType.Float">
+            <summary>
+            A float record type
+            </summary>
+        </member>
+    </members>
+</doc>
