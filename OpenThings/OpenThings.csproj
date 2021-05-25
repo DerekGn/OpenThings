@@ -10,7 +10,8 @@
     <RepositoryUrl>https://github.com/DerekGn/RfmOta</RepositoryUrl>
     <PackageTags>Openthings Sentec</PackageTags>
     <PackageReleaseNotes>1.0.0 Initial version
-1.0.19 Added strong name key updated documentation</PackageReleaseNotes>
+1.0.19 Added strong name key updated documentation
+1.0.20 Added additional openthings parameters</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <SignAssembly>true</SignAssembly>

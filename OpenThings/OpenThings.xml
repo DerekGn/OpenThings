@@ -641,6 +641,51 @@
             THree phase total power
             </summary>
         </member>
+        <member name="F:OpenThings.OpenThingsParameter.VocIndex">
+            <summary>
+            The Voc index
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.PhaseAngle">
+            <summary>
+            Phase angle
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ActivePower">
+            <summary>
+            Active power
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ForwardActiveEnergy">
+            <summary>
+            Forward active energy
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ReverseActiveEnergy">
+            <summary>
+            Reverse active energy
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.AbsoluteActiveEnergy">
+            <summary>
+            Absolute active energy
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ForwardReactiveEnergy">
+            <summary>
+            Forward reactive energy
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.ReverseReactiveEnergy">
+            <summary>
+            Reverse reactive energy
+            </summary>
+        </member>
+        <member name="F:OpenThings.OpenThingsParameter.AbsoluteReactiveEnergy">
+            <summary>
+            Absolute reactive energy
+            </summary>
+        </member>
         <member name="F:OpenThings.OpenThingsParameter.IdentifyCommand">
             <summary>
             An Identify command

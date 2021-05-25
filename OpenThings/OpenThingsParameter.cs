@@ -226,6 +226,42 @@ namespace OpenThings
         /// </summary>
         ThreePhaseTotalPower = 0x7C,
         /// <summary>
+        /// The Voc index
+        /// </summary>
+        VocIndex = 0x7D,
+        /// <summary>
+        /// Phase angle
+        /// </summary>
+        PhaseAngle = 0x7E,
+        /// <summary>
+        /// Active power
+        /// </summary>
+        ActivePower = 0x7F,
+        /// <summary>
+        /// Forward active energy
+        /// </summary>
+        ForwardActiveEnergy = 0x80,
+        /// <summary>
+        /// Reverse active energy
+        /// </summary>
+        ReverseActiveEnergy = 0x81,
+        /// <summary>
+        /// Absolute active energy
+        /// </summary>
+        AbsoluteActiveEnergy = 0x82,
+        /// <summary>
+        /// Forward reactive energy
+        /// </summary>
+        ForwardReactiveEnergy = 0x83,
+        /// <summary>
+        /// Reverse reactive energy
+        /// </summary>
+        ReverseReactiveEnergy = 0x84,
+        /// <summary>
+        /// Absolute reactive energy
+        /// </summary>
+        AbsoluteReactiveEnergy = 0x85,
+        /// <summary>
         /// An Identify command
         /// </summary>
         IdentifyCommand = 0xBF,
