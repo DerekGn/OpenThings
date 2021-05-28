@@ -6,8 +6,8 @@
     <Description>A library for encoding and decoding openthings messages</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright © Derek Goslin 2021</Copyright>
-    <PackageProjectUrl>https://github.com/DerekGn/RfmOta</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/DerekGn/RfmOta</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/DerekGn/OpenThings</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DerekGn/OpenThings</RepositoryUrl>
     <PackageTags>Openthings Sentec</PackageTags>
     <PackageReleaseNotes>
       1.0.0 Initial version
@@ -15,6 +15,7 @@
       1.0.20 Added additional openthings parameters
       1.0.21 Added documentation file to package
       1.0.22 Updated pidMap class
+      1.0.23 Updated package documentation
     </PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
