@@ -8,7 +8,7 @@ A .net core library for encoding and decoding OpenThings messages. See [specific
 
 Install the OpenThings package via nuget package manager console:
 
-```
+``` cmd
 Install-Package OpenThings
 ```
 
@@ -46,7 +46,7 @@ List<Byte> encodedMessageBytes = openthingsMessageEncoder.Encode(message);
 ushort seed = GetSeed();
 
 // Alternatively apply linear shift encryption to message 
-List<Byte> encodedMessageBytes = openthingsMessageEncoder.Encode(message, 0x45, );
+List<Byte> encodedMessageBytes = openthingsMessageEncoder.Encode(message, 0x45, seed);
 ```
 
 ## Decoding
