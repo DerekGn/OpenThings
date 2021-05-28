@@ -751,6 +751,11 @@
             A pip to manufacturer map 
             </summary>
         </member>
+        <member name="M:OpenThings.PidMap.#ctor">
+            <summary>
+            The default constructor
+            </summary>
+        </member>
         <member name="M:OpenThings.PidMap.#ctor(System.Byte,System.Byte)">
             <summary>
             Create an instance of a <see cref="T:OpenThings.PidMap"/>

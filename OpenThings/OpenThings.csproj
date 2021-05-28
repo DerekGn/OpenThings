@@ -9,10 +9,13 @@
     <PackageProjectUrl>https://github.com/DerekGn/RfmOta</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DerekGn/RfmOta</RepositoryUrl>
     <PackageTags>Openthings Sentec</PackageTags>
-    <PackageReleaseNotes>1.0.0 Initial version
-1.0.19 Added strong name key updated documentation
-1.0.20 Added additional openthings parameters
-1.0.21 Added documentation file to package</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      1.0.0 Initial version
+      1.0.19 Added strong name key updated documentation
+      1.0.20 Added additional openthings parameters
+      1.0.21 Added documentation file to package
+      1.0.22 Updated pidMap class
+    </PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <SignAssembly>true</SignAssembly>

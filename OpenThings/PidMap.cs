@@ -30,6 +30,13 @@ namespace OpenThings
     public class PidMap
     {
         /// <summary>
+        /// The default constructor
+        /// </summary>
+        public PidMap()
+        {
+        }
+
+        /// <summary>
         /// Create an instance of a <see cref="PidMap"/>
         /// </summary>
         /// <param name="manufacturerId">The manufacturer Id</param>
@@ -39,13 +46,15 @@ namespace OpenThings
             ManufacturerId = manufacturerId;
             Pid = pid;
         }
+
         /// <summary>
         /// The manufacturer Id
         /// </summary>
-        public byte ManufacturerId { get; private set; }
+        public byte ManufacturerId { get; set; }
+        
         /// <summary>
         /// The pid
         /// </summary>
-        public byte Pid { get; private set; }
+        public byte Pid { get; set; }
     }
 }
