@@ -97,7 +97,15 @@ namespace OpenThings
         {
             Identifier = parameterIdentifier;
 
-            Units = parameterUnitsMap.First(_ => _.Item1 == parameterIdentifier).Item2;
+            var parameterUnitMapping = parameterUnitsMap.FirstOrDefault(_ => _.Item1 == parameterIdentifier);
+            if (parameterUnitMapping != null)
+            {
+                Units = parameterUnitMapping.Item2;
+            }
+            else
+            {
+                Units = string.Empty;
+            }
         }
         /// <summary>
         /// The <see cref="OpenThingsParameter"/>

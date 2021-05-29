@@ -16,6 +16,7 @@
       1.0.21 Added documentation file to package
       1.0.22 Updated pidMap class
       1.0.23 Updated package documentation
+      1.0.24 Allow 
     </PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
