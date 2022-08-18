@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -33,8 +33,8 @@ namespace OpenThings
     /// </summary>
     public class Parameter
     {
-        private static readonly List<Tuple<OpenThingsParameter, string>> parameterUnitsMap = new List<Tuple<OpenThingsParameter, string>>() 
-        { 
+        private static readonly List<Tuple<OpenThingsParameter, string>> parameterUnitsMap = new List<Tuple<OpenThingsParameter, string>>()
+        {
             new Tuple<OpenThingsParameter, string>(OpenThingsParameter.AirPressure, "mbar" ),
             new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Alarm, ""),
             new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ApparentPower, "VA"),
@@ -98,6 +98,7 @@ namespace OpenThings
             Identifier = parameterIdentifier;
 
             var parameterUnitMapping = parameterUnitsMap.FirstOrDefault(_ => _.Item1 == parameterIdentifier);
+
             if (parameterUnitMapping != null)
             {
                 Units = parameterUnitMapping.Item2;
@@ -107,14 +108,17 @@ namespace OpenThings
                 Units = string.Empty;
             }
         }
+
         /// <summary>
         /// The <see cref="OpenThingsParameter"/>
         /// </summary>
         public OpenThingsParameter Identifier { get; }
+
         /// <summary>
         /// The unit for this <see cref="Parameter"/>
         /// </summary>
         public string Units { get; }
+
         /// <summary>
         /// Get the <see cref="Parameter"/> from the identifier
         /// </summary>
@@ -122,7 +126,7 @@ namespace OpenThings
         /// <returns>The <see cref="Parameter"/> instance</returns>
         public static Parameter GetParameter(byte identifier)
         {
-            var parameter = parameterUnitsMap.FirstOrDefault (_ => _.Item1 == (OpenThingsParameter) identifier);
+            var parameter = parameterUnitsMap.FirstOrDefault(_ => _.Item1 == (OpenThingsParameter)identifier);
 
             if (parameter == null)
             {

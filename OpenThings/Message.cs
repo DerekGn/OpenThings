@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -39,10 +39,11 @@ namespace OpenThings
         /// <param name="messageHeader">The <see cref="MessageHeader"/> to add to the <see cref="Message"/></param>
         public Message(MessageHeader messageHeader)
         {
-            Header = messageHeader ?? throw new ArgumentOutOfRangeException(nameof(messageHeader));
+            Header = messageHeader ?? throw new ArgumentNullException(nameof(messageHeader));
 
             Records = new List<MessageRecord>();
         }
+
         /// <summary>
         /// The <see cref="MessageHeader"/>
         /// </summary>

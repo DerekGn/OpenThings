@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenThings
 {
@@ -11,6 +12,7 @@ namespace OpenThings
         /// </summary>
         /// <param name="serviceCollection">The <see cref="IServiceCollection"/> to add the</param>
         /// <returns>The <see cref="IServiceCollection"/></returns>
+        [ExcludeFromCodeCoverage]
         public static IServiceCollection AddOpenThings(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IOpenThingsDecoder, OpenThingsDecoder>();
