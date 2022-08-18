@@ -59,6 +59,13 @@
             A base message record data type
             </summary>
         </member>
+        <member name="M:OpenThings.BaseMessageRecordData.#ctor(OpenThings.RecordType,System.Int32)">
+            <summary>
+            Cerate an instance of a <see cref="T:OpenThings.BaseMessageRecordData"/>
+            </summary>
+            <param name="recordType">The <see cref="P:OpenThings.BaseMessageRecordData.RecordType"/></param>
+            <param name="length">The length of the record</param>
+        </member>
         <member name="P:OpenThings.BaseMessageRecordData.Length">
             <summary>
             The records byte length
@@ -74,6 +81,9 @@
             Encode the <see cref="T:OpenThings.BaseMessageRecordData"/> derived data bytes
             </summary>
             <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:System.Byte"/></returns>
+        </member>
+        <member name="M:OpenThings.BaseMessageRecordData.ToString">
+            <inheritdoc/>
         </member>
         <member name="T:OpenThings.Crc16Ccitt">
             <summary>
@@ -185,14 +195,14 @@
             The Manufacturer Id
             </summary>
         </member>
-        <member name="P:OpenThings.MessageHeader.ProductId">
-            <summary>
-            The Product Id
-            </summary>
-        </member>
         <member name="P:OpenThings.MessageHeader.Pip">
             <summary>
             The pip
+            </summary>
+        </member>
+        <member name="P:OpenThings.MessageHeader.ProductId">
+            <summary>
+            The Product Id
             </summary>
         </member>
         <member name="P:OpenThings.MessageHeader.SensorId">
@@ -218,14 +228,14 @@
             <param name="parameter">The <see cref="P:OpenThings.MessageRecord.Parameter"/> instance</param>
             <param name="data">The <see cref="T:OpenThings.BaseMessageRecordData"/> instance for this <see cref="T:OpenThings.MessageRecord"/></param>
         </member>
-        <member name="P:OpenThings.MessageRecord.Parameter">
-            <summary>
-            The <see cref="P:OpenThings.MessageRecord.Parameter"/> instance
-            </summary>
-        </member>
         <member name="P:OpenThings.MessageRecord.Data">
             <summary>
             The <see cref="T:OpenThings.BaseMessageRecordData"/> instance for this <see cref="T:OpenThings.MessageRecord"/>
+            </summary>
+        </member>
+        <member name="P:OpenThings.MessageRecord.Parameter">
+            <summary>
+            The <see cref="P:OpenThings.MessageRecord.Parameter"/> instance
             </summary>
         </member>
         <member name="M:OpenThings.MessageRecord.ToString">
@@ -749,11 +759,6 @@
         <member name="T:OpenThings.PidMap">
             <summary>
             A pip to manufacturer map 
-            </summary>
-        </member>
-        <member name="M:OpenThings.PidMap.#ctor">
-            <summary>
-            The default constructor
             </summary>
         </member>
         <member name="M:OpenThings.PidMap.#ctor(System.Byte,System.Byte)">

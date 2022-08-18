@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -51,13 +51,19 @@ namespace OpenThings
             }
 
             if (payload.Count < 11)
+            {
                 throw new OpenThingsException($"Invalid buffer length [{payload.Count}] too short");
+            }
 
             if (payload[0] < 11)
+            {
                 throw new OpenThingsException($"Invalid OpenThings Header length [{payload[0]}]");
+            }
 
             if (payload[0] > payload.Count)
+            {
                 throw new OpenThingsException($"Invalid OpenThings Header length [{payload[0]}] Buffer Length: [{payload.Count}]");
+            }
 
             var pip = BitConverter.ToUInt16(payload.Skip(3).Take(2).Reverse().ToArray(), 0);
 
@@ -87,7 +93,9 @@ namespace OpenThings
             ushort crcExpected = crc16Ccitt.ComputeChecksum(body.Take(body.Count - 2).ToArray());
 
             if (crcActual != crcExpected)
+            {
                 throw new OpenThingsException($"Invalid Crc Expected: [0x{crcExpected:X4}] Actual: [0x{crcActual:X4}]");
+            }
 
             var message = new Message(header);
 
@@ -111,7 +119,7 @@ namespace OpenThings
                 message.Records.Add(new MessageRecord(parameter, MapMessageRecordData(recordType, length, recordBytes.Skip(i + 2).Take(length).ToList())));
 
                 i += length + 2;
-            };
+            }
         }
 
         private BaseMessageRecordData MapMessageRecordData(RecordType recordType, int length, List<byte> dataBytes)
@@ -162,7 +170,7 @@ namespace OpenThings
             return decrypted;
         }
 
-        private byte EncryptDecrypt(byte dat)
+        private static byte EncryptDecrypt(byte dat)
         {
             for (int i = 0; i < 5; ++i)
             {
@@ -172,7 +180,7 @@ namespace OpenThings
             return (byte)(random ^ dat ^ 90U);
         }
 
-        private void Seed(byte encryptionId, ushort pip)
+        private static void Seed(byte encryptionId, ushort pip)
         {
             random = (ushort)((encryptionId << 8) ^ pip);
         }

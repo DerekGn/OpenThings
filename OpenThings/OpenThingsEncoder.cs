@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 * SOFTWARE.
 */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -104,7 +103,7 @@ namespace OpenThings
             }
         }
 
-        private byte EncryptDecrypt(byte b)
+        private static byte EncryptDecrypt(byte b)
         {
             int i;
             
@@ -116,7 +115,7 @@ namespace OpenThings
             return (byte)(random ^ b ^ 90U);
         }
 
-        private void RandomiseSeed(ushort seed)
+        private static void RandomiseSeed(ushort seed)
         {
             random = (ushort)(random ^ seed);
             
