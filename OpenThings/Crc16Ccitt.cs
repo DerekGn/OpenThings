@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,9 @@ namespace OpenThings
     /// </summary>
     internal class Crc16Ccitt
     {
-        private readonly ushort[] _table = new ushort[256];
-        private readonly ushort _initialValue = 0;
         private const ushort Polynomial = 4129;
+        private readonly ushort _initialValue = 0;
+        private readonly ushort[] _table = new ushort[256];
 
         /// <summary>
         /// Create instance of a <see cref="Crc16Ccitt"/>
@@ -64,6 +64,7 @@ namespace OpenThings
                 _table[i] = temp;
             }
         }
+
         /// <summary>
         /// Compute the CRC checksum
         /// </summary>
@@ -79,6 +80,7 @@ namespace OpenThings
             }
             return crc;
         }
+
         /// <summary>
         /// Compute the CRC checksum
         /// </summary>
@@ -89,6 +91,5 @@ namespace OpenThings
             ushort crc = ComputeChecksum(bytes);
             return BitConverter.GetBytes(crc);
         }
-
     }
 }

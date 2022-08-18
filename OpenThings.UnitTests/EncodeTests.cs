@@ -1,4 +1,28 @@
-﻿using FluentAssertions;
+﻿/*
+* MIT License
+*
+* Copyright (c) 2022 Derek Goslin
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
+
+using FluentAssertions;
 using System.Collections.Generic;
 using Xunit;
 
@@ -50,7 +74,30 @@ namespace OpenThings.UnitTests
         }
 
         [Fact]
-        public void TestEncodeMessageWithEncoding()
+        public void TestEncodeMessageIdentifyCommand()
+        {
+            MessageRecordDataUInt messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 0, 0);
+            Parameter parameter = new Parameter(OpenThingsParameter.IdentifyCommand);
+            MessageRecord messageRecord = new MessageRecord(parameter, messageRecordData);
+            MessageHeader messageHeader = new MessageHeader(0, 0, 0, 0x00F3E379);
+            Message message = new Message(messageHeader);
+            message.Records.Add(messageRecord);
+
+            // Act
+            var result = _encoder.Encode(message);
+
+            // Assert
+            result
+                .Should()
+                .NotBeNull()
+                .And
+                .NotBeEmpty()
+                .And
+                .ContainInOrder(new List<byte>() { 0x0C, 0x00, 0x00, 0x00, 0x00, 0xF3, 0xE3, 0x79, 0xBF, 0x00, 0x00, 0xE9, 0x4E });
+        }
+
+        [Fact]
+        public void TestEncodeMessageWithEncryption()
         {
             // Arrange
             var messageHeader = new MessageHeader(0x55, 0xAA, 0x0000, 0xFEEDED);
@@ -83,29 +130,6 @@ namespace OpenThings.UnitTests
                 .NotBeEmpty()
                 .And
                 .ContainInOrder(new List<byte>() { 0x12, 0x55, 0xAA, 0x55, 0x55, 0x18, 0xE2, 0x3B, 0x97, 0x06, 0x47, 0x40, 0xFB, 0xE8, 0x84, 0x0E, 0xCD, 0x29, 0xAE });
-        }
-
-        [Fact]
-        public void TestEncodeMessageIdentifyCommand()
-        {
-            MessageRecordDataUInt messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 0, 0);
-            Parameter parameter = new Parameter(OpenThingsParameter.IdentifyCommand);
-            MessageRecord messageRecord = new MessageRecord(parameter, messageRecordData);
-            MessageHeader messageHeader = new MessageHeader(0, 0, 0, 0x00F3E379);
-            Message message = new Message(messageHeader);
-            message.Records.Add(messageRecord);
-
-            // Act
-            var result = _encoder.Encode(message);
-
-            // Assert
-            result
-                .Should()
-                .NotBeNull()
-                .And
-                .NotBeEmpty()
-                .And
-                .ContainInOrder(new List<byte>() { 0x0C, 0x00, 0x00, 0x00, 0x00, 0xF3, 0xE3, 0x79, 0xBF, 0x00, 0x00, 0xE9, 0x4E });
         }
     }
 }

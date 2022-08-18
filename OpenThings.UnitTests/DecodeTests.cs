@@ -1,3 +1,27 @@
+/*
+* MIT License
+*
+* Copyright (c) 2022 Derek Goslin
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
+
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -13,6 +37,20 @@ namespace OpenThings.UnitTests
         public DecodeTests()
         {
             _decoder = new OpenThingsDecoder();
+        }
+
+        [Fact]
+        public void TestMalformedMessage()
+        {
+            // Arrange
+            List<byte> payload = new List<byte>() { 0x03, 0xA0, 0x43, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+            // Act
+            Action action = () => _decoder.Decode(payload, new List<PidMap>() { new PidMap(0x4, 242) });
+
+            // Assert
+            OpenThingsException exception = Assert.Throws<OpenThingsException>(action);
+            Assert.Equal("Invalid OpenThings Header length [3]", exception.Message);
         }
 
         [Fact]
@@ -44,20 +82,6 @@ namespace OpenThings.UnitTests
         }
 
         [Fact]
-        public void TestMalformedMessage()
-        {
-            // Arrange
-            List<byte> payload = new List<byte>() { 0x03, 0xA0, 0x43, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
-            // Act
-            Action action = () => _decoder.Decode(payload, new List<PidMap>() { new PidMap(0x4, 242) });
-
-            // Assert
-            OpenThingsException exception = Assert.Throws<OpenThingsException>(action);
-            Assert.Equal("Invalid OpenThings Header length [3]", exception.Message);
-        }
-
-        [Fact]
         public void TestMessageValid()
         {
             // Arrange
@@ -77,6 +101,20 @@ namespace OpenThings.UnitTests
             message.Records.Take(1).First().Parameter.Identifier.Should().Be(OpenThingsParameter.Temperature);
             message.Records.Skip(1).Take(1).First().Parameter.Should().NotBeNull();
             message.Records.Skip(1).Take(1).First().Parameter.Identifier.Should().Be(OpenThingsParameter.Temperature);
+        }
+
+        [Fact]
+        public void TestMessageValidDecode()
+        {
+            // Arrange
+            List<byte> payload = new List<byte>() { 0x13, 0x55, 0xAA, 0x55, 0x55, 0x18, 0xE2, 0x3B, 0x97, 0x06, 0x47, 0x40, 0xFB, 0xE8, 0x84, 0x0E, 0xCD, 0x29, 0xAE };
+
+            // Act
+            var message = _decoder.Decode(payload, new List<PidMap>() { new PidMap(0x55, 0xFF) });
+
+            // Assert
+            message.Header.Should().NotBeNull();
+            message.Header.ManufacturerId.Should().Be(0x55);
         }
 
         [Fact]
@@ -100,6 +138,37 @@ namespace OpenThings.UnitTests
         }
 
         [Fact]
+        public void TestPayloadInvalid()
+        {
+            // Arrange
+            List<byte> payload = new List<byte>() { 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+            // Act
+            Action action = () => _decoder.Decode(payload, new List<PidMap>() { new PidMap(0x4, 242) });
+
+            // Assert
+            action
+                .Should()
+                .Throw<OpenThingsException>()
+                .WithMessage("Invalid OpenThings Header length [255] Buffer Length: [15]");
+        }
+
+        [Fact]
+        public void TestPayloadNull()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => _decoder.Decode(null, new List<PidMap>() { new PidMap(0x4, 242) });
+
+            // Assert
+            action
+                .Should()
+                .Throw<ArgumentOutOfRangeException>()
+                .WithMessage("Specified argument was out of the range of valid values. (Parameter 'payload')");
+        }
+
+        [Fact]
         public void TestTempHumdityMessageValid()
         {
             // Arrange
@@ -114,17 +183,19 @@ namespace OpenThings.UnitTests
         }
 
         [Fact]
-        public void TestMessageValidDecode()
+        public void TestNoPid()
         {
             // Arrange
             List<byte> payload = new List<byte>() { 0x13, 0x55, 0xAA, 0x55, 0x55, 0x18, 0xE2, 0x3B, 0x97, 0x06, 0x47, 0x40, 0xFB, 0xE8, 0x84, 0x0E, 0xCD, 0x29, 0xAE };
 
             // Act
-            var message = _decoder.Decode(payload, new List<PidMap>() { new PidMap(0x55, 0xFF) });
+            Action action = () => _decoder.Decode(payload, new List<PidMap>() { });
 
             // Assert
-            message.Header.Should().NotBeNull();
-            message.Header.ManufacturerId.Should().Be(0x55);
+            action
+                .Should()
+                .Throw<OpenThingsException>()
+                .WithMessage("No [PidMap] found for manufacture id [0x55]");    
         }
     }
 }

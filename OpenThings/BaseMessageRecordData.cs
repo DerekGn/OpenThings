@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -31,19 +31,27 @@ namespace OpenThings
     /// </summary>
     public abstract class BaseMessageRecordData
     {
-        internal BaseMessageRecordData(RecordType recordType, int length)
+        /// <summary>
+        /// Cerate an instance of a <see cref="BaseMessageRecordData"/>
+        /// </summary>
+        /// <param name="recordType">The <see cref="RecordType"/></param>
+        /// <param name="length">The length of the record</param>
+        protected BaseMessageRecordData(RecordType recordType, int length)
         {
             RecordType = recordType;
             Length = length;
         }
+
         /// <summary>
         /// The records byte length
         /// </summary>
         public int Length { get; }
+
         /// <summary>
         /// The record type
         /// </summary>
         public RecordType RecordType { get; }
+
         /// <summary>
         /// Encode the <see cref="BaseMessageRecordData"/> derived data bytes
         /// </summary>
@@ -58,6 +66,13 @@ namespace OpenThings
             bytes.AddRange(GetValueByes());
 
             return bytes;
+        }
+
+        /// <inheritdoc/>
+
+        public override string ToString()
+        {
+            return $"Record Type: [{RecordType}] Length: [{Length}]";
         }
 
         internal abstract IList<byte> GetValueByes();

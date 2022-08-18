@@ -22,32 +22,38 @@
 * SOFTWARE.
 */
 
-namespace OpenThings
+using FluentAssertions;
+using System.Collections.Generic;
+using Xunit;
+
+namespace OpenThings.UnitTests
 {
-    /// <summary>
-    /// A pip to manufacturer map 
-    /// </summary>
-    public class PidMap
+    public class Crc16CcittTests
     {
-        /// <summary>
-        /// Create an instance of a <see cref="PidMap"/>
-        /// </summary>
-        /// <param name="manufacturerId">The manufacturer Id</param>
-        /// <param name="pid">The PID</param>
-        public PidMap(byte manufacturerId, byte pid)
+        [Fact]
+        public void TestComputeChecksum()
         {
-            ManufacturerId = manufacturerId;
-            Pid = pid;
+            // Arrange
+            var crc16Ccitt = new Crc16Ccitt(89);
+
+            // Act
+            var result =  crc16Ccitt.ComputeChecksum(new List<byte>() { 0x55, 0x66, 0xAA });
+
+            // Assert
+            result.Should().Be(46133);
         }
 
-        /// <summary>
-        /// The manufacturer Id
-        /// </summary>
-        public byte ManufacturerId { get; set; }
-        
-        /// <summary>
-        /// The pid
-        /// </summary>
-        public byte Pid { get; set; }
+        [Fact]
+        public void TestComputeChecksumBytes()
+        {
+            // Arrange
+            var crc16Ccitt = new Crc16Ccitt(89);
+
+            // Act
+            var result = crc16Ccitt.ComputeChecksumBytes(new List<byte>() { 0x55, 0x66, 0xAA });
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x35, 0xB4 });
+        }
     }
 }

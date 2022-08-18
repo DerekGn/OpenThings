@@ -22,32 +22,24 @@
 * SOFTWARE.
 */
 
-namespace OpenThings
-{
-    /// <summary>
-    /// A pip to manufacturer map 
-    /// </summary>
-    public class PidMap
-    {
-        /// <summary>
-        /// Create an instance of a <see cref="PidMap"/>
-        /// </summary>
-        /// <param name="manufacturerId">The manufacturer Id</param>
-        /// <param name="pid">The PID</param>
-        public PidMap(byte manufacturerId, byte pid)
-        {
-            ManufacturerId = manufacturerId;
-            Pid = pid;
-        }
+using FluentAssertions;
+using Xunit;
 
-        /// <summary>
-        /// The manufacturer Id
-        /// </summary>
-        public byte ManufacturerId { get; set; }
-        
-        /// <summary>
-        /// The pid
-        /// </summary>
-        public byte Pid { get; set; }
+namespace OpenThings.UnitTests
+{
+    public class PidMapTests
+    {
+        [Fact]
+        public void Test()
+        {
+            // Arrange
+
+            // Act
+            var pidMap = new PidMap(1, 2);
+
+            // Assert
+            pidMap.Pid.Should().Be(2);
+            pidMap.ManufacturerId.Should().Be(1);
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +42,12 @@ namespace OpenThings
         public MessageRecordDataInt(RecordType recordType, int length, int value) : base(recordType, length)
         {
             if (length > 4)
+            {
                 throw new ArgumentOutOfRangeException(nameof(length));
+            }
 
             AssertRecordType(recordType);
+
             Value = value;
         }
 
@@ -52,6 +55,15 @@ namespace OpenThings
         /// The value of the <see cref="MessageRecordDataInt"/>
         /// </summary>
         public int Value { get; }
+
+        /// <summary>
+        /// Convert the <see cref="MessageRecordDataInt"/> to a string representation
+        /// </summary>
+        /// <returns>A string representation of the <see cref="MessageRecordDataInt"/></returns>
+        public override string ToString()
+        {
+            return $"{base.ToString()} Value: [0x{Value:X8}]";
+        }
 
         internal override IList<byte> GetValueByes()
         {
@@ -74,15 +86,6 @@ namespace OpenThings
 
             if (!valid)
                 throw new ArgumentOutOfRangeException(nameof(recordType));
-        }
-
-        /// <summary>
-        /// Convert the <see cref="MessageRecordDataInt"/> to a string representation
-        /// </summary>
-        /// <returns>A string representation of the <see cref="MessageRecordDataInt"/></returns>
-        public override string ToString()
-        {
-            return $"Record Type: [{RecordType}] Length: [{Length}] Value: [0x{Value:X8}]";
         }
     }
 }
