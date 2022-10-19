@@ -46,9 +46,9 @@ namespace OpenThings.UnitTests
             var message = new Message(messageHeader);
 
             var parameterTemp = new Parameter(OpenThingsParameter.Temperature);
-            var dataTemp = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
+            var dataTemp = new MessageRecordDataUInt(0xBEEF);
             var parameterHumidity = new Parameter(OpenThingsParameter.RelativeHumidity);
-            var dataHumidity = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
+            var dataHumidity = new MessageRecordDataUInt(0xBEEF);
 
             message.Records.Add(
                 new MessageRecord(
@@ -76,7 +76,7 @@ namespace OpenThings.UnitTests
         [Fact]
         public void TestEncodeMessageIdentifyCommand()
         {
-            MessageRecordDataUInt messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 0, 0);
+            MessageRecordDataUInt messageRecordData = new MessageRecordDataUInt(0);
             Parameter parameter = new Parameter(OpenThingsParameter.IdentifyCommand);
             MessageRecord messageRecord = new MessageRecord(parameter, messageRecordData);
             MessageHeader messageHeader = new MessageHeader(0, 0, 0, 0x00F3E379);
@@ -105,9 +105,9 @@ namespace OpenThings.UnitTests
             var message = new Message(messageHeader);
 
             var parameterTemp = new Parameter(OpenThingsParameter.Temperature);
-            var dataTemp = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
+            var dataTemp = new MessageRecordDataUInt(0xBEEF);
             var parameterHumidity = new Parameter(OpenThingsParameter.RelativeHumidity);
-            var dataHumidity = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
+            var dataHumidity = new MessageRecordDataUInt(0xBEEF);
 
             message.Records.Add(
                 new MessageRecord(

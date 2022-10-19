@@ -24,63 +24,61 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
 namespace OpenThings
 {
     /// <summary>
-    /// An unsigned integer <see cref="BaseMessageRecordData"/> type
+    /// A string <see cref="BaseMessageRecordData"/> type
     /// </summary>
-    public class MessageRecordDataUInt : BaseMessageRecordData
+    public class MessageRecordDataString : BaseMessageRecordData
     {
         /// <summary>
         /// Create an instance of a <see cref="MessageRecordDataString"/>
         /// </summary>
         /// <param name="value">The value to encode</param>
-        public MessageRecordDataUInt(uint value) : base(RecordType.UnsignedX0)
+        /// <exception cref="ArgumentOutOfRangeException">If the <paramref name="value"/> is out of range</exception>
+        public MessageRecordDataString(string value) : base(RecordType.Chars)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            if (value.Length > MaxRecordLength - 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
             Value = value;
         }
 
         /// <summary>
-        /// Create an instance of a <see cref="MessageRecordDataUInt"/>
+        /// 
         /// </summary>
-        /// <param name="bytes">The bytes to decode</param>
-        public MessageRecordDataUInt(List<byte> bytes) : base(RecordType.UnsignedX0)
+        /// <param name="bytes"></param>
+        public MessageRecordDataString(List<byte> bytes) : base(RecordType.Chars)
         {
         }
 
         /// <summary>
         /// The value of the <see cref="MessageRecordDataString"/>
         /// </summary>
-        public uint Value { get; }
+        public string Value { get; }
 
         /// <summary>
-        /// Convert the <see cref="MessageRecordDataUInt"/> to a string representation
-        /// </summary>
-        /// <returns>A string representation of the <see cref="MessageRecordDataUInt"/></returns>
-        public override string ToString()
-        {
-            return $"{base.ToString()} Value: [0x{Value:X8}]";
-        }
-
-        /// <summary>
-        /// Determine if a <see cref="RecordType"/> is an unsigned integer type.
+        /// Determine if a <see cref="RecordType"/> is an string type.
         /// </summary>
         /// <param name="recordType">The <see cref="RecordType"/> to check</param>
-        /// <returns>True if the <paramref name="recordType"/> is a uint type</returns>
-        public static bool IsUInt(RecordType recordType)
+        /// <returns>True if the <paramref name="recordType"/> is a string type</returns>
+        public static bool IsString(RecordType recordType)
         {
-            return recordType == RecordType.UnsignedX0;
+            return recordType == RecordType.Chars;
         }
 
         internal override IList<byte> EncodeValue()
         {
-            return BitConverter
-                .GetBytes(Value)
-                .Reverse()
-                .SkipWhile((v) => v == 0)
-                .ToList();
+            return Encoding.ASCII.GetBytes(Value);
         }
     }
 }

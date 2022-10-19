@@ -24,45 +24,48 @@
 
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace OpenThings.UnitTests
 {
-    public class MessageTests
+    public class MessageRecordDataStringTests
     {
         [Fact]
-        public void TestNullMessageHeader()
+        public void TestMaxLength()
         {
             // Arrange
-
+            
             // Act
-            Action action = () => new Message(null);
+            Action action = () => { new MessageRecordDataString("".PadRight(16, 'X')); };
 
             // Assert
-            action
-                .Should()
-                .Throw<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'messageHeader')");
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public void TestToString()
+        public void TestEmpty()
         {
             // Arrange
-            var message = new Message(new MessageHeader(0, 0, 0, 0));
 
-            message.Records.Add(
-                new MessageRecord(
-                    new Parameter(OpenThingsParameter.AbsoluteActiveEnergy),
-                    new MessageRecordDataInt(0)));
             // Act
-            var result = message.ToString();
+            Action action = () => { new MessageRecordDataString(""); };
 
             // Assert
-            result.Should().Be("Header->\r\n" +
-                "Length: [0x00] ManufacturerId: [0x00] ProductId: [0x00] Pip: [0x0000] SensorId: [0x00000000]\r\n" +
-                "Records->\r\n" +
-                "Parameter:[Identifier: [AbsoluteActiveEnergy] Units: []] Data: [Record Type: [SignedX0] Value: [0x00000000]]\r\n");
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void TestEncode()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataString("".PadRight(5, 'X'));
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x75, 0x58, 0x58, 0x58, 0x58, 0x58 });
         }
     }
 }

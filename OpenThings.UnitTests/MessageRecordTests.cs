@@ -64,13 +64,13 @@ namespace OpenThings.UnitTests
             // Act
             var messageRecord = new MessageRecord(
                 new Parameter(OpenThingsParameter.ReactivePower),
-                new MessageRecordDataInt(RecordType.SignedX0, 1, 0));
+                new MessageRecordDataInt(0));
 
             // Assert
             messageRecord
                 .ToString()
                 .Should()
-                .Be("Parameter:[Identifier: [ReactivePower] Units: [VAR]] Data: [Record Type: [SignedX0] Length: [1] Value: [0x00000000]]");
+                .Be("Parameter:[Identifier: [ReactivePower] Units: [VAR]] Data: [Record Type: [SignedX0] Value: [0x00000000]]");
         }
     }
 }

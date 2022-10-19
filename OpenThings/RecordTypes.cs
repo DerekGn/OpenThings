@@ -70,10 +70,6 @@ namespace OpenThings
         /// </summary>
         SignedX8,
         /// <summary>
-        /// x.12 signed fixed point integer
-        /// </summary>
-        SignedX12,
-        /// <summary>
         /// x.16 signed fixed point integer
         /// </summary>
         SignedX16,
