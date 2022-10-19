@@ -48,6 +48,22 @@ namespace OpenThings
         /// <param name="bytes">The bytes to decode</param>
         internal MessageRecordDataInt(List<byte> bytes) : base(RecordType.SignedX0)
         {
+            if (bytes is null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            uint unpacked = UnPackUInt(bytes);
+            if ((bytes[0] & 0x80) == 0x80)
+            {
+                int mask = GenerateMask(bytes.Count);
+
+                Value = (int)-(((~unpacked) & mask) + 1);
+            }
+            else
+            {
+                Value = (int)unpacked;
+            }
         }
 
         /// <summary>

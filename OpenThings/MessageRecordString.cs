@@ -54,11 +54,17 @@ namespace OpenThings
         }
 
         /// <summary>
-        /// 
+        /// Create an instance of a <see cref="MessageRecordDataString"/>
         /// </summary>
-        /// <param name="bytes"></param>
+        /// <param name="bytes">The bytes to decode</param>
         public MessageRecordDataString(List<byte> bytes) : base(RecordType.Chars)
         {
+            if (bytes is null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            Value = Encoding.ASCII.GetString(bytes.ToArray());
         }
 
         /// <summary>

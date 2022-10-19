@@ -249,5 +249,83 @@ namespace OpenThings.UnitTests
             // Assert
             messageRecordData.Value.Should().Be(0xAA55);
         }
+
+        [Fact]
+        public void TestDecodeByteUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x7F });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(127);
+        }
+
+        [Fact]
+        public void TestDecodeByteLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x80 });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(-128);
+        }
+
+        [Fact]
+        public void TestDecodeByteShortUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x7F, 0xFF });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(32767);
+        }
+
+        [Fact]
+        public void TestDecodeByteShortLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x80, 0x00 });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(-32768);
+        }
+
+        [Fact]
+        public void TestDecodeByteIntUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x7F, 0xFF, 0xFF, 0xFF });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(2147483647);
+        }
+
+        [Fact]
+        public void TestDecodeByteIntLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x80, 0x00, 0x00, 0x00 });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(-2147483648);
+        }
     }
 }

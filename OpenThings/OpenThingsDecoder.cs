@@ -136,7 +136,7 @@ namespace OpenThings
             }
             else if (MessageRecordDataFloat.IsFloat(recordType))
             {
-                result = new MessageRecordDataFloat(bytes);
+                result = new MessageRecordDataFloat(recordType, bytes);
             }
             else if (MessageRecordDataString.IsString(recordType))
             {

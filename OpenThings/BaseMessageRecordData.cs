@@ -76,5 +76,31 @@ namespace OpenThings
         /// </summary>
         /// <returns>A <see cref="List{T}"/> of <see cref="byte"/> values that encode the message record value</returns>
         internal abstract IList<byte> EncodeValue();
+
+        internal static uint UnPackUInt(List<byte> bytes)
+        {
+            uint result = 0;
+
+            for (int i = 0; i < bytes.Count; i++)
+            {
+                result <<= 8;
+                result += bytes[i];
+            }
+
+            return result;
+        }
+
+        internal static int GenerateMask(int byteCount)
+        {
+            int result = 0;
+
+            for (int i = 0; i < byteCount; i++)
+            {
+                result <<= 8;
+                result += 0xFF;
+            }
+
+            return result;
+        }
     }
 }

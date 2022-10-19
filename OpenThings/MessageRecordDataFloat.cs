@@ -29,7 +29,7 @@ using System.Linq;
 namespace OpenThings
 {
     /// <summary>
-    /// 
+    /// A float <see cref="BaseMessageRecordData"/> type
     /// </summary>
     public class MessageRecordDataFloat : BaseMessageRecordData
     {
@@ -58,9 +58,42 @@ namespace OpenThings
         /// <summary>
         /// Create an instance of a <see cref="MessageRecordDataFloat"/>
         /// </summary>
+        /// <param name="recordType">The <see cref="RecordType"/></param>
         /// <param name="bytes">The bytes to decode</param>
-        internal MessageRecordDataFloat(List<byte> bytes) : base(RecordType.SignedX0)
+        internal MessageRecordDataFloat(RecordType recordType,
+            List<byte> bytes) : base(recordType)
         {
+            if (!IsFloat(recordType))
+            {
+                throw new ArgumentOutOfRangeException(nameof(recordType));
+            }
+
+            if (bytes is null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            uint unpacked = UnPackUInt(bytes);
+
+            if (IsSigned(recordType))
+            {
+                int s = (int)unpacked;
+
+                if ((bytes[0] & 0x80) == 0x80)
+                {
+                    int mask = GenerateMask(bytes.Count);
+
+                    s = (int)-(((~unpacked) & mask) + 1);
+                }
+
+                Value = (float)(s /
+                         Math.Pow(2, GetRecordTypeBits(recordType)));
+            }
+            else
+            {
+                Value = (float)(unpacked /
+                     Math.Pow(2, GetRecordTypeBits(recordType)));
+            }
         }
 
         /// <summary>
@@ -190,7 +223,47 @@ namespace OpenThings
                 case RecordType.SignedX24:
                     result = 24;
                     break;
-                case RecordType.Float:
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
+        private static bool IsSigned(RecordType recordType)
+        {
+            return
+                recordType == RecordType.SignedX8 ||
+                recordType == RecordType.SignedX16 ||
+                recordType == RecordType.SignedX24;
+        }
+
+        private uint GetRecordTypeBits(RecordType recordType)
+        {
+            uint result = 0;
+
+            switch (recordType)
+            {
+                case RecordType.UnsignedX4:
+                    result = 4;
+                    break;
+                case RecordType.UnsignedX8:
+                case RecordType.SignedX8:
+                    result = 8;
+                    break;
+                case RecordType.UnsignedX12:
+                    result = 12;
+                    break;
+                case RecordType.UnsignedX16:
+                case RecordType.SignedX16:
+                    result = 16;
+                    break;
+                case RecordType.UnsignedX20:
+                    result = 20;
+                    break;
+                case RecordType.UnsignedX24:
+                case RecordType.SignedX24:
+                    result = 24;
                     break;
                 default:
                     break;

@@ -48,6 +48,12 @@ namespace OpenThings
         /// <param name="bytes">The bytes to decode</param>
         public MessageRecordDataUInt(List<byte> bytes) : base(RecordType.UnsignedX0)
         {
+            if (bytes is null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            Value = UnPackUInt(bytes);
         }
 
         /// <summary>

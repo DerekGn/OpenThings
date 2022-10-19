@@ -23,6 +23,7 @@
 */
 
 using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -30,6 +31,18 @@ namespace OpenThings.UnitTests
 {
     public class MessageRecordDataUIntTests
     {
+        [Fact]
+        public void TestEmptyBytes()
+        {
+            // Arrange
+            
+            // Act
+            Action action = () => new MessageRecordDataUInt(null);
+
+            // Assert
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         [Fact]
         public void TestEncodeZero()
         {
@@ -131,6 +144,45 @@ namespace OpenThings.UnitTests
 
             // Assert
             messageRecordData.Value.Should().Be(0xAA55);
+        }
+
+        [Fact]
+        public void TestDecodeByte()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(new List<byte>() { 0xAA });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(0xAA);
+        }
+
+        [Fact]
+        public void TestDecodeShort()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(new List<byte>() { 0x55, 0xAA });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(0x55AA);
+        }
+
+        [Fact]
+        public void TestDecodeUInt()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(new List<byte>() { 0x55, 0xAA, 0xFE, 0xED });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(0x55AAFEED);
         }
     }
 }

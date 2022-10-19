@@ -246,7 +246,7 @@
         </member>
         <member name="T:OpenThings.MessageRecordDataFloat">
             <summary>
-            
+            A float <see cref="T:OpenThings.BaseMessageRecordData"/> type
             </summary>
         </member>
         <member name="M:OpenThings.MessageRecordDataFloat.#ctor(OpenThings.RecordType,System.Single)">
@@ -257,10 +257,11 @@
             <param name="value"></param>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
         </member>
-        <member name="M:OpenThings.MessageRecordDataFloat.#ctor(System.Collections.Generic.List{System.Byte})">
+        <member name="M:OpenThings.MessageRecordDataFloat.#ctor(OpenThings.RecordType,System.Collections.Generic.List{System.Byte})">
             <summary>
             Create an instance of a <see cref="T:OpenThings.MessageRecordDataFloat"/>
             </summary>
+            <param name="recordType">The <see cref="T:OpenThings.RecordType"/></param>
             <param name="bytes">The bytes to decode</param>
         </member>
         <member name="P:OpenThings.MessageRecordDataFloat.Value">
@@ -359,9 +360,9 @@
         </member>
         <member name="M:OpenThings.MessageRecordDataString.#ctor(System.Collections.Generic.List{System.Byte})">
             <summary>
-            
+            Create an instance of a <see cref="T:OpenThings.MessageRecordDataString"/>
             </summary>
-            <param name="bytes"></param>
+            <param name="bytes">The bytes to decode</param>
         </member>
         <member name="P:OpenThings.MessageRecordDataString.Value">
             <summary>

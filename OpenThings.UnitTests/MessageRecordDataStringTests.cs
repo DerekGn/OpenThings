@@ -25,12 +25,28 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Xunit;
 
 namespace OpenThings.UnitTests
 {
     public class MessageRecordDataStringTests
     {
+        private const string Expected = "ABCD";
+
+        [Fact]
+        public void TestEmptyBytes()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => new MessageRecordDataString(bytes: null);
+
+            // Assert
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         [Fact]
         public void TestMaxLength()
         {
@@ -66,6 +82,19 @@ namespace OpenThings.UnitTests
 
             // Assert
             result.Should().BeEquivalentTo(new List<byte>() { 0x75, 0x58, 0x58, 0x58, 0x58, 0x58 });
+        }
+
+        [Fact]
+        public void TestDecode()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataString(Encoding.ASCII.GetBytes(Expected).ToList());
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(Expected);
         }
     }
 }
