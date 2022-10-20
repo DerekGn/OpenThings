@@ -17,6 +17,7 @@
       1.0.22 Updated pidMap class
       1.0.23 Updated package documentation
       1.0.25 Allow OpenThingsParameter to be set to an update value
+	  2.0.0 Added additional mesasge record types
     </PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
