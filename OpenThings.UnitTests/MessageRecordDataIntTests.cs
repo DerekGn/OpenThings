@@ -32,84 +32,313 @@ namespace OpenThings.UnitTests
     public class MessageRecordDataIntTests
     {
         [Fact]
-        public void TestEncode()
+        public void TestNullBytes()
         {
             // Arrange
-            var messageRecordDataInt = new MessageRecordDataInt(RecordType.SignedX0, 1, 0xAA55);
 
             // Act
-            var result = messageRecordDataInt.Encode();
+            Action action = () => new MessageRecordDataInt(null);
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0x55 });
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void TestGetValueBytes()
+        public void TestEncodeOne()
         {
             // Arrange
-            var messageRecordDataInt = new MessageRecordDataInt(RecordType.SignedX0, 1, 0xAA55);
+            var messageRecordData = new MessageRecordDataInt(1);
 
             // Act
-            var result = messageRecordDataInt.GetValueByes();
+            var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x55 });
+            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0x01 });
         }
 
         [Fact]
-        public void TestInvalidLength()
+        public void TestEncodeMinusOne()
         {
             // Arrange
+            var messageRecordData = new MessageRecordDataInt(-1);
 
             // Act
-            Action action = () => new MessageRecordDataInt(RecordType.SignedX0, 5, 0xAA55);
+            var result = messageRecordData.Encode();
 
             // Assert
-            action
-                .Should()
-                .Throw<ArgumentOutOfRangeException>()
-                .WithMessage("Specified argument was out of the range of valid values. (Parameter 'length')");
+            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0xFF });
         }
 
         [Fact]
-        public void TestInvalidType()
+        public void TestEncodeMinusTwo()
         {
             // Arrange
+            var messageRecordData = new MessageRecordDataInt(-2);
 
             // Act
-            Action action = () => new MessageRecordDataInt(RecordType.Chars, 1, 0xAA55);
+            var result = messageRecordData.Encode();
 
             // Assert
-            action
-                .Should()
-                .Throw<ArgumentOutOfRangeException>()
-                .WithMessage("Specified argument was out of the range of valid values. (Parameter 'recordType')");
+            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0xFE });
+        }
+
+        [Fact]
+        public void TestEncodeMinus127()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(-127);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0x81 });
+        }
+
+        [Fact]
+        public void TestEncodeMinus128()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(-128);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0x80 });
+        }
+
+        [Fact]
+        public void TestEncodeMinus129()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(-129);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0xFF, 0x7F });
+        }
+
+        [Fact]
+        public void TestEncodeMinus32767()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(-32767);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x80, 0x01 });
+        }
+
+        [Fact]
+        public void TestEncodeMinus32768()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(-32768);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x80, 0x00 });
+        }
+
+        [Fact]
+        public void TestEncodeMinus2147483648()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(-2147483648);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x84, 0x80, 0x00, 0x00, 0x00 });
+        }
+
+        [Fact]
+        public void TestEncode255()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(255);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0xFF });
+        }
+
+        [Fact]
+        public void TestEncode256()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(256);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x01, 0x00 });
+        }
+
+        [Fact]
+        public void TestEncode32767()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(32767);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x7F, 0xFF });
+        }
+
+        [Fact]
+        public void TestEncode32768()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(32768);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x80, 0x00 });
+        }
+
+        [Fact]
+        public void TestEncode2147483647()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(2147483647);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x84, 0x7F, 0xFF, 0xFF, 0xFF });
+        }
+
+        [Fact]
+        public void TestEncodeZero()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(0);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x80 });
         }
 
         [Fact]
         public void TestToString()
         {
             // Arrange
-            var messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 1, 0xAA55);
+            var messageRecordData = new MessageRecordDataInt(0xAA55);
 
             // Act
             var result = messageRecordData.ToString();
 
             // Assert
-            result.Should().Be("Record Type: [UnsignedX0] Length: [1] Value: [0x0000AA55]");
+            result.Should().Be("Record Type: [SignedX0] Value: [0x0000AA55]");
         }
 
         [Fact]
-        public void TestValid()
+        public void TestValue()
         {
             // Arrange
 
             // Act
-            var messageRecordDataInt = new MessageRecordDataInt(RecordType.SignedX0, 1, 0xAA55);
+            var messageRecordData = new MessageRecordDataInt(0xAA55);
 
             // Assert
-            messageRecordDataInt.Value.Should().Be(0xAA55);
+            messageRecordData.Value.Should().Be(0xAA55);
+        }
+
+        [Fact]
+        public void TestDecodeByteUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x7F });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(127);
+        }
+
+        [Fact]
+        public void TestDecodeByteLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x80 });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(-128);
+        }
+
+        [Fact]
+        public void TestDecodeByteShortUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x7F, 0xFF });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(32767);
+        }
+
+        [Fact]
+        public void TestDecodeByteShortLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x80, 0x00 });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(-32768);
+        }
+
+        [Fact]
+        public void TestDecodeByteIntUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x7F, 0xFF, 0xFF, 0xFF });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(2147483647);
+        }
+
+        [Fact]
+        public void TestDecodeByteIntLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataInt(new List<byte>() { 0x80, 0x00, 0x00, 0x00 });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(-2147483648);
         }
     }
 }

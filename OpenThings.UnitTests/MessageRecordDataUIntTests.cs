@@ -32,84 +32,157 @@ namespace OpenThings.UnitTests
     public class MessageRecordDataUIntTests
     {
         [Fact]
-        public void TestEncode()
+        public void TestEmptyBytes()
         {
             // Arrange
-            var messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 1, 0xAA55);
+            
+            // Act
+            Action action = () => new MessageRecordDataUInt(null);
+
+            // Assert
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void TestEncodeZero()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(0);
 
             // Act
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x01, 0x55 });
+            result.Should().BeEquivalentTo(new List<byte>() { 0x00 });
         }
 
         [Fact]
-        public void TestGetValueBytes()
+        public void TestEncodeByteUpper()
         {
             // Arrange
-            var messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 1, 0xAA55);
+            var messageRecordData = new MessageRecordDataUInt(255);
 
             // Act
-            var result = messageRecordData.GetValueByes();
+            var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x55 });
+            result.Should().BeEquivalentTo(new List<byte>() { 0x01, 0xFF });
         }
 
         [Fact]
-        public void TestInvalidLength()
+        public void TestEncodeShortLower()
         {
             // Arrange
+            var messageRecordData = new MessageRecordDataUInt(256);
 
             // Act
-            Action action = () => new MessageRecordDataUInt(RecordType.UnsignedX0, 5, 0xAA55);
+            var result = messageRecordData.Encode();
 
             // Assert
-            action
-                .Should()
-                .Throw<ArgumentOutOfRangeException>()
-                .WithMessage("Specified argument was out of the range of valid values. (Parameter 'length')");
+            result.Should().BeEquivalentTo(new List<byte>() { 0x02, 0x01, 0x00 });
         }
 
         [Fact]
-        public void TestInvalidType()
+        public void TestEncodeShortUpper()
         {
             // Arrange
+            var messageRecordData = new MessageRecordDataUInt(65535);
 
             // Act
-            Action action = () => new MessageRecordDataUInt(RecordType.Chars, 1, 0xAA55);
+            var result = messageRecordData.Encode();
 
             // Assert
-            action
-                .Should()
-                .Throw<ArgumentOutOfRangeException>()
-                .WithMessage("Specified argument was out of the range of valid values. (Parameter 'recordType')");
+            result.Should().BeEquivalentTo(new List<byte>() { 0x02, 0xFF, 0xFF });
+        }
+
+        [Fact]
+        public void TestEncodeUIntLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(65536);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x03, 0x01, 0x00, 0x00 });
+        }
+
+        [Fact]
+        public void TestEncodeUIntUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(65535);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x02, 0xFF, 0xFF });
         }
 
         [Fact]
         public void TestToString()
         {
             // Arrange
-            var messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 1, 0xAA55);
+            var messageRecordData = new MessageRecordDataUInt(0xAA55);
 
             // Act
             var result = messageRecordData.ToString();
 
             // Assert
-            result.Should().Be("Record Type: [UnsignedX0] Length: [1] Value: [0x0000AA55]");
+            result.Should().Be("Record Type: [UnsignedX0] Value: [0x0000AA55]");
         }
 
         [Fact]
-        public void TestValid()
+        public void TestValue()
         {
             // Arrange
 
             // Act
-            var messageRecordData = new MessageRecordDataUInt(RecordType.UnsignedX0, 1, 0xAA55);
+            var messageRecordData = new MessageRecordDataUInt(0xAA55);
 
             // Assert
             messageRecordData.Value.Should().Be(0xAA55);
+        }
+
+        [Fact]
+        public void TestDecodeByte()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(new List<byte>() { 0xAA });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(0xAA);
+        }
+
+        [Fact]
+        public void TestDecodeShort()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(new List<byte>() { 0x55, 0xAA });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(0x55AA);
+        }
+
+        [Fact]
+        public void TestDecodeUInt()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(new List<byte>() { 0x55, 0xAA, 0xFE, 0xED });
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(0x55AAFEED);
         }
     }
 }

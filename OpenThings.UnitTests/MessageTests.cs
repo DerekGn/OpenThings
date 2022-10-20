@@ -54,7 +54,7 @@ namespace OpenThings.UnitTests
             message.Records.Add(
                 new MessageRecord(
                     new Parameter(OpenThingsParameter.AbsoluteActiveEnergy),
-                    new MessageRecordDataInt(RecordType.SignedX0, 1, 0)));
+                    new MessageRecordDataInt(0)));
             // Act
             var result = message.ToString();
 
@@ -62,7 +62,7 @@ namespace OpenThings.UnitTests
             result.Should().Be("Header->\r\n" +
                 "Length: [0x00] ManufacturerId: [0x00] ProductId: [0x00] Pip: [0x0000] SensorId: [0x00000000]\r\n" +
                 "Records->\r\n" +
-                "Parameter:[Identifier: [AbsoluteActiveEnergy] Units: []] Data: [Record Type: [SignedX0] Length: [1] Value: [0x00000000]]\r\n");
+                "Parameter:[Identifier: [AbsoluteActiveEnergy] Units: []] Data: [Record Type: [SignedX0] Value: [0x00000000]]\r\n");
         }
     }
 }
