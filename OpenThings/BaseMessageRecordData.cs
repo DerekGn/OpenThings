@@ -31,21 +31,16 @@ namespace OpenThings
     /// </summary>
     public abstract class BaseMessageRecordData
     {
-        /// <summary>
-        /// Cerate an instance of a <see cref="BaseMessageRecordData"/>
-        /// </summary>
-        /// <param name="recordType">The <see cref="RecordType"/></param>
-        /// <param name="length">The length of the record</param>
-        protected BaseMessageRecordData(RecordType recordType, int length)
-        {
-            RecordType = recordType;
-            Length = length;
-        }
+        internal const int MaxRecordLength = 16;
 
         /// <summary>
-        /// The records byte length
+        /// Create an instance of a <see cref="BaseMessageRecordData"/>
         /// </summary>
-        public int Length { get; }
+        /// <param name="recordType">The <see cref="RecordType"/></param>
+        protected BaseMessageRecordData(RecordType recordType)
+        {
+            RecordType = recordType;
+        }
 
         /// <summary>
         /// The record type
@@ -58,23 +53,57 @@ namespace OpenThings
         /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="byte"/></returns>
         public IEnumerable<byte> Encode()
         {
+            var encoded = EncodeValue();
+
             List<byte> bytes = new List<byte>
             {
-                (byte)(((byte)RecordType << 4) | (byte)Length)
+                (byte)(((byte)RecordType << 4) | (byte)encoded.Count)
             };
 
-            bytes.AddRange(GetValueByes());
+            bytes.AddRange(encoded);
 
             return bytes;
         }
 
         /// <inheritdoc/>
-
         public override string ToString()
         {
-            return $"Record Type: [{RecordType}] Length: [{Length}]";
+            return $"Record Type: [{RecordType}]";
         }
 
-        internal abstract IList<byte> GetValueByes();
+        /// <summary>
+        /// Encode the instance message record data value
+        /// </summary>
+        /// <returns>A <see cref="List{T}"/> of <see cref="byte"/> values that encode the message record value</returns>
+        internal abstract IList<byte> EncodeValue();
+
+        internal static uint UnPackUInt(List<byte> bytes)
+        {
+            uint result = 0;
+
+            for (int i = 0; i < bytes.Count; i++)
+            {
+                result <<= 8;
+                result += bytes[i];
+            }
+
+            return result;
+        }
+
+        internal static long GenerateMask(int byteCount)
+        {
+            long result = 0;
+
+            for (int i = 0; i < byteCount; i++)
+            {
+                if (result > 0)
+                {
+                    result <<= 8;
+                }
+                result += 0xFF;
+            }
+
+            return result;
+        }
     }
 }

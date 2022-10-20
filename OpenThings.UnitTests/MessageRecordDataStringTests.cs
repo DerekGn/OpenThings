@@ -24,53 +24,77 @@
 
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Xunit;
 
 namespace OpenThings.UnitTests
 {
-    public class MessageRecordTests
+    public class MessageRecordDataStringTests
     {
+        private const string Expected = "ABCD";
+
         [Fact]
-        public void TestMessageRecordNullData()
+        public void TestEmptyBytes()
         {
             // Arrange
 
             // Act
-            Action action = () => new MessageRecord(new Parameter(OpenThingsParameter.AbsoluteActiveEnergy), null);
+            Action action = () => new MessageRecordDataString(bytes: null);
 
             // Assert
-            action.Should().Throw<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'data')");
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void TestMessageRecordNullParameter()
+        public void TestMaxLength()
         {
             // Arrange
-
+            
             // Act
-            Action action = () => new MessageRecord(null, null);
+            Action action = () => { new MessageRecordDataString("".PadRight(16, 'X')); };
 
             // Assert
-            action.Should().Throw<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'parameter')");
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public void TestToString()
+        public void TestEmpty()
         {
             // Arrange
 
             // Act
-            var messageRecord = new MessageRecord(
-                new Parameter(OpenThingsParameter.ReactivePower),
-                new MessageRecordDataInt(0));
+            Action action = () => { new MessageRecordDataString(""); };
 
             // Assert
-            messageRecord
-                .ToString()
-                .Should()
-                .Be("Parameter:[Identifier: [ReactivePower] Units: [VAR]] Data: [Record Type: [SignedX0] Value: [0x00000000]]");
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void TestEncode()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataString("".PadRight(5, 'X'));
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            result.Should().BeEquivalentTo(new List<byte>() { 0x75, 0x58, 0x58, 0x58, 0x58, 0x58 });
+        }
+
+        [Fact]
+        public void TestDecode()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataString(Encoding.ASCII.GetBytes(Expected).ToList());
+
+            // Act
+            var result = messageRecordData.Value;
+
+            // Assert
+            result.Should().Be(Expected);
         }
     }
 }
