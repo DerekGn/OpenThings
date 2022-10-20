@@ -90,13 +90,16 @@ namespace OpenThings
             return result;
         }
 
-        internal static int GenerateMask(int byteCount)
+        internal static long GenerateMask(int byteCount)
         {
-            int result = 0;
+            long result = 0;
 
             for (int i = 0; i < byteCount; i++)
             {
-                result <<= 8;
+                if (result > 0)
+                {
+                    result <<= 8;
+                }
                 result += 0xFF;
             }
 

@@ -56,7 +56,7 @@ namespace OpenThings
             uint unpacked = UnPackUInt(bytes);
             if ((bytes[0] & 0x80) == 0x80)
             {
-                int mask = GenerateMask(bytes.Count);
+                long mask = GenerateMask(bytes.Count);
 
                 Value = (int)-(((~unpacked) & mask) + 1);
             }
@@ -106,9 +106,9 @@ namespace OpenThings
 
                     uint bits = GetValueBits(Value);
 
-                    bits = (uint)(((((float)bits - 1) / 8) + 1) * 8);
+                    bits = RoundUp(bits, 8);
 
-                    encoded &= (long)Math.Pow(2, bits) - 1;
+                    encoded &= GenerateMask((int)(bits / 8));
 
                     result = BitConverter
                         .GetBytes(encoded)
@@ -127,6 +127,13 @@ namespace OpenThings
             }
 
             return result;
+        }
+
+        private uint RoundUp(uint value, uint multiple)
+        {
+            if (value % multiple == 0)
+                return value;
+            return (multiple - value % multiple) + value;
         }
 
         private static uint GetValueBits(int value)

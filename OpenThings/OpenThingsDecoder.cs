@@ -114,7 +114,7 @@ namespace OpenThings
 
                 var recordType = (RecordType)(recordBytes[i + 1] >> 4);
 
-                var length = (recordBytes[i + 1] & 0xFF);
+                var length = (recordBytes[i + 1] & 0x0F);
 
                 message.Records.Add(new MessageRecord(parameter, MapMessageRecordData(recordType, recordBytes.Skip(i + 2).Take(length).ToList())));
 

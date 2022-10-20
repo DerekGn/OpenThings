@@ -32,13 +32,29 @@ namespace OpenThings.UnitTests
     public class MessageRecordDataFloatTests
     {
         [Theory]
+        [InlineData(RecordType.UnsignedX0)]
+        [InlineData(RecordType.SignedX0)]
+        [InlineData(RecordType.Chars)]
+        [InlineData(RecordType.Enum)]
+        public void TestInvalidType(RecordType recordType)
+        {
+            // Arrange
+
+            // Act
+            Action action = () => new MessageRecordDataFloat(recordType, 1);
+
+            // Assert
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
         [InlineData(RecordType.UnsignedX4, -1.0f)]
         [InlineData(RecordType.UnsignedX8, -1.0f)]
         [InlineData(RecordType.UnsignedX12, -1.0f)]
         [InlineData(RecordType.UnsignedX16, -1.0f)]
         [InlineData(RecordType.UnsignedX20, -1.0f)]
         [InlineData(RecordType.UnsignedX24, -1.0f)]
-        public void TestEncodeUnsignedSignedValue(RecordType recordType, float value)
+        public void TestInvalidTypeUnsigned(RecordType recordType, float value)
         {
             // Arrange
             
@@ -47,6 +63,34 @@ namespace OpenThings.UnitTests
 
             // Assert
             action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(RecordType.UnsignedX0)]
+        [InlineData(RecordType.SignedX0)]
+        [InlineData(RecordType.Chars)]
+        [InlineData(RecordType.Enum)]
+        public void TestInvalidTypeAlternateConstructor(RecordType recordType)
+        {
+            // Arrange
+
+            // Act
+            Action action = () => new MessageRecordDataFloat(recordType, new List<byte>() { });
+
+            // Assert
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void TestNullBytes()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => new MessageRecordDataFloat(RecordType.UnsignedX4, null);
+
+            // Assert
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]

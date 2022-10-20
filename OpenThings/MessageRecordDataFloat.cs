@@ -81,7 +81,7 @@ namespace OpenThings
 
                 if ((bytes[0] & 0x80) == 0x80)
                 {
-                    int mask = GenerateMask(bytes.Count);
+                    long mask = GenerateMask(bytes.Count);
 
                     s = (int)-(((~unpacked) & mask) + 1);
                 }
@@ -120,7 +120,6 @@ namespace OpenThings
                 case RecordType.UnsignedX24:
                     result = true;
                     break;
-                case RecordType.SignedX0:
                 case RecordType.SignedX8:
                 case RecordType.SignedX16:
                 case RecordType.SignedX24:
