@@ -27,20 +27,25 @@ var messageHeader = new MessageHeader(0x55, 0xAA, 0x0000, 0xFEEDED);
 
 var message = new Message(messageHeader);
 
-var parameterTemperature = new Parameter(OpenThingsParameter.Temperature);
-var dataTempTemperature = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
-var parameterHumidity = new Parameter(OpenThingsParameter.RelativeHumidity);
-var dataHumidity = new MessageRecordDataUInt(RecordType.UnsignedX0, 2, 0xBEEF);
+message.Records.Add(
+    new MessageRecord(
+        new Parameter(OpenThingsParameter.Temperature),
+        new MessageRecordDataFloat(RecordType.UnsignedX4, 20.5f)));
 
 message.Records.Add(
     new MessageRecord(
-        parameterTemp,
-        dataTemp));
+        new Parameter(OpenThingsParameter.Debug),
+        new MessageRecordDataString("TEST")));
 
 message.Records.Add(
     new MessageRecord(
-        parameterHumidity,
-        dataHumidity));
+        new Parameter(OpenThingsParameter.Frequency),
+        new MessageRecordDataUInt(120)));
+
+message.Records.Add(
+    new MessageRecord(
+        new Parameter(OpenThingsParameter.Level),
+        new MessageRecordDataInt(-50)));
 
 List<Byte> encodedMessageBytes = openthingsMessageEncoder.Encode(message);
 

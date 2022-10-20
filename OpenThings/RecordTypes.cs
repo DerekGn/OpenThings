@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -69,10 +69,6 @@ namespace OpenThings
         /// x.8 signed fixed point integer
         /// </summary>
         SignedX8,
-        /// <summary>
-        /// x.12 signed fixed point integer
-        /// </summary>
-        SignedX12,
         /// <summary>
         /// x.16 signed fixed point integer
         /// </summary>

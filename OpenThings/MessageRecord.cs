@@ -1,7 +1,7 @@
 /*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -41,14 +41,16 @@ namespace OpenThings
             Parameter = parameter ?? throw new ArgumentNullException(nameof(parameter));
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }
-        /// <summary>
-        /// The <see cref="Parameter"/> instance
-        /// </summary>
-        public Parameter Parameter { get; }
+
         /// <summary>
         /// The <see cref="BaseMessageRecordData"/> instance for this <see cref="MessageRecord"/>
         /// </summary>
         public BaseMessageRecordData Data { get; }
+
+        /// <summary>
+        /// The <see cref="Parameter"/> instance
+        /// </summary>
+        public Parameter Parameter { get; }
 
         /// <summary>
         /// Convert the <see cref="MessageRecord"/> to a string representation
@@ -56,8 +58,7 @@ namespace OpenThings
         /// <returns>A string representation of the <see cref="MessageRecord"/></returns>
         public override string ToString()
         {
-            return
-                $"\tParameter:[{Parameter}] Data: [{Data}]";
+            return $"{nameof(Parameter)}:[{Parameter}] {nameof(Data)}: [{Data}]";
         }
     }
 }

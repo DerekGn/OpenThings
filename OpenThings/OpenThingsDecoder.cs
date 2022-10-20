@@ -1,7 +1,7 @@
 ﻿/*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -51,13 +51,19 @@ namespace OpenThings
             }
 
             if (payload.Count < 11)
+            {
                 throw new OpenThingsException($"Invalid buffer length [{payload.Count}] too short");
+            }
 
             if (payload[0] < 11)
+            {
                 throw new OpenThingsException($"Invalid OpenThings Header length [{payload[0]}]");
+            }
 
             if (payload[0] > payload.Count)
+            {
                 throw new OpenThingsException($"Invalid OpenThings Header length [{payload[0]}] Buffer Length: [{payload.Count}]");
+            }
 
             var pip = BitConverter.ToUInt16(payload.Skip(3).Take(2).Reverse().ToArray(), 0);
 
@@ -87,7 +93,9 @@ namespace OpenThings
             ushort crcExpected = crc16Ccitt.ComputeChecksum(body.Take(body.Count - 2).ToArray());
 
             if (crcActual != crcExpected)
+            {
                 throw new OpenThingsException($"Invalid Crc Expected: [0x{crcExpected:X4}] Actual: [0x{crcActual:X4}]");
+            }
 
             var message = new Message(header);
 
@@ -104,49 +112,38 @@ namespace OpenThings
             {
                 var parameter = Parameter.GetParameter(recordBytes[i]);
 
-                var recordType = (RecordType) (recordBytes[i + 1] >> 4);
+                var recordType = (RecordType)(recordBytes[i + 1] >> 4);
 
-                var length = (recordBytes[i + 1] & 0xFF);
+                var length = (recordBytes[i + 1] & 0x0F);
 
-                message.Records.Add(new MessageRecord(parameter, MapMessageRecordData(recordType, length, recordBytes.Skip(i + 2).Take(length).ToList())));
+                message.Records.Add(new MessageRecord(parameter, MapMessageRecordData(recordType, recordBytes.Skip(i + 2).Take(length).ToList())));
 
                 i += length + 2;
-            };
+            }
         }
 
-        private BaseMessageRecordData MapMessageRecordData(RecordType recordType, int length, List<byte> dataBytes)
+        private BaseMessageRecordData MapMessageRecordData(RecordType recordType, List<byte> bytes)
         {
-            switch (recordType)
+            BaseMessageRecordData result = null;
+
+            if (MessageRecordDataInt.IsInt(recordType))
             {
-                case RecordType.UnsignedX0:
-                case RecordType.UnsignedX4:
-                case RecordType.UnsignedX8:
-                case RecordType.UnsignedX12:
-                case RecordType.UnsignedX16:
-                case RecordType.UnsignedX20:
-                case RecordType.UnsignedX24:
-                    uint unsigned = 0;
-                    for (int i = 0; i < length; i++)
-                    {
-                        unsigned <<= 8;
-                        unsigned += dataBytes[i];
-                    }
-                    return new MessageRecordDataUInt(recordType, length, unsigned );
-                case RecordType.SignedX0:
-                case RecordType.SignedX8:
-                case RecordType.SignedX12:
-                case RecordType.SignedX16:
-                case RecordType.SignedX24:
-                    int signed = 0;
-                    for (int i = 0; i < length; i++)
-                    {
-                        signed <<= 8;
-                        signed += dataBytes[i];
-                    }
-                    return new MessageRecordDataInt(recordType, length, signed);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(recordType));
+                result = new MessageRecordDataInt(bytes);
             }
+            else if (MessageRecordDataUInt.IsUInt(recordType))
+            {
+                result = new MessageRecordDataUInt(bytes);
+            }
+            else if (MessageRecordDataFloat.IsFloat(recordType))
+            {
+                result = new MessageRecordDataFloat(recordType, bytes);
+            }
+            else if (MessageRecordDataString.IsString(recordType))
+            {
+                result = new MessageRecordDataString(bytes);
+            }
+
+            return result;
         }
 
         private List<byte> Decrypt(IList<byte> payload, byte encyptionId, ushort pip)
@@ -162,7 +159,7 @@ namespace OpenThings
             return decrypted;
         }
 
-        private byte EncryptDecrypt(byte dat)
+        private static byte EncryptDecrypt(byte dat)
         {
             for (int i = 0; i < 5; ++i)
             {
@@ -172,7 +169,7 @@ namespace OpenThings
             return (byte)(random ^ dat ^ 90U);
         }
 
-        private void Seed(byte encryptionId, ushort pip)
+        private static void Seed(byte encryptionId, ushort pip)
         {
             random = (ushort)((encryptionId << 8) ^ pip);
         }

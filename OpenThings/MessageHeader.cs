@@ -1,7 +1,7 @@
 /*
 * MIT License
 *
-* Copyright (c) 2021 Derek Goslin
+* Copyright (c) 2022 Derek Goslin
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ namespace OpenThings
                 throw new ArgumentOutOfRangeException(nameof(manufacturerId));
             }
 
-            if(sensorId > 0xFFFFFF)
+            if (sensorId > 0xFFFFFF)
             {
                 throw new ArgumentOutOfRangeException(nameof(sensorId));
             }
@@ -61,18 +61,22 @@ namespace OpenThings
         /// The length in bytes of the OpenThings message payload
         /// </summary>
         public byte Length { get; }
+
         /// <summary>
         /// The Manufacturer Id
         /// </summary>
         public byte ManufacturerId { get; }
-        /// <summary>
-        /// The Product Id
-        /// </summary>
-        public byte ProductId { get; }
+
         /// <summary>
         /// The pip
         /// </summary>
         public ushort Pip { get; }
+
+        /// <summary>
+        /// The Product Id
+        /// </summary>
+        public byte ProductId { get; }
+
         /// <summary>
         /// The sensor Id
         /// </summary>
@@ -84,12 +88,12 @@ namespace OpenThings
         /// <returns>A string representation of the <see cref="MessageHeader"/></returns>
         public override string ToString()
         {
-            return 
-                $"\tLength:\t\t[0x{Length:X2}]\r\n" +
-                $"\tManufacturerID:\t[0x{ManufacturerId:X2}]\r\n" +
-                $"\tProductId:\t[0x{ProductId:X2}]\r\n" +
-                $"\tPip:\t\t[0x{Pip:X4}]\r\n" +
-                $"\tSensorId:\t[0x{SensorId:X8}]";
+            return
+                $"{nameof(Length)}: [0x{Length:X2}] " +
+                $"{nameof(ManufacturerId)}: [0x{ManufacturerId:X2}] " +
+                $"{nameof(ProductId)}: [0x{ProductId:X2}] " +
+                $"{nameof(Pip)}: [0x{Pip:X4}] " +
+                $"{nameof(SensorId)}: [0x{SensorId:X8}]";
         }
 
         internal void SetSensorId(List<byte> sensorId)
