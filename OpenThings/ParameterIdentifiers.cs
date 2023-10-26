@@ -27,7 +27,7 @@ namespace OpenThings
     /// <summary>
     /// The OpenThings parameter identifiers
     /// </summary>
-    public partial class ParameterIdentifiers
+    public class ParameterIdentifiers
     {
         /// <summary>
         /// Air pressure
