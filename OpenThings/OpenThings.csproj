@@ -17,12 +17,13 @@
 		1.0.22 Updated pidMap class
 		1.0.23 Updated package documentation
 		1.0.25 Allow OpenThingsParameter to be set to an update value
-		2.0.0 Added additional mesasge record types
+		2.0.0 Added additional message record types
 		2.1.0 Updated framework version
+		2.2.0 Updated parameter handling
 	</PackageReleaseNotes>
-    <Version>2.1.0</Version>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
+    <Version>2.2.0</Version>
+    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <FileVersion>2.2.0.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <SignAssembly>true</SignAssembly>
