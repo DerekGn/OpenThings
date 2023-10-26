@@ -30,11 +30,11 @@ namespace OpenThings.UnitTests
 {
     public class MessageTests
     {
-        private readonly ParameterList _parameters;
+        private readonly DefaultParameters _parameters;
 
         public MessageTests()
         {
-            _parameters = new ParameterList();
+            _parameters = new DefaultParameters();
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace OpenThings.UnitTests
 
             message.Records.Add(
                 new MessageRecord(
-                    _parameters.GetParameter(ParameterIdentifier.WaterPressure),
+                    _parameters.GetParameter(ParameterIdentifiers.WaterPressure),
                     new MessageRecordDataInt(0)));
             // Act
             var result = message.ToString();

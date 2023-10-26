@@ -22,28 +22,28 @@
 * SOFTWARE.
 */
 
+using OpenThings.Exceptions;
 using System;
-using System.Runtime.Serialization;
 
 namespace OpenThings
 {
-    [Serializable]
-    internal class OpenThingsParameterExistsException : Exception
+    /// <summary>
+    /// Defines an interface for an openthings parameter set
+    /// </summary>
+    public interface IParameters
     {
-        public OpenThingsParameterExistsException()
-        {
-        }
+        /// <summary>
+        /// Adds a <see cref="Parameter"/> instance to the <see cref="IParameters"/>
+        /// </summary>
+        /// <param name="item">The <see cref="Parameter"/> instance to add to the <see cref="IParameters"/> instance</param>
+        /// <exception cref="OpenThingsParameterExistsException">Thrown if a <paramref name="item"/> with same identifier exists</exception>
+        void Add(Parameter item);
 
-        public OpenThingsParameterExistsException(string message) : base(message)
-        {
-        }
-
-        public OpenThingsParameterExistsException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected OpenThingsParameterExistsException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+        /// <summary>
+        /// Get a <see cref="Parameter"/> instance from the collection by identifier
+        /// </summary>
+        /// <param name="identifier">The identifier of the <see cref="Parameter"/></param>
+        /// <returns>The <see cref="Parameter"/> instance if found in the list</returns>
+        Parameter GetParameter(byte identifier);
     }
 }

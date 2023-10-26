@@ -29,9 +29,23 @@ namespace OpenThings
     /// <summary>
     /// An OpenThings parameter
     /// </summary>
-    public class Parameter
+    public class Parameter : IComparable<Parameter>
     {
-        internal Parameter(byte identifier, string label, string units)
+        /// <summary>
+        /// Initialize a new instance of a <see cref="Parameter"/>
+        /// </summary>
+        /// <param name="identifier">The identifier for this parameter</param>
+        public Parameter(byte identifier) : this(identifier, string.Empty, string.Empty)
+        {
+        }
+
+        /// <summary>
+        /// Initialize a new instance of a <see cref="Parameter"/>
+        /// </summary>
+        /// <param name="identifier">The identifier for this parameter</param>
+        /// <param name="label">The <see cref="Parameter"/> label</param>
+        /// <param name="units">The <see cref="Parameter"/> units</param>
+        public Parameter(byte identifier, string label, string units)
         {
             Identifier = identifier;
             Label = label ?? throw new ArgumentNullException(nameof(label));
@@ -44,7 +58,7 @@ namespace OpenThings
         public byte Identifier { get; }
 
         /// <summary>
-        /// The <see cref="Parameter"/> 
+        /// The <see cref="Parameter"/>
         /// </summary>
         public string Label { get; }
 
@@ -52,6 +66,19 @@ namespace OpenThings
         /// The unit for this <see cref="Parameter"/>
         /// </summary>
         public string Units { get; }
+        
+        /// <inheritdoc/>
+        public int CompareTo(Parameter other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+            else
+            {
+                return Identifier.CompareTo(other.Identifier);
+            }
+        }
 
         /// <summary>
         /// Convert the <see cref="Parameter"/> to a string representation

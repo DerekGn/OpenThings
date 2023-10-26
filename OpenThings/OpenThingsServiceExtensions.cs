@@ -15,6 +15,7 @@ namespace OpenThings
         [ExcludeFromCodeCoverage]
         public static IServiceCollection AddOpenThings(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddSingleton<IParameters, DefaultParameters>();
             serviceCollection.AddSingleton<IOpenThingsDecoder, OpenThingsDecoder>();
             serviceCollection.AddSingleton<IOpenThingsEncoder, OpenThingsEncoder>();
 

@@ -25,7 +25,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace OpenThings
+namespace OpenThings.Exceptions
 {
     /// <summary>
     /// An <see cref="Exception"/> that is throw if an error occurs processing openthing messages

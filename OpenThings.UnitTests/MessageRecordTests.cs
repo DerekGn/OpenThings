@@ -30,11 +30,11 @@ namespace OpenThings.UnitTests
 {
     public class MessageRecordTests
     {
-        private readonly ParameterList _parameters;
+        private readonly DefaultParameters _parameters;
 
         public MessageRecordTests()
         {
-            _parameters = new ParameterList();
+            _parameters = new DefaultParameters();
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace OpenThings.UnitTests
             // Arrange
 
             // Act
-            Action action = () => new MessageRecord(_parameters.GetParameter(ParameterIdentifier.AirPressure), null);
+            Action action = () => new MessageRecord(_parameters.GetParameter(ParameterIdentifiers.AirPressure), null);
 
             // Assert
             action.Should().Throw<ArgumentNullException>()
@@ -70,7 +70,7 @@ namespace OpenThings.UnitTests
 
             // Act
             var messageRecord = new MessageRecord(
-                _parameters.GetParameter(ParameterIdentifier.ReactivePower),
+                _parameters.GetParameter(ParameterIdentifiers.ReactivePower),
                 new MessageRecordDataInt(0));
 
             // Assert

@@ -24,7 +24,6 @@
 
 using FluentAssertions;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace OpenThings.UnitTests
@@ -32,12 +31,12 @@ namespace OpenThings.UnitTests
     public class EncodeTests
     {
         private readonly OpenThingsEncoder _encoder;
-        private readonly ParameterList _parameters;
+        private readonly DefaultParameters _parameters;
 
         public EncodeTests()
         {
             _encoder = new OpenThingsEncoder();
-            _parameters = new ParameterList();
+            _parameters = new DefaultParameters();
         }
 
         [Fact]
@@ -50,22 +49,22 @@ namespace OpenThings.UnitTests
 
             message.Records.Add(
                 new MessageRecord(
-                    _parameters.GetParameter(ParameterIdentifier.Temperature),
+                    _parameters.GetParameter(ParameterIdentifiers.Temperature),
                     new MessageRecordDataFloat(RecordType.UnsignedX4, 20.5f)));
 
             message.Records.Add(
                 new MessageRecord(
-                    _parameters.GetParameter(ParameterIdentifier.Debug),
+                    _parameters.GetParameter(ParameterIdentifiers.Debug),
                     new MessageRecordDataString("TEST")));
 
             message.Records.Add(
                 new MessageRecord(
-                    _parameters.GetParameter(ParameterIdentifier.Frequency),
+                    _parameters.GetParameter(ParameterIdentifiers.Frequency),
                     new MessageRecordDataUInt(120)));
 
             message.Records.Add(
                 new MessageRecord(
-                    _parameters.GetParameter(ParameterIdentifier.Level),
+                    _parameters.GetParameter(ParameterIdentifiers.Level),
                     new MessageRecordDataInt(-50)));
 
             // Act
@@ -93,7 +92,7 @@ namespace OpenThings.UnitTests
         public void TestEncodeMessageIdentifyCommand()
         {
             MessageRecordDataUInt messageRecordData = new MessageRecordDataUInt(0);
-            Parameter parameter = _parameters.GetParameter(ParameterIdentifier.IdentifyCommand);
+            Parameter parameter = new Parameter(DefaultCommands.IdentifyCommand);
             MessageRecord messageRecord = new MessageRecord(parameter, messageRecordData);
             MessageHeader messageHeader = new MessageHeader(0, 0, 0, 0x00F3E379);
             Message message = new Message(messageHeader);
@@ -120,9 +119,9 @@ namespace OpenThings.UnitTests
 
             var message = new Message(messageHeader);
 
-            var parameterTemp = _parameters.GetParameter(ParameterIdentifier.Temperature);
+            var parameterTemp = _parameters.GetParameter(ParameterIdentifiers.Temperature);
             var dataTemp = new MessageRecordDataUInt(0xBEEF);
-            var parameterHumidity = _parameters.GetParameter(ParameterIdentifier.RelativeHumidity);
+            var parameterHumidity = _parameters.GetParameter(ParameterIdentifiers.RelativeHumidity);
             var dataHumidity = new MessageRecordDataUInt(0xBEEF);
 
             message.Records.Add(

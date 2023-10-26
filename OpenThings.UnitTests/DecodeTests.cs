@@ -23,6 +23,7 @@
 */
 
 using FluentAssertions;
+using OpenThings.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace OpenThings.UnitTests
 
         public DecodeTests()
         {
-            _decoder = new OpenThingsDecoder(new ParameterList());
+            _decoder = new OpenThingsDecoder(new DefaultParameters());
         }
 
         [Fact]
@@ -110,9 +111,9 @@ namespace OpenThings.UnitTests
             message.Header.SensorId.Should().Be(0xAD0028);
             message.Records.Should().NotBeNull().And.NotBeEmpty().And.HaveCount(2);
             message.Records.Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.Temperature);
+            message.Records.Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifiers.Temperature);
             message.Records.Skip(1).Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Skip(1).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.Temperature);
+            message.Records.Skip(1).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifiers.Temperature);
         }
 
         [Fact]
@@ -154,7 +155,7 @@ namespace OpenThings.UnitTests
             message.Header.SensorId.Should().Be(0x91BD);
             message.Records.Should().NotBeNull().And.NotBeEmpty().And.HaveCount(1);
             message.Records.Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.JoinCommand);
+            message.Records.Take(1).First().Parameter.Identifier.Should().Be(DefaultCommands.JoinCommand);
         }
 
         [Fact]
@@ -254,16 +255,16 @@ namespace OpenThings.UnitTests
             message.Header.SensorId.Should().Be(0xFEEDED);
             message.Records.Should().NotBeNull().And.NotBeEmpty().And.HaveCount(4);
             message.Records.Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.Temperature);
+            message.Records.Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifiers.Temperature);
             message.Records.Take(1).First().Data.As<MessageRecordDataFloat>().Value.Should().Be(20.5f);
             message.Records.Skip(1).Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Skip(1).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.Debug);
+            message.Records.Skip(1).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifiers.Debug);
             message.Records.Skip(1).Take(1).First().Data.As<MessageRecordDataString>().Value.Should().Be("TEST");
             message.Records.Skip(2).Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Skip(2).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.Frequency);
+            message.Records.Skip(2).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifiers.Frequency);
             message.Records.Skip(2).Take(1).First().Data.As<MessageRecordDataUInt>().Value.Should().Be(120);
             message.Records.Skip(3).Take(1).First().Parameter.Should().NotBeNull();
-            message.Records.Skip(3).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifier.Level);
+            message.Records.Skip(3).Take(1).First().Parameter.Identifier.Should().Be(ParameterIdentifiers.Level);
             message.Records.Skip(3).Take(1).First().Data.As<MessageRecordDataInt>().Value.Should().Be(-50);
         }
     }
