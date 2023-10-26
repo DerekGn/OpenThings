@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace OpenThings
 {
@@ -33,7 +34,16 @@ namespace OpenThings
     /// </summary>
     public class OpenThingsDecoder : IOpenThingsDecoder
     {
+        private readonly ParameterList _parameters;
         private static ushort random;
+
+        /// <summary>
+        /// Create an instance of a <see cref="OpenThingsDecoder"/>
+        /// </summary>
+        public OpenThingsDecoder(ParameterList parameters)
+        {
+            _parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+        }
 
         /// <summary>
         /// Decode a <see cref="IList{T}"/> of bytes representing the OpenThings message payload
@@ -110,7 +120,7 @@ namespace OpenThings
 
             while (i < recordBytes.Count)
             {
-                var parameter = Parameter.GetParameter(recordBytes[i]);
+                var parameter = _parameters.GetParameter(recordBytes[i]);
 
                 var recordType = (RecordType)(recordBytes[i + 1] >> 4);
 

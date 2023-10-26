@@ -23,43 +23,27 @@
 */
 
 using System;
+using System.Runtime.Serialization;
 
 namespace OpenThings
 {
-    /// <summary>
-    /// An OpenThings parameter
-    /// </summary>
-    public class Parameter
+    [Serializable]
+    internal class OpenThingsParameterExistsException : Exception
     {
-        internal Parameter(byte identifier, string label, string units)
+        public OpenThingsParameterExistsException()
         {
-            Identifier = identifier;
-            Label = label ?? throw new ArgumentNullException(nameof(label));
-            Units = units ?? throw new ArgumentNullException(nameof(units));
         }
 
-        /// <summary>
-        /// The <see cref="Parameter"/> identifier
-        /// </summary>
-        public byte Identifier { get; }
-
-        /// <summary>
-        /// The <see cref="Parameter"/> 
-        /// </summary>
-        public string Label { get; }
-
-        /// <summary>
-        /// The unit for this <see cref="Parameter"/>
-        /// </summary>
-        public string Units { get; }
-
-        /// <summary>
-        /// Convert the <see cref="Parameter"/> to a string representation
-        /// </summary>
-        /// <returns>A string representation of the <see cref="Parameter"/></returns>
-        public override string ToString()
+        public OpenThingsParameterExistsException(string message) : base(message)
         {
-            return $"Identifier: [0x{Identifier:X2}] Label: [{Label}] Units: [{Units}]";
+        }
+
+        public OpenThingsParameterExistsException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected OpenThingsParameterExistsException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }
