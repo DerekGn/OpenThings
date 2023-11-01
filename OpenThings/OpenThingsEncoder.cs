@@ -57,7 +57,7 @@ namespace OpenThings
 
             foreach (var record in message.Records)
             {
-                encoded.Add((byte)record.Parameter.Identifier);
+                encoded.Add(record.Parameter.Identifier);
                 encoded.AddRange(record.Data.Encode());
             }
 
@@ -88,7 +88,7 @@ namespace OpenThings
             return encoded;
         }
 
-        private void Encrypt(IList<byte> encoded, byte encryptionId, ushort seed)
+        private static void Encrypt(IList<byte> encoded, byte encryptionId, ushort seed)
         {
             RandomiseSeed(seed);
 
@@ -125,7 +125,7 @@ namespace OpenThings
             }
         }
 
-        ushort GeneratePip(byte encryptionId)
+        private static ushort GeneratePip(byte encryptionId)
         {
             return (ushort)(random ^ (encryptionId << 8));
         }

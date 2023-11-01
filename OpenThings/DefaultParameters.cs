@@ -113,12 +113,9 @@ namespace OpenThings
         {
             var parameter = _parameterList.FirstOrDefault(_ => _.Identifier == identifier);
 
-            if(parameter == null)
-            {
-                throw new OpenThingsParameterNotFoundException($"Parameter with Identifier: [0x{identifier:X2}] not found");
-            }
-
-            return parameter;
+            return parameter == null
+                ? throw new OpenThingsParameterNotFoundException($"Parameter with Identifier: [0x{identifier:X2}] not found")
+                : parameter;
         }
     }
 }

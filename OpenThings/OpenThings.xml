@@ -396,6 +396,16 @@
             <param name="recordType">The <see cref="T:OpenThings.RecordType"/> to check</param>
             <returns>True if the <paramref name="recordType"/> is a int type</returns>
         </member>
+        <member name="T:OpenThings.MessageRecordDataNull">
+            <summary>
+            An empty <see cref="T:OpenThings.BaseMessageRecordData"/> type
+            </summary>
+        </member>
+        <member name="M:OpenThings.MessageRecordDataNull.#ctor">
+            <summary>
+            Create an instance of a <see cref="T:OpenThings.MessageRecordDataNull"/>
+            </summary>
+        </member>
         <member name="T:OpenThings.MessageRecordDataUInt">
             <summary>
             An unsigned integer <see cref="T:OpenThings.BaseMessageRecordData"/> type
