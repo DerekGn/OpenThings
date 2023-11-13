@@ -18,7 +18,7 @@ Install-Package OpenThings
 
 The OpenThings package is compatible with the following runtimes:
 
-* .NET Standard 2.0
+* .NET Core 7.0
 
 ## Encoding
 
@@ -71,3 +71,95 @@ var openthingsMessage = _decoder.Decode(payload, pidMaps);
 
 Console.WriteLine($"Message: {openthingsMessage}");
 ```
+
+## Adding Extended Parameters And Commands
+
+The OpenThings specification specifies a number of parameter types out of the box, however there are situations when new parameters are required to be added to support a custom sensor type. There are a number of steps required to support additional parameter types encoding and decoding.
+
+### Extend Parameter Identifiers
+
+To support the encoding and decoding of custom parameter types first extend the **ParameterIdentifiers** base class and add the additional parameters.
+
+``` csharp
+internal class ExtendedParameterIdentifiers : ParameterIdentifiers
+{
+    /// <summary>
+    /// The devices battery voltage
+    /// </summary>
+    public const byte BatteryVoltage = 0x7D;
+
+    /// <summary>
+    /// The Indoor air quality
+    /// </summary>
+    public const byte Iaq = 0x7E;
+
+    /// <summary>
+    /// The estimated carbon dioxide level
+    /// </summary>
+    public const byte eCo2 = 0x7F;
+
+    /// <summary>
+    /// The equivalent ethanol level
+    /// </summary>
+    public const byte EtOH = 0x80;
+
+    /// <summary>
+    /// The total volatile organic compounds
+    /// </summary>
+    public const byte TVOC = 0x81;
+}
+```
+
+### Extend Commands
+
+To support encoding of command type parameters extend the **DefaultCommands** type.
+
+``` csharp
+internal class ExtendedCommands : DefaultCommands
+{
+    /// <summary>
+    /// A command to execute the devices boot loader
+    /// </summary>
+    public const byte ExecuteBootLoaderCommand = 0xFF;
+}
+```
+
+### Extend Parameter Definitions
+
+To support the encoding and decoding of custom parameter types the OpenThings library contains a collection of the default parameters called **DefaultParameters**. This class implements the interface **IParameters** interface.
+
+Create a derived type from the **DefaultParameters** type and add the custom parameters to the collection via the **Add** method.
+
+``` csharp
+internal class ExtendedParameters : DefaultParameters
+{
+    public ExtendedParameters()
+    {
+        Add(new Parameter(
+            ExtendedParameterIdentifiers.BatteryVoltage, 
+            nameof(ExtendedParameterIdentifiers.BatteryVoltage), "V"));
+
+        Add(new Parameter(
+            ExtendedParameterIdentifiers.Iaq,
+            nameof(ExtendedParameterIdentifiers.Iaq), string.Empty));
+
+        Add(new Parameter(
+            ExtendedParameterIdentifiers.eCo2,
+            nameof(ExtendedParameterIdentifiers.eCo2), "ppm"));
+
+        Add(new Parameter(
+            ExtendedParameterIdentifiers.EtOH,
+            nameof(ExtendedParameterIdentifiers.EtOH), "ppm"));
+
+        Add(new Parameter(
+            ExtendedParameterIdentifiers.TVOC,
+            nameof(ExtendedParameterIdentifiers.TVOC), "mg/m^3"));
+
+        Add(new Parameter(
+            ExtendedCommands.ExecuteBootLoaderCommand,
+            nameof(ExtendedCommands.ExecuteBootLoaderCommand), string.Empty));
+    }
+}
+```
+
+An instance of this custom ExtendedParameters type is then injected into the **OpenThingsDecoder** instance either directly or via a DI framework.
