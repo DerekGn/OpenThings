@@ -6,6 +6,7 @@
         <Description>A library for encoding and decoding openthings messages</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Copyright>Copyright © Derek Goslin 2021</Copyright>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/DerekGn/OpenThings</PackageProjectUrl>
         <RepositoryUrl>https://github.com/DerekGn/OpenThings</RepositoryUrl>
         <PackageTags>Openthings Sentec</PackageTags>
