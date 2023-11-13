@@ -129,7 +129,7 @@ namespace OpenThings
             return result;
         }
 
-        private uint RoundUp(uint value, uint multiple)
+        private static uint RoundUp(uint value, uint multiple)
         {
             if (value % multiple == 0)
                 return value;

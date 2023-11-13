@@ -31,10 +31,12 @@ namespace OpenThings.UnitTests
     public class EncodeTests
     {
         private readonly OpenThingsEncoder _encoder;
+        private readonly DefaultParameters _parameters;
 
         public EncodeTests()
         {
             _encoder = new OpenThingsEncoder();
+            _parameters = new DefaultParameters();
         }
 
         [Fact]
@@ -47,22 +49,22 @@ namespace OpenThings.UnitTests
 
             message.Records.Add(
                 new MessageRecord(
-                    new Parameter(OpenThingsParameter.Temperature),
+                    _parameters.GetParameter(ParameterIdentifiers.Temperature),
                     new MessageRecordDataFloat(RecordType.UnsignedX4, 20.5f)));
 
             message.Records.Add(
                 new MessageRecord(
-                    new Parameter(OpenThingsParameter.Debug),
+                    _parameters.GetParameter(ParameterIdentifiers.Debug),
                     new MessageRecordDataString("TEST")));
 
             message.Records.Add(
                 new MessageRecord(
-                    new Parameter(OpenThingsParameter.Frequency),
+                    _parameters.GetParameter(ParameterIdentifiers.Frequency),
                     new MessageRecordDataUInt(120)));
 
             message.Records.Add(
                 new MessageRecord(
-                    new Parameter(OpenThingsParameter.Level),
+                    _parameters.GetParameter(ParameterIdentifiers.Level),
                     new MessageRecordDataInt(-50)));
 
             // Act
@@ -90,7 +92,7 @@ namespace OpenThings.UnitTests
         public void TestEncodeMessageIdentifyCommand()
         {
             MessageRecordDataUInt messageRecordData = new MessageRecordDataUInt(0);
-            Parameter parameter = new Parameter(OpenThingsParameter.IdentifyCommand);
+            Parameter parameter = new Parameter(DefaultCommands.IdentifyCommand);
             MessageRecord messageRecord = new MessageRecord(parameter, messageRecordData);
             MessageHeader messageHeader = new MessageHeader(0, 0, 0, 0x00F3E379);
             Message message = new Message(messageHeader);
@@ -117,9 +119,9 @@ namespace OpenThings.UnitTests
 
             var message = new Message(messageHeader);
 
-            var parameterTemp = new Parameter(OpenThingsParameter.Temperature);
+            var parameterTemp = _parameters.GetParameter(ParameterIdentifiers.Temperature);
             var dataTemp = new MessageRecordDataUInt(0xBEEF);
-            var parameterHumidity = new Parameter(OpenThingsParameter.RelativeHumidity);
+            var parameterHumidity = _parameters.GetParameter(ParameterIdentifiers.RelativeHumidity);
             var dataHumidity = new MessageRecordDataUInt(0xBEEF);
 
             message.Records.Add(

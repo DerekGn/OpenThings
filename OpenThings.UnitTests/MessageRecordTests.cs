@@ -30,13 +30,20 @@ namespace OpenThings.UnitTests
 {
     public class MessageRecordTests
     {
+        private readonly DefaultParameters _parameters;
+
+        public MessageRecordTests()
+        {
+            _parameters = new DefaultParameters();
+        }
+
         [Fact]
         public void TestMessageRecordNullData()
         {
             // Arrange
 
             // Act
-            Action action = () => new MessageRecord(new Parameter(OpenThingsParameter.AbsoluteActiveEnergy), null);
+            Action action = () => new MessageRecord(_parameters.GetParameter(ParameterIdentifiers.AirPressure), null);
 
             // Assert
             action.Should().Throw<ArgumentNullException>()
@@ -63,14 +70,14 @@ namespace OpenThings.UnitTests
 
             // Act
             var messageRecord = new MessageRecord(
-                new Parameter(OpenThingsParameter.ReactivePower),
+                _parameters.GetParameter(ParameterIdentifiers.ReactivePower),
                 new MessageRecordDataInt(0));
 
             // Assert
             messageRecord
                 .ToString()
                 .Should()
-                .Be("Parameter:[Identifier: [ReactivePower] Units: [VAR]] Data: [Record Type: [SignedX0] Value: [0x00000000]]");
+                .Be("Parameter:[Identifier: [0x71] Label: [ReactivePower] Units: [VAR]] Data: [Record Type: [SignedX0] Value: [0x00000000]]");
         }
     }
 }

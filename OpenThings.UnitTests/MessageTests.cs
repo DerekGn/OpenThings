@@ -30,6 +30,13 @@ namespace OpenThings.UnitTests
 {
     public class MessageTests
     {
+        private readonly DefaultParameters _parameters;
+
+        public MessageTests()
+        {
+            _parameters = new DefaultParameters();
+        }
+
         [Fact]
         public void TestNullMessageHeader()
         {
@@ -53,7 +60,7 @@ namespace OpenThings.UnitTests
 
             message.Records.Add(
                 new MessageRecord(
-                    new Parameter(OpenThingsParameter.AbsoluteActiveEnergy),
+                    _parameters.GetParameter(ParameterIdentifiers.WaterPressure),
                     new MessageRecordDataInt(0)));
             // Act
             var result = message.ToString();
@@ -62,7 +69,7 @@ namespace OpenThings.UnitTests
             result.Should().Be("Header->\r\n" +
                 "Length: [0x00] ManufacturerId: [0x00] ProductId: [0x00] Pip: [0x0000] SensorId: [0x00000000]\r\n" +
                 "Records->\r\n" +
-                "Parameter:[Identifier: [AbsoluteActiveEnergy] Units: []] Data: [Record Type: [SignedX0] Value: [0x00000000]]\r\n");
+                "Parameter:[Identifier: [0x78] Label: [WaterPressure] Units: [Pa]] Data: [Record Type: [SignedX0] Value: [0x00000000]]\r\n");
         }
     }
 }

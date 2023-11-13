@@ -186,12 +186,9 @@ namespace OpenThings
         private static uint EncodeFloatToInt(RecordType recordType, float value)
         {
             double encode = value;
-            uint encoded = 0;
-
             encode *= Math.Pow(2, GetEncodingBits(recordType));
             encode = Math.Round(encode);
-            encoded = (uint)encode;
-
+            uint encoded = (uint)encode;
             return encoded;
         }
 
@@ -237,7 +234,7 @@ namespace OpenThings
                 recordType == RecordType.SignedX24;
         }
 
-        private uint GetRecordTypeBits(RecordType recordType)
+        private static uint GetRecordTypeBits(RecordType recordType)
         {
             uint result = 0;
 

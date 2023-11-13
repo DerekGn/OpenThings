@@ -22,6 +22,7 @@
 * SOFTWARE.
 */
 
+using OpenThings.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,16 @@ namespace OpenThings
     /// </summary>
     public class OpenThingsDecoder : IOpenThingsDecoder
     {
+        private readonly IParameters _parameters;
         private static ushort random;
+
+        /// <summary>
+        /// Create an instance of a <see cref="OpenThingsDecoder"/>
+        /// </summary>
+        public OpenThingsDecoder(IParameters parameters)
+        {
+            _parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+        }
 
         /// <summary>
         /// Decode a <see cref="IList{T}"/> of bytes representing the OpenThings message payload
@@ -73,13 +83,9 @@ namespace OpenThings
 
             if (pip != 0)
             {
-                var pidMap = pidMaps.FirstOrDefault(_ => _.ManufacturerId == header.ManufacturerId);
-
-                if (pidMap == null)
-                {
+                var pidMap = pidMaps.FirstOrDefault(_ => _.ManufacturerId == header.ManufacturerId) ?? 
                     throw new OpenThingsException($"No [{nameof(PidMap)}] found for manufacture id [0x{header.ManufacturerId:X}]");
-                }
-
+                
                 body = Decrypt(body, pidMap.Pid, header.Pip);
 
                 header.SetSensorId(body.Take(3).ToList());
@@ -110,7 +116,7 @@ namespace OpenThings
 
             while (i < recordBytes.Count)
             {
-                var parameter = Parameter.GetParameter(recordBytes[i]);
+                var parameter = _parameters.GetParameter(recordBytes[i]);
 
                 var recordType = (RecordType)(recordBytes[i + 1] >> 4);
 
@@ -122,7 +128,7 @@ namespace OpenThings
             }
         }
 
-        private BaseMessageRecordData MapMessageRecordData(RecordType recordType, List<byte> bytes)
+        private static BaseMessageRecordData MapMessageRecordData(RecordType recordType, List<byte> bytes)
         {
             BaseMessageRecordData result = null;
 
@@ -146,7 +152,7 @@ namespace OpenThings
             return result;
         }
 
-        private List<byte> Decrypt(IList<byte> payload, byte encyptionId, ushort pip)
+        private static List<byte> Decrypt(IList<byte> payload, byte encyptionId, ushort pip)
         {
             List<byte> decrypted = new List<byte>();
 

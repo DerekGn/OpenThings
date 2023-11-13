@@ -23,117 +23,61 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace OpenThings
 {
     /// <summary>
     /// An OpenThings parameter
     /// </summary>
-    public class Parameter
+    public class Parameter : IComparable<Parameter>
     {
-        private static readonly List<Tuple<OpenThingsParameter, string>> parameterUnitsMap = new List<Tuple<OpenThingsParameter, string>>()
-        {
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.AirPressure, "mbar" ),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Alarm, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ApparentPower, "VA"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.BatteryLevel, "V"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Closures, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.CODetector, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Current, "A"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Debug, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.DoorBell, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.DoorSensor, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.EmergencyPanicButton, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Energy, "kWh"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.FallSensor, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Frequency, "Hz"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.GasFlowRate, "m3/hr"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.GasPressure, "Pa"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.GasVolume, "m3"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.GlassBreakage, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Identify, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Illuminance, "Lux"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Join, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Level, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.LightLevel, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.MotionDetector, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Occupancy, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Phase1Power, "W"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Phase2Power, "W"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Phase3Power, "W"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.PowerFactor, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Rainfall, "mm"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ReactivePower, "VAR"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.RealPower, "W"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.RelativeHumidity, "%"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ReportPeriod, "s"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.RFQuality, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.RotationSpeed, "RPM"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.SmokeDetector, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.SourceSelector, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.SwitchState, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Temperature, "Celsius"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.ThreePhaseTotalPower, "W"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.TimeDate, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Vibration, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.Voltage, "V"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WaterDetector, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WaterFlowRate, "l/hr"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WaterPressure, "Pa"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WaterVolume, "l"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.WindSpeed, "m/s"),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.IdentifyCommand, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.JoinCommand, ""),
-            new Tuple<OpenThingsParameter, string>(OpenThingsParameter.StartOtaCommand, "")
-        };
-
         /// <summary>
-        /// Create an instance of a <see cref="Parameter"/>
+        /// Initialize a new instance of a <see cref="Parameter"/>
         /// </summary>
-        /// <param name="parameterIdentifier">The <see cref="OpenThingsParameter"/></param>
-        public Parameter(OpenThingsParameter parameterIdentifier)
+        /// <param name="identifier">The identifier for this parameter</param>
+        public Parameter(byte identifier) : this(identifier, string.Empty, string.Empty)
         {
-            Identifier = parameterIdentifier;
-
-            var parameterUnitMapping = parameterUnitsMap.FirstOrDefault(_ => _.Item1 == parameterIdentifier);
-
-            if (parameterUnitMapping != null)
-            {
-                Units = parameterUnitMapping.Item2;
-            }
-            else
-            {
-                Units = string.Empty;
-            }
         }
 
         /// <summary>
-        /// The <see cref="OpenThingsParameter"/>
+        /// Initialize a new instance of a <see cref="Parameter"/>
         /// </summary>
-        public OpenThingsParameter Identifier { get; }
+        /// <param name="identifier">The identifier for this parameter</param>
+        /// <param name="label">The <see cref="Parameter"/> label</param>
+        /// <param name="units">The <see cref="Parameter"/> units</param>
+        public Parameter(byte identifier, string label, string units)
+        {
+            Identifier = identifier;
+            Label = label ?? throw new ArgumentNullException(nameof(label));
+            Units = units ?? throw new ArgumentNullException(nameof(units));
+        }
+
+        /// <summary>
+        /// The <see cref="Parameter"/> identifier
+        /// </summary>
+        public byte Identifier { get; }
+
+        /// <summary>
+        /// The <see cref="Parameter"/>
+        /// </summary>
+        public string Label { get; }
 
         /// <summary>
         /// The unit for this <see cref="Parameter"/>
         /// </summary>
         public string Units { get; }
-
-        /// <summary>
-        /// Get the <see cref="Parameter"/> from the identifier
-        /// </summary>
-        /// <param name="identifier">The identifier to lookup the <see cref="Parameter"/></param>
-        /// <returns>The <see cref="Parameter"/> instance</returns>
-        public static Parameter GetParameter(byte identifier)
+        
+        /// <inheritdoc/>
+        public int CompareTo(Parameter other)
         {
-            var parameter = parameterUnitsMap.FirstOrDefault(_ => _.Item1 == (OpenThingsParameter)identifier);
-
-            if (parameter == null)
+            if (other == null)
             {
-                throw new OpenThingsException($"Unable to find parameter id [0x{identifier:X}]");
+                return 1;
             }
-
-            return new Parameter(parameter.Item1);
+            else
+            {
+                return Identifier.CompareTo(other.Identifier);
+            }
         }
 
         /// <summary>
@@ -142,7 +86,7 @@ namespace OpenThings
         /// <returns>A string representation of the <see cref="Parameter"/></returns>
         public override string ToString()
         {
-            return $"Identifier: [{Identifier}] Units: [{Units}]";
+            return $"Identifier: [0x{Identifier:X2}] Label: [{Label}] Units: [{Units}]";
         }
     }
 }
