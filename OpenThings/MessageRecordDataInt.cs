@@ -53,16 +53,23 @@ namespace OpenThings
                 throw new ArgumentNullException(nameof(bytes));
             }
 
-            uint unpacked = UnPackUInt(bytes);
-            if ((bytes[0] & 0x80) == 0x80)
+            if (bytes.Count == 0)
             {
-                long mask = GenerateMask(bytes.Count);
-
-                Value = (int)-(((~unpacked) & mask) + 1);
+                Value = 0;
             }
             else
             {
-                Value = (int)unpacked;
+                uint unpacked = UnPackUInt(bytes);
+                if ((bytes[0] & 0x80) == 0x80)
+                {
+                    long mask = GenerateMask(bytes.Count);
+
+                    Value = (int)-(((~unpacked) & mask) + 1);
+                }
+                else
+                {
+                    Value = (int)unpacked;
+                }
             }
         }
 
