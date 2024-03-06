@@ -21,10 +21,11 @@
             2.0.0 Added additional message record types
             2.1.0 Updated framework version
             2.2.0 Updated parameter handling
+            2.2.2 Updated int value decoding
         </PackageReleaseNotes>
-        <Version>2.2.0</Version>
-        <AssemblyVersion>2.2.0.0</AssemblyVersion>
-        <FileVersion>2.2.0.0</FileVersion>
+        <Version>2.2.2</Version>
+        <AssemblyVersion>2.2.2.0</AssemblyVersion>
+        <FileVersion>2.2.2.0</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <SignAssembly>true</SignAssembly>
