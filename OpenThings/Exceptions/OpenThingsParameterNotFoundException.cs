@@ -41,9 +41,5 @@ namespace OpenThings.Exceptions
         public OpenThingsParameterNotFoundException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        protected OpenThingsParameterNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }

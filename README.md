@@ -18,7 +18,7 @@ Install-Package OpenThings
 
 The OpenThings package is compatible with the following runtimes:
 
-* .NET Core 7.0
+* .NET Core 8.0
 
 ## Encoding
 
