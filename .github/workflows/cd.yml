@@ -27,6 +27,6 @@ jobs:
         uses: softprops/action-gh-release@v2.0.8
         with:
           files: |
-            /home/runner/work/OpenThings/OpenThings/bin/Release/OpenThings*.nupkg
+            /home/runner/work/OpenThings/OpenThings/OpenThings/bin/Release/OpenThings*.nupkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
