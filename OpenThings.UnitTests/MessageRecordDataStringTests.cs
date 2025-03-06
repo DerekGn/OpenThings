@@ -22,7 +22,6 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,27 +35,16 @@ namespace OpenThings.UnitTests
         private const string Expected = "ABCD";
 
         [Fact]
-        public void TestEmptyBytes()
+        public void TestDecode()
         {
             // Arrange
+            var messageRecordData = new MessageRecordDataString(Encoding.ASCII.GetBytes(Expected).ToList());
 
             // Act
-            Action action = () => new MessageRecordDataString(bytes: null);
+            var result = messageRecordData.Value;
 
             // Assert
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void TestMaxLength()
-        {
-            // Arrange
-            
-            // Act
-            Action action = () => { new MessageRecordDataString("".PadRight(16, 'X')); };
-
-            // Assert
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            Assert.Equal(Expected, result);
         }
 
         [Fact]
@@ -68,7 +56,22 @@ namespace OpenThings.UnitTests
             Action action = () => { new MessageRecordDataString(""); };
 
             // Assert
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => action());
+
+            Assert.NotNull(exception);
+            Assert.Equal("Specified argument was out of the range of valid values. (Parameter 'value')", exception.Message);
+        }
+
+        [Fact]
+        public void TestEmptyBytes()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => new MessageRecordDataString(bytes: null);
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => action());
         }
 
         [Fact]
@@ -81,20 +84,19 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x75, 0x58, 0x58, 0x58, 0x58, 0x58 });
+            Assert.Equal(new List<byte>() { 0x75, 0x58, 0x58, 0x58, 0x58, 0x58 }, result);
         }
 
         [Fact]
-        public void TestDecode()
+        public void TestMaxLength()
         {
             // Arrange
-            var messageRecordData = new MessageRecordDataString(Encoding.ASCII.GetBytes(Expected).ToList());
-
+            
             // Act
-            var result = messageRecordData.Value;
+            Action action = () => { new MessageRecordDataString("".PadRight(16, 'X')); };
 
             // Assert
-            result.Should().Be(Expected);
+            Assert.Throws<ArgumentOutOfRangeException>(() => action());
         }
     }
 }

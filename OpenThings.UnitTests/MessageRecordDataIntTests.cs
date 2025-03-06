@@ -22,7 +22,6 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -41,7 +40,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(-2147483648);
+            Assert.Equal(-2147483648, result);
         }
 
         [Fact]
@@ -54,7 +53,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(2147483647);
+            Assert.Equal(2147483647, result);
         }
 
         [Fact]
@@ -67,7 +66,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(-128);
+            Assert.Equal(-128, result);
         }
 
         [Fact]
@@ -80,7 +79,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(-32768);
+            Assert.Equal(-32768, result);
         }
 
         [Fact]
@@ -93,7 +92,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(32767);
+            Assert.Equal(32767, result);
         }
 
         [Fact]
@@ -106,7 +105,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(127);
+            Assert.Equal(127, result);
         }
 
         [Fact]
@@ -119,7 +118,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(0);
+            Assert.Equal(0, result);
         }
 
         [Fact]
@@ -132,7 +131,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x84, 0x7F, 0xFF, 0xFF, 0xFF });
+            Assert.Equal(new List<byte>() { 0x84, 0x7F, 0xFF, 0xFF, 0xFF }, result);
         }
 
         [Fact]
@@ -145,7 +144,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0xFF });
+            Assert.Equal(new List<byte>() { 0x81, 0xFF }, result);
         }
 
         [Fact]
@@ -158,7 +157,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x01, 0x00 });
+            Assert.Equal(new List<byte>() { 0x82, 0x01, 0x00 }, result);
         }
 
         [Fact]
@@ -171,7 +170,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x7F, 0xFF });
+            Assert.Equal(new List<byte>() { 0x82, 0x7F, 0xFF }, result);
         }
 
         [Fact]
@@ -184,7 +183,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x80, 0x00 });
+            Assert.Equal(new List<byte>() { 0x82, 0x80, 0x00 }, result);
         }
 
         [Fact]
@@ -197,7 +196,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0x81 });
+            Assert.Equal(new List<byte>() { 0x81, 0x81 }, result);
         }
 
         [Fact]
@@ -210,7 +209,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0x80 });
+            Assert.Equal(new List<byte>() { 0x81, 0x80 }, result);
         }
 
         [Fact]
@@ -223,7 +222,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0xFF, 0x7F });
+            Assert.Equal(new List<byte>() { 0x82, 0xFF, 0x7F }, result);
         }
 
         [Fact]
@@ -236,7 +235,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x84, 0x80, 0x00, 0x00, 0x00 });
+            Assert.Equal(new List<byte>() { 0x84, 0x80, 0x00, 0x00, 0x00 }, result);
         }
 
         [Fact]
@@ -249,7 +248,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x80, 0x01 });
+            Assert.Equal(new List<byte>() { 0x82, 0x80, 0x01 }, result);
         }
 
         [Fact]
@@ -262,7 +261,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x82, 0x80, 0x00 });
+            Assert.Equal(new List<byte>() { 0x82, 0x80, 0x00 }, result);
         }
 
         [Fact]
@@ -275,7 +274,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0xFF });
+            Assert.Equal(new List<byte>() { 0x81, 0xFF }, result);
         }
 
         [Fact]
@@ -288,7 +287,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0xFE });
+            Assert.Equal(new List<byte>() { 0x81, 0xFE }, result);
         }
 
         [Fact]
@@ -301,7 +300,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x81, 0x01 });
+            Assert.Equal(new List<byte>() { 0x81, 0x01 }, result);
         }
 
         [Fact]
@@ -314,7 +313,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Encode();
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x80 });
+            Assert.Equal(new List<byte>() { 0x80 }, result);
         }
 
         [Fact]
@@ -326,7 +325,7 @@ namespace OpenThings.UnitTests
             Action action = () => new MessageRecordDataInt(null);
 
             // Assert
-            action.Should().Throw<ArgumentNullException>();
+            Assert.Throws<ArgumentNullException>(() => action());
         }
 
         [Fact]
@@ -339,7 +338,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.ToString();
 
             // Assert
-            result.Should().Be("Record Type: [SignedX0] Value: [0x0000AA55]");
+            Assert.Equal("Record Type: [SignedX0] Value: [0x0000AA55]", result);
         }
 
         [Fact]
@@ -351,7 +350,8 @@ namespace OpenThings.UnitTests
             var messageRecordData = new MessageRecordDataInt(0xAA55);
 
             // Assert
-            messageRecordData.Value.Should().Be(0xAA55);
+            Assert.NotNull(messageRecordData);
+            Assert.Equal(0xAA55,messageRecordData.Value);
         }
     }
 }
