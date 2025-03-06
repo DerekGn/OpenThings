@@ -22,7 +22,6 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
 using System.Collections.Generic;
 using Xunit;
 
@@ -71,21 +70,17 @@ namespace OpenThings.UnitTests
             var result = _encoder.Encode(message);
 
             // Assert
-            result
-                .Should()
-                .NotBeNull()
-                .And
-                .NotBeEmpty()
-                .And
-                .Equal(new List<byte>() {
-                    0x1A, 0x55, 0xAA, 0x00, 
-                    0x00, 0xFE, 0xED, 0xED, 
-                    0x74, 0x12, 0x01, 0x48, 
-                    0x2D, 0x74, 0x54, 0x45, 
-                    0x53, 0x54, 0x66, 0x01, 
-                    0x78, 0x4C, 0x81, 0xCE, 
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.Equal(new List<byte>() {
+                    0x1A, 0x55, 0xAA, 0x00,
+                    0x00, 0xFE, 0xED, 0xED,
+                    0x74, 0x12, 0x01, 0x48,
+                    0x2D, 0x74, 0x54, 0x45,
+                    0x53, 0x54, 0x66, 0x01,
+                    0x78, 0x4C, 0x81, 0xCE,
                     0x00, 0xF9, 0xB7
-                });
+                }, result);
         }
 
         [Fact]
@@ -102,13 +97,16 @@ namespace OpenThings.UnitTests
             var result = _encoder.Encode(message);
 
             // Assert
-            result
-                .Should()
-                .NotBeNull()
-                .And
-                .NotBeEmpty()
-                .And
-                .Equal(new List<byte>() { 0x0C, 0x00, 0x00, 0x00, 0x00, 0xF3, 0xE3, 0x79, 0xBF, 0x00, 0x00, 0xE9, 0x4E });
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.Equal(new List<byte>() {
+                0x0C, 0x00,
+                0x00, 0x00,
+                0x00, 0xF3,
+                0xE3, 0x79,
+                0xBF, 0x00,
+                0x00, 0xE9,
+                0x4E}, result);
         }
 
         [Fact]
@@ -138,13 +136,19 @@ namespace OpenThings.UnitTests
             var result = _encoder.Encode(message, 0xFF, 0xAA55);
 
             // Assert
-            result
-                .Should()
-                .NotBeNull()
-                .And
-                .NotBeEmpty()
-                .And
-                .Equal(new List<byte>() { 0x12, 0x55, 0xAA, 0x55, 0x55, 0x18, 0xE2, 0x3B, 0x97, 0x06, 0x47, 0x40, 0xFB, 0xE8, 0x84, 0x0E, 0xCD, 0x29, 0xAE });
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.Equal(new List<byte>() {
+                0x12, 0x55,
+                0xAA, 0x55,
+                0x55, 0x18,
+                0xE2, 0x3B,
+                0x97, 0x06,
+                0x47, 0x40,
+                0xFB, 0xE8,
+                0x84, 0x0E,
+                0xCD, 0x29,
+                0xAE}, result);
         }
     }
 }

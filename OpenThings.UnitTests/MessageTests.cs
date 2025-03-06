@@ -22,7 +22,6 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -46,10 +45,10 @@ namespace OpenThings.UnitTests
             Action action = () => new Message(null);
 
             // Assert
-            action
-                .Should()
-                .Throw<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'messageHeader')");
+            var exception = Assert.Throws<ArgumentNullException>(() => action());
+
+            Assert.NotNull(exception);
+            Assert.Equal("Value cannot be null. (Parameter 'messageHeader')", exception.Message);
         }
 
         [Fact]
@@ -66,10 +65,16 @@ namespace OpenThings.UnitTests
             var result = message.ToString();
 
             // Assert
-            result.Should().Be("Header->\r\n" +
-                "Length: [0x00] ManufacturerId: [0x00] ProductId: [0x00] Pip: [0x0000] SensorId: [0x00000000]\r\n" +
-                "Records->\r\n" +
-                "Parameter:[Identifier: [0x78] Label: [WaterPressure] Units: [Pa]] Data: [Record Type: [SignedX0] Value: [0x00000000]]\r\n");
+
+            Assert.Equal(
+                $"Header->{Environment.NewLine}" +
+                $"Length: [0x00] " +
+                $"ManufacturerId: [0x00] " +
+                $"ProductId: [0x00] " +
+                $"Pip: [0x0000] " +
+                $"SensorId: [0x00000000]{Environment.NewLine}" +
+                $"Records->{Environment.NewLine}" +
+                $"Parameter:[Identifier: [0x78] Label: [WaterPressure] Units: [Pa]] Data: [Record Type: [SignedX0] Value: [0x00000000]]{Environment.NewLine}", result);
         }
     }
 }

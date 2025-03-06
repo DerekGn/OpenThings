@@ -22,7 +22,8 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
+// Ignore Spelling: Ccitt
+
 using System.Collections.Generic;
 using Xunit;
 
@@ -37,10 +38,10 @@ namespace OpenThings.UnitTests
             var crc16Ccitt = new Crc16Ccitt(89);
 
             // Act
-            var result =  crc16Ccitt.ComputeChecksum(new List<byte>() { 0x55, 0x66, 0xAA });
+            var result = crc16Ccitt.ComputeChecksum(new List<byte>() { 0x55, 0x66, 0xAA });
 
             // Assert
-            result.Should().Be(46133);
+            Assert.Equal(46133, result);
         }
 
         [Fact]
@@ -53,7 +54,7 @@ namespace OpenThings.UnitTests
             var result = crc16Ccitt.ComputeChecksumBytes(new List<byte>() { 0x55, 0x66, 0xAA });
 
             // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x35, 0xB4 });
+            Assert.Equal(new List<byte>() { 0x35, 0xB4 }, result);
         }
     }
 }

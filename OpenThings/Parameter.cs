@@ -61,7 +61,7 @@ namespace OpenThings
         /// The <see cref="Parameter"/>
         /// </summary>
         public string Label { get; }
-
+        //TODO add enum value for units
         /// <summary>
         /// The unit for this <see cref="Parameter"/>
         /// </summary>

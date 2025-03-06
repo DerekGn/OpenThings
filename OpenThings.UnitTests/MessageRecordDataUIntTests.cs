@@ -22,7 +22,6 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -31,121 +30,6 @@ namespace OpenThings.UnitTests
 {
     public class MessageRecordDataUIntTests
     {
-        [Fact]
-        public void TestEmptyBytes()
-        {
-            // Arrange
-            
-            // Act
-            Action action = () => new MessageRecordDataUInt(null);
-
-            // Assert
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void TestEncodeZero()
-        {
-            // Arrange
-            var messageRecordData = new MessageRecordDataUInt(0);
-
-            // Act
-            var result = messageRecordData.Encode();
-
-            // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x00 });
-        }
-
-        [Fact]
-        public void TestEncodeByteUpper()
-        {
-            // Arrange
-            var messageRecordData = new MessageRecordDataUInt(255);
-
-            // Act
-            var result = messageRecordData.Encode();
-
-            // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x01, 0xFF });
-        }
-
-        [Fact]
-        public void TestEncodeShortLower()
-        {
-            // Arrange
-            var messageRecordData = new MessageRecordDataUInt(256);
-
-            // Act
-            var result = messageRecordData.Encode();
-
-            // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x02, 0x01, 0x00 });
-        }
-
-        [Fact]
-        public void TestEncodeShortUpper()
-        {
-            // Arrange
-            var messageRecordData = new MessageRecordDataUInt(65535);
-
-            // Act
-            var result = messageRecordData.Encode();
-
-            // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x02, 0xFF, 0xFF });
-        }
-
-        [Fact]
-        public void TestEncodeUIntLower()
-        {
-            // Arrange
-            var messageRecordData = new MessageRecordDataUInt(65536);
-
-            // Act
-            var result = messageRecordData.Encode();
-
-            // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x03, 0x01, 0x00, 0x00 });
-        }
-
-        [Fact]
-        public void TestEncodeUIntUpper()
-        {
-            // Arrange
-            var messageRecordData = new MessageRecordDataUInt(65535);
-
-            // Act
-            var result = messageRecordData.Encode();
-
-            // Assert
-            result.Should().BeEquivalentTo(new List<byte>() { 0x02, 0xFF, 0xFF });
-        }
-
-        [Fact]
-        public void TestToString()
-        {
-            // Arrange
-            var messageRecordData = new MessageRecordDataUInt(0xAA55);
-
-            // Act
-            var result = messageRecordData.ToString();
-
-            // Assert
-            result.Should().Be("Record Type: [UnsignedX0] Value: [0x0000AA55]");
-        }
-
-        [Fact]
-        public void TestValue()
-        {
-            // Arrange
-
-            // Act
-            var messageRecordData = new MessageRecordDataUInt(0xAA55);
-
-            // Assert
-            messageRecordData.Value.Should().Be(0xAA55);
-        }
-
         [Fact]
         public void TestDecodeByte()
         {
@@ -156,7 +40,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(0xAA);
+            Assert.Equal<uint>(0xAA, result);
         }
 
         [Fact]
@@ -169,7 +53,7 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(0x55AA);
+            Assert.Equal<uint>(0x55AA, result);
         }
 
         [Fact]
@@ -182,7 +66,123 @@ namespace OpenThings.UnitTests
             var result = messageRecordData.Value;
 
             // Assert
-            result.Should().Be(0x55AAFEED);
+            Assert.Equal<uint>(0x55AAFEED, result);
+        }
+
+        [Fact]
+        public void TestEmptyBytes()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => new MessageRecordDataUInt(null);
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => action());
+        }
+
+        [Fact]
+        public void TestEncodeByteUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(255);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            Assert.Equal(new List<byte>() { 0x01, 0xFF }, result);
+        }
+
+        [Fact]
+        public void TestEncodeShortLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(256);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            Assert.Equal(new List<byte>() { 0x02, 0x01, 0x00 }, result);
+        }
+
+        [Fact]
+        public void TestEncodeShortUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(65535);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            Assert.Equal(new List<byte>() { 0x02, 0xFF, 0xFF }, result);
+        }
+
+        [Fact]
+        public void TestEncodeUIntLower()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(65536);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            Assert.Equal(new List<byte>() { 0x03, 0x01, 0x00, 0x00 }, result);
+        }
+
+        [Fact]
+        public void TestEncodeUIntUpper()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(65435);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            Assert.Equal(new List<byte>() { 0x02, 0xFF, 0x9B }, result);
+        }
+
+        [Fact]
+        public void TestEncodeZero()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(0);
+
+            // Act
+            var result = messageRecordData.Encode();
+
+            // Assert
+            Assert.Equal(new List<byte>() { 0x00 }, result);
+        }
+
+        [Fact]
+        public void TestToString()
+        {
+            // Arrange
+            var messageRecordData = new MessageRecordDataUInt(0xAA55);
+
+            // Act
+            var result = messageRecordData.ToString();
+
+            // Assert
+            Assert.Equal("Record Type: [UnsignedX0] Value: [0x0000AA55]", result);
+        }
+
+        [Fact]
+        public void TestValue()
+        {
+            // Arrange
+
+            // Act
+            var messageRecordData = new MessageRecordDataUInt(0xAA55);
+
+            // Assert
+            Assert.NotNull(messageRecordData);
+            Assert.Equal<uint>(0xAA55, messageRecordData.Value);
         }
     }
 }
