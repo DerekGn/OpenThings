@@ -66,10 +66,15 @@ namespace OpenThings.UnitTests
 
             // Assert
 
-            Assert.Equal("Header->\r\n" +
-                "Length: [0x00] ManufacturerId: [0x00] ProductId: [0x00] Pip: [0x0000] SensorId: [0x00000000]\r\n" +
-                "Records->\r\n" +
-                "Parameter:[Identifier: [0x78] Label: [WaterPressure] Units: [Pa]] Data: [Record Type: [SignedX0] Value: [0x00000000]]\r\n", result);
+            Assert.Equal(
+                $"Header->{Environment.NewLine}" +
+                $"Length: [0x00] " +
+                $"ManufacturerId: [0x00] " +
+                $"ProductId: [0x00] " +
+                $"Pip: [0x0000] " +
+                $"SensorId: [0x00000000]{Environment.NewLine}" +
+                $"Records->{Environment.NewLine}" +
+                $"Parameter:[Identifier: [0x78] Label: [WaterPressure] Units: [Pa]] Data: [Record Type: [SignedX0] Value: [0x00000000]]{Environment.NewLine}", result);
         }
     }
 }
