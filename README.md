@@ -1,8 +1,8 @@
 # OpenThings
 
-[![Build Status](https://dev.azure.com/DerekGn/GitHub/_apis/build/status/DerekGn.OpenThings?branchName=main)](https://dev.azure.com/DerekGn/GitHub/_build/latest?definitionId=4&branchName=main)
+![GitHub Actions](https://github.com/DerekGn/OpenThings/actions/workflows/build.yml/badge.svg)
 
-[![NuGet Badge](https://buildstats.info/nuget/OpenThings)](https://www.nuget.org/packages/OpenThings/)
+[![NuGet](https://img.shields.io/nuget/v/OpenThings.svg?style=flat-square)](https://www.nuget.org/packages/OpenThings/)
 
 A .net core library for encoding and decoding OpenThings messages. See [specification](https://github.com/DerekGn/OpenThings/blob/main/OpenThings%20Specification%5B2505%5D.pdf).
 

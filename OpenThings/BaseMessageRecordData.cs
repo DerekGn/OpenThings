@@ -65,29 +65,20 @@ namespace OpenThings
             return bytes;
         }
 
+        /// <summary>
+        /// Cast to <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The <typeparamref name="T"/>"/></typeparam>
+        /// <returns>The <see cref="BaseMessageRecordData"/> derived type cast to <typeparamref name="T"/></returns>
+        public T As<T>() where T : BaseMessageRecordData
+        {
+            return (T)this;
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
             return $"Record Type: [{RecordType}]";
-        }
-
-        /// <summary>
-        /// Encode the instance message record data value
-        /// </summary>
-        /// <returns>A <see cref="List{T}"/> of <see cref="byte"/> values that encode the message record value</returns>
-        internal abstract IList<byte> EncodeValue();
-
-        internal static uint UnPackUInt(List<byte> bytes)
-        {
-            uint result = 0;
-
-            for (int i = 0; i < bytes.Count; i++)
-            {
-                result <<= 8;
-                result += bytes[i];
-            }
-
-            return result;
         }
 
         internal static long GenerateMask(int byteCount)
@@ -105,5 +96,24 @@ namespace OpenThings
 
             return result;
         }
+
+        internal static uint UnPackUInt(List<byte> bytes)
+        {
+            uint result = 0;
+
+            for (int i = 0; i < bytes.Count; i++)
+            {
+                result <<= 8;
+                result += bytes[i];
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encode the instance message record data value
+        /// </summary>
+        /// <returns>A <see cref="List{T}"/> of <see cref="byte"/> values that encode the message record value</returns>
+        internal abstract IList<byte> EncodeValue();
     }
 }

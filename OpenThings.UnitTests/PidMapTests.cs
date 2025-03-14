@@ -22,7 +22,9 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
+
+// Ignore Spelling: Pid
+
 using Xunit;
 
 namespace OpenThings.UnitTests
@@ -38,8 +40,8 @@ namespace OpenThings.UnitTests
             var pidMap = new PidMap(1, 2);
 
             // Assert
-            pidMap.Pid.Should().Be(2);
-            pidMap.ManufacturerId.Should().Be(1);
+            Assert.Equal(2, pidMap.Pid);
+            Assert.Equal(1, pidMap.ManufacturerId);
         }
     }
 }

@@ -22,7 +22,6 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -46,8 +45,10 @@ namespace OpenThings.UnitTests
             Action action = () => new MessageRecord(_parameters.GetParameter(ParameterIdentifiers.AirPressure), null);
 
             // Assert
-            action.Should().Throw<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'data')");
+            var exception = Assert.Throws<ArgumentNullException>(() => action());
+
+            Assert.NotNull(exception);
+            Assert.Equal("Value cannot be null. (Parameter 'data')", exception.Message);
         }
 
         [Fact]
@@ -59,8 +60,10 @@ namespace OpenThings.UnitTests
             Action action = () => new MessageRecord(null, null);
 
             // Assert
-            action.Should().Throw<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'parameter')");
+            var exception = Assert.Throws<ArgumentNullException>(() => action());
+
+            Assert.NotNull(exception);
+            Assert.Equal("Value cannot be null. (Parameter 'parameter')", exception.Message);
         }
 
         [Fact]
@@ -74,10 +77,9 @@ namespace OpenThings.UnitTests
                 new MessageRecordDataInt(0));
 
             // Assert
-            messageRecord
-                .ToString()
-                .Should()
-                .Be("Parameter:[Identifier: [0x71] Label: [ReactivePower] Units: [VAR]] Data: [Record Type: [SignedX0] Value: [0x00000000]]");
+            Assert.NotNull(messageRecord);
+            Assert.Equal("Parameter:[Identifier: [0x71] Label: [ReactivePower] Units: [VAR]] Data: [Record Type: [SignedX0] Value: [0x00000000]]",
+                messageRecord.ToString());
         }
     }
 }

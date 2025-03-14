@@ -22,7 +22,6 @@
 * SOFTWARE.
 */
 
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -40,8 +39,8 @@ namespace OpenThings.UnitTests
             Action action = () => new MessageHeader(0x81, 0, 0, 0);
 
             // Assert
-            action.Should().Throw<ArgumentOutOfRangeException>()
-                .WithMessage("Specified argument was out of the range of valid values. (Parameter 'manufacturerId')");
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(action);
+            Assert.Equal("Specified argument was out of the range of valid values. (Parameter 'manufacturerId')", exception.Message);
         }
 
         [Fact]
@@ -53,8 +52,8 @@ namespace OpenThings.UnitTests
             Action action = () => new MessageHeader(0x10, 0, 0, uint.MaxValue);
 
             // Assert
-            action.Should().Throw<ArgumentOutOfRangeException>()
-                .WithMessage("Specified argument was out of the range of valid values. (Parameter 'sensorId')");
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(action);
+            Assert.Equal("Specified argument was out of the range of valid values. (Parameter 'sensorId')", exception.Message);
         }
 
         [Fact]
@@ -67,7 +66,7 @@ namespace OpenThings.UnitTests
             messageHeader.SetSensorId(new List<byte>() { 0xFE, 0xED, 0xAA });
 
             // Assert
-            messageHeader.SensorId.Should().Be(0xFEEDAA);
+            Assert.Equal<uint>(0xFEEDAA, messageHeader.SensorId);
         }
 
         [Fact]
@@ -80,8 +79,8 @@ namespace OpenThings.UnitTests
             Action action = () => messageHeader.SetSensorId(new List<byte>() { });
 
             // Assert
-            action.Should().Throw<ArgumentOutOfRangeException>()
-                .WithMessage("Specified argument was out of the range of valid values. (Parameter 'sensorId')");
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(action);
+            Assert.Equal("Specified argument was out of the range of valid values. (Parameter 'sensorId')", exception.Message);
         }
 
         [Fact]
@@ -94,7 +93,7 @@ namespace OpenThings.UnitTests
             Action action = () => messageHeader.SetSensorId(null);
 
             // Assert
-            action.Should().Throw<ArgumentNullException>();
+            Assert.Throws<ArgumentNullException>(action);
         }
 
         [Fact]
@@ -107,9 +106,7 @@ namespace OpenThings.UnitTests
             var result = messageHeader.ToString();
 
             // Assert
-            result
-                .Should()
-                .Be("Length: [0x00] ManufacturerId: [0x10] ProductId: [0x00] Pip: [0x0000] SensorId: [0x00000000]");
+            Assert.Equal("Length: [0x00] ManufacturerId: [0x10] ProductId: [0x00] Pip: [0x0000] SensorId: [0x00000000]", result);
         }
     }
 }
